@@ -30,8 +30,21 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_position_on_map))
             .check(matches(isClickable()))
 
-        onView(withId(R.id.btn_altitude))
+        onView(withId(R.id.btn_position_on_map))
             .check(matches(withText("Find me")))
     }
+
+    @Test
+    fun check_listview_containItems() {
+        onView(withId(R.id.scrollview_menu))
+            .check(matches(hasDescendant(withId(R.id.btn_altitude))))
+    }
+
+    @Test
+    fun check_listview_containItems() {
+        onView(withId(R.id.scrollview_menu))
+            .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
+    }
+
 
 }
