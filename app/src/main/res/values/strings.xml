@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TheHiker</string>
+    <string name="title_activity_position_on_map">Map</string>
 </resources>
