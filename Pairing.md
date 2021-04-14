@@ -1,14 +1,20 @@
-# Pairing Matrix
----
+### Pairing Matrix
+Dev 1: Name
+Dev 2: Name
+Dev 3: Name
+Dev 4: Name
+Dev 5: Name
+Dev 6: Name
+Dev 7: Name
+Dev 8: Name
 
-| Devs      | Langs, Thomas   	  | Feldgrill, Lukas André| Grief, Sebastian   	  | Leeb, Johannes Leonhard Günther  	  | Nuñez Delgado, Jaime   	  | Saf, Nikolas   	  | Schweiger, Tamara   	  | Seiser, Maria   	  | Watko, Markus      |
-| :---        |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |     :---:  |
-| Langs, Thomas       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM      |
-| Feldgrill, Lukas André       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM      |
-| Grief, Sebastian     | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM      |
-| Leeb, Johannes Leonhard Günther       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM      |
-| Nuñez Delgado, Jaime      | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM      |
-| Saf, Nikolas      | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM      |
-| Schweiger, Tamara       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM      |
-| Seiser, Maria       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM      |
-| Watko, Markus       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X          |
+| Syntax      | Dev 1   	  | Dev 2   	  | Dev 3   	  | Dev 4   	  | Dev 5   	  | Dev 6   	  | Dev 7   	  | Dev 8   	  |
+| :---        |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |
+| Dev 1       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       |
+| Dev 2       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       |
+| Dev 3       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       |
+| Dev 4       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       |
+| Dev 5       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       |
+| Dev 6       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       |
+| Dev 7       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       |
+| Dev 8       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           |
