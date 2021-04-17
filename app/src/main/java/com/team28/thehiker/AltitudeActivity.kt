@@ -9,10 +9,12 @@ class AltitudeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_altitude)
 
-
     }
 
     fun updateAltitude(altitude : Double){
+        val altitude_text = findViewById<TextView>(R.id.altitude)
+        altitude_text.text = String.format("%.2f m",altitude)
+
 
     }
 
