@@ -58,6 +58,7 @@
                     app:tint="@color/white"/>
 
                 <Button
+                    android:onClick="mainMenuButtonClicked"
                     android:id="@+id/btn_altitude"
                     android:text="@string/altitude"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton" />
@@ -83,6 +84,7 @@
                     app:tint="@color/white"/>
 
                 <Button
+                    android:onClick="mainMenuButtonClicked"
                     android:id="@+id/btn_position_on_map"
                     android:text="@string/find_me"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton" />
