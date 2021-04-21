@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 import android.os.SystemClock
 import androidx.appcompat.widget.ActivityChooserView
+import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.LayoutMatchers
@@ -47,15 +48,20 @@ class SplashscreenTest {
     fun whenAppLaunches(){
         SystemClock.setCurrentTimeMillis(0)
     }
+
     @Test
     fun splashscreenComponentsPresent() {
         onView(withId(R.id.imageViewSplashscreen)).check(matches(isDisplayed()))
         onView(withId(R.id.textViewAppName)).check(matches(isDisplayed()))
     }
 
+    @ExperimentalTime
     @Test
-    fun switchToMainAfterTime() {
-
+    fun measureDisplayTime() {
+        //val scenario = launchActivity<SplashscreenActivity>()
+        val scenario = launch(SplashscreenActivity::class.java)
+        val elapsed:Duration = measureTime { SplashscreenActivity::displaySplashscreen }
+        assertEquals(1500.milliseconds, elapsed)
     }
 
 }
