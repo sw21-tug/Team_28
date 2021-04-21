@@ -13,6 +13,9 @@ import com.google.android.gms.maps.model.MarkerOptions
  */
 class position_on_map : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mapView: MapView
+    private lateinit var _map: GoogleMap
+    private val MAP_MIN_ZOOM = 10f
+    private val MAP_MAX_ZOOM = 100f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,11 @@ class position_on_map : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         map.addMarker(MarkerOptions().position(LatLng(0.0, 0.0)).title("Marker"))
+        map.mapType = GoogleMap.MAP_TYPE_TERRAIN
+        _map = map
+        map.setMinZoomPreference(MAP_MIN_ZOOM)
+        map.setMaxZoomPreference(MAP_MAX_ZOOM)
+        setMapPosition(47.0707, 15.4395)
     }
 
     override fun onPause() {
@@ -72,6 +80,17 @@ class position_on_map : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
+
+    fun setMapPosition(lat: Double, lon: Double): Int
+    {
+        if(!this::_map.isInitialized)
+            return -1
+
+        _map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(lat, lon)))
+
+        return 0
+    }
+
 }
 
 

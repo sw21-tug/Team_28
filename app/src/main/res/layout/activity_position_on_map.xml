@@ -8,16 +8,24 @@
     android:orientation="vertical"
     tools:context=".position_on_map">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:background="#00FF0A"
+        map:srcCompat="@android:drawable/ic_dialog_map" />
+
     <EditText
         android:id="@+id/editTextTextPersonName4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"
+        android:layout_weight="15"
         android:background="#00FF0A"
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
         android:inputType="textPersonName"
-        android:text="MAP"
+        android:text="My location"
         android:textSize="70sp"
         android:textStyle="bold"
         android:typeface="sans" />
