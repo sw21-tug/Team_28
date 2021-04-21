@@ -32,7 +32,7 @@ import kotlin.time.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class SplashScreenUIComponentTest {
+class SplashscreenTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -40,8 +40,8 @@ class SplashScreenUIComponentTest {
         assertEquals("com.team28.thehiker", appContext.packageName)
     }
     @get:Rule
-    var activityRule: ActivityScenarioRule<MainActivity>
-            = ActivityScenarioRule(MainActivity::class.java)
+    var activityRule: ActivityScenarioRule<SplashscreenActivity>
+            = ActivityScenarioRule(SplashscreenActivity::class.java)
 
     @Before
     fun whenAppLaunches(){
@@ -53,5 +53,9 @@ class SplashScreenUIComponentTest {
         onView(withId(R.id.textViewAppName)).check(matches(isDisplayed()))
     }
 
+    @Test
+    fun switchToMainAfterTime() {
+
+    }
 
 }
