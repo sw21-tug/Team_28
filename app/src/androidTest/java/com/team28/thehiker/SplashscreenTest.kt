@@ -6,12 +6,17 @@ import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.LayoutMatchers
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.times
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.After
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,7 +51,7 @@ class SplashscreenTest {
 
     @Before
     fun whenAppLaunches(){
-        SystemClock.setCurrentTimeMillis(0)
+        Intents.init()
     }
 
     @Test
@@ -55,13 +60,16 @@ class SplashscreenTest {
         onView(withId(R.id.textViewAppName)).check(matches(isDisplayed()))
     }
 
-    @ExperimentalTime
     @Test
     fun measureDisplayTime() {
-        //val scenario = launchActivity<SplashscreenActivity>()
         val scenario = launch(SplashscreenActivity::class.java)
-        val elapsed:Duration = measureTime { SplashscreenActivity::displaySplashscreen }
-        assertEquals(1500.milliseconds, elapsed)
+        Thread.sleep(1600)
+        Intents.intended(hasComponent(MainActivity::class.java.name), times(1))
+    }
+
+    @After
+    fun cleanUp(){
+        Intents.release()
     }
 
 }
