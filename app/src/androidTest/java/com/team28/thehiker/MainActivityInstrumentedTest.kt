@@ -59,8 +59,7 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_altitude))
             .perform(click())
 
-        //TODO: this can be changed to real activities when implemented
-        Intents.intended(hasComponent(TestActivity::class.java.name), times(1))
+        Intents.intended(hasComponent(AltitudeActivity::class.java.name), times(1))
     }
 
     @Test

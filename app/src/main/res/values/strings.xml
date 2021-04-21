@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">TheHiker</string>
+    <string name="altitude_title">Your altitude:</string>
+    <string name="altitude_userinfo">*altitude above sea level is displayed in meters</string>
     <string name="altitude">Altitude</string>
     <string name="find_me">Find me</string>
     <string name="main_menu_header_image">main menu header image</string>
