@@ -62,7 +62,6 @@ class SplashscreenTest {
 
     @Test
     fun measureDisplayTime() {
-        val scenario = launch(SplashscreenActivity::class.java)
         Thread.sleep(1600)
         Intents.intended(hasComponent(MainActivity::class.java.name), times(1))
     }
