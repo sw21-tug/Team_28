@@ -1,41 +1,41 @@
 package com.team28.thehiker
 
-import com.team28.thehiker.PermissionHandler.PermissionHandler
-import org.junit.Before
-import org.junit.Rule
+
+import com.team28.thehiker.Permissions.PermissionHandler
 import org.junit.Test
-import org.junit.runner.RunWith
+
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.*
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(AndroidJUnit4::class)
+
 class MainActivityTest {
-
 
     @Mock
     var permissionHandlerMock = mock(PermissionHandler::class.java)
-    @get:Rule
-    var activityScenarioRule = activityScenarioRule<MainActivity>()
 
     @Test
-    fun testPermissions_checkPermissionsIfNotGranted_PermissionsGranted() {
-        val main = MainActivity()
+    fun testPermissions_PermissionsGranted() {
+        val mainActivity = MainActivity()
 
-        `when`(permissionHandlerMock.checkPermissionsGranted(main))
-            .thenReturn(false)
-        main.permissionCheck()
-        verify(permissionHandlerMock, times(1)).requestPermissions(main)
+        `when`(permissionHandlerMock.permissionsAlreadyGranted(mainActivity))
+                .thenReturn(true)
+
+        mainActivity.checkPermissions(permissionHandlerMock)
+
+        verify(permissionHandlerMock, times(1)).permissionsAlreadyGranted(mainActivity)
+        verify(permissionHandlerMock, never()).askUserForPermissions(mainActivity)
     }
 
     @Test
-    fun testPermissions_checkPermissionsIfNotGranted_PermissionsNotGranted() {
-        val main = MainActivity()
+    fun testPermissions_PermissionsNotGranted() {
+        val mainActivity = MainActivity()
 
-        `when`(permissionHandlerMock.checkPermissionsGranted(main))
-            .thenReturn(true)
+        `when`(permissionHandlerMock.permissionsAlreadyGranted(mainActivity))
+            .thenReturn(false)
 
-        verify(permissionHandlerMock, never()).requestPermissions(main)
+        mainActivity.checkPermissions(permissionHandlerMock)
+
+        verify(permissionHandlerMock, times(1)).permissionsAlreadyGranted(mainActivity)
+        verify(permissionHandlerMock, times(1)).askUserForPermissions(mainActivity)
     }
 }
