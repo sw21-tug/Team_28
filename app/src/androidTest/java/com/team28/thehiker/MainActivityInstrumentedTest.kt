@@ -55,8 +55,17 @@ class MainActivityInstrumentedTest {
     }
 
     @Test
-    fun onButtonClick_correctActivityStarted() {
+    fun onButtonClick_Altitude_correctActivityStarted() {
         onView(withId(R.id.btn_altitude))
+            .perform(click())
+
+        //TODO: this can be changed to real activities when implemented
+        Intents.intended(hasComponent(TestActivity::class.java.name), times(1))
+    }
+
+    @Test
+    fun onButtonClick_FindMe_correctActivityStarted() {
+        onView(withId(R.id.btn_position_on_map))
             .perform(click())
 
         //TODO: this can be changed to real activities when implemented
