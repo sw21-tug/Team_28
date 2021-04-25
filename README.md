@@ -26,3 +26,16 @@ The Hiker introduce a simple app that will be able to show several statistics fo
 
 ![MobileApp1](https://user-images.githubusercontent.com/79966516/114615879-7ec0c980-9ca6-11eb-85ac-ba26860b4a15.PNG)
 ![MobileApp2](https://user-images.githubusercontent.com/79966516/114615904-84b6aa80-9ca6-11eb-93ab-32ad477e2334.PNG)
+
+
+---
+
+### Implemented Features
+
+| **Ticket**        | **Description** |
+| ------------- |:-------------: |
+| [The Hiker] [#3](https://github.com/sw21-tug/Team_28/issues/3) | Main Screen: shows a picture of the nature and contains the functions of the
+| [The Hiker] [#2](https://github.com/sw21-tug/Team_28/issues/2) | Splashscreen
+| [The Hiker] [#17](https://github.com/sw21-tug/Team_28/issues/17) | Altitude Backend: Hiker location
+
+
