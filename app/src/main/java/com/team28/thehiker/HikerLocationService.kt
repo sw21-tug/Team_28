@@ -37,7 +37,7 @@ class HikerLocationService : Service() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        locationProvider.removeLocationUpdates(locationCallback)
     }
 
     fun getLocationProvider() : FusedLocationProviderClient{

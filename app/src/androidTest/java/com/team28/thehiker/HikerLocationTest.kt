@@ -6,6 +6,7 @@ import android.location.LocationManager
 import android.os.SystemClock
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
 import androidx.test.rule.ServiceTestRule
 import org.junit.Assert.*
 import org.junit.Before
@@ -18,6 +19,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
+@LargeTest
 @RunWith(AndroidJUnit4::class)
 class HikerLocationTest {
 
@@ -37,7 +39,8 @@ class HikerLocationTest {
     private lateinit var service : HikerLocationService
 
     @Before
-    fun init(){
+    fun init(){ //setup that is executed every time a testcase is executed
+
         //initialize mock objects and captors
         MockitoAnnotations.initMocks(this)
 
