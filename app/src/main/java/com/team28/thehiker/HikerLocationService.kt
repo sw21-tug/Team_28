@@ -45,7 +45,9 @@ class HikerLocationService : Service() {
 
     inner class LocationCallbackHandler : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
-            callbackList.forEach { it.notifyLocationUpdate(Location("TEST")) }
+            if (locationResult != null){
+                callbackList.forEach { it.notifyLocationUpdate(locationResult.lastLocation) }
+            }
         }
     }
 

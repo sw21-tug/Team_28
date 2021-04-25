@@ -68,7 +68,6 @@ class HikerLocationTest {
 
         verify(mockCallbackInterface, after(5000).atLeastOnce()).notifyLocationUpdate(capture(locationCaptor))
 
-        //TODO: extend test to verify that object is the same
         assertLocationsEqual(mockLocation, locationCaptor.value)
     }
 
