@@ -3,6 +3,7 @@ package com.team28.thehiker
 import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
+import android.location.Location
 import android.os.Binder
 import android.os.IBinder
 import android.os.Looper
@@ -44,7 +45,7 @@ class HikerLocationService : Service() {
 
     inner class LocationCallbackHandler : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
-            callbackList.forEach { it.notifyLocationUpdate() }
+            callbackList.forEach { it.notifyLocationUpdate(Location("TEST")) }
         }
     }
 
