@@ -3,14 +3,19 @@ package com.team28.thehiker
 import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
-import android.location.Location
 import android.os.Binder
 import android.os.IBinder
 import android.os.Looper
-import android.util.Log
 import com.google.android.gms.location.*
+import com.team28.thehiker.HikerLocationService.LocationConstants.LOCATION_UPDATE_FASTEST_INTERVAL
+import com.team28.thehiker.HikerLocationService.LocationConstants.LOCATION_UPDATE_INTERVAL
 
 class HikerLocationService : Service() {
+
+    object LocationConstants {
+        const val LOCATION_UPDATE_INTERVAL = 2500L
+        const val LOCATION_UPDATE_FASTEST_INTERVAL = 1000L
+    }
 
     private val binder = HikerLocationBinder()
     private lateinit var locationProvider: FusedLocationProviderClient
@@ -23,8 +28,8 @@ class HikerLocationService : Service() {
         locationProvider = LocationServices.getFusedLocationProviderClient(this)
 
         val locationRequest = LocationRequest.create()
-        locationRequest.interval = 2500
-        locationRequest.fastestInterval = 1000
+        locationRequest.interval = LOCATION_UPDATE_INTERVAL
+        locationRequest.fastestInterval = LOCATION_UPDATE_FASTEST_INTERVAL
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
         locationProvider.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())

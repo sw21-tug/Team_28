@@ -22,6 +22,8 @@ import org.mockito.MockitoAnnotations
 class HikerLocationTest {
 
     private val DOUBLE_COMPARE_DELTA = 0.0001
+    private val LOCATION_UPDATE_WAIT_TIME = 3000L
+
 
     @get:Rule
     var serviceRule = ServiceTestRule()
@@ -57,7 +59,7 @@ class HikerLocationTest {
         service.getLocationProvider().setMockLocation(mockLocation).addOnFailureListener { throw it }
 
         // verify that the method notifyLocationUpdate() has been called at least once after 5 sec
-        verify(mockCallbackInterface, after(5000).atLeastOnce()).notifyLocationUpdate(capture(locationCaptor))
+        verify(mockCallbackInterface, after(LOCATION_UPDATE_WAIT_TIME).atLeastOnce()).notifyLocationUpdate(capture(locationCaptor))
     }
 
     @Test
@@ -66,11 +68,28 @@ class HikerLocationTest {
         val mockLocation = createMockLocation()
         service.getLocationProvider().setMockLocation(mockLocation).addOnFailureListener { throw it }
 
-        verify(mockCallbackInterface, after(5000).atLeastOnce()).notifyLocationUpdate(capture(locationCaptor))
+        verify(mockCallbackInterface, after(LOCATION_UPDATE_WAIT_TIME).atLeastOnce()).notifyLocationUpdate(capture(locationCaptor))
 
         assertLocationsEqual(mockLocation, locationCaptor.value)
     }
 
+    @Test
+    fun stopSendingUpdatesAfterUnbindingService(){
+        //mock location
+        var mockLocation = createMockLocation()
+        service.getLocationProvider().setMockLocation(mockLocation).addOnFailureListener { throw it }
+
+        // verify that location updates are arriving in the first place
+        verify(mockCallbackInterface, after(LOCATION_UPDATE_WAIT_TIME).atLeastOnce()).notifyLocationUpdate(capture(locationCaptor))
+        serviceRule.unbindService()
+
+        //mock location
+        mockLocation = createMockLocation()
+        service.getLocationProvider().setMockLocation(mockLocation).addOnFailureListener { throw it }
+
+        // verify that location updates are no longer arriving
+        verify(mockCallbackInterface, after(LOCATION_UPDATE_WAIT_TIME).atMost(1)).notifyLocationUpdate(capture(locationCaptor))
+    }
 
     private fun assertLocationsEqual(mockedLocation : Location, returnedLocation : Location) {
         assertEquals(mockedLocation.latitude, returnedLocation.latitude, DOUBLE_COMPARE_DELTA)
