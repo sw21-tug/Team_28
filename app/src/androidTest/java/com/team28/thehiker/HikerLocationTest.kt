@@ -7,12 +7,11 @@ import android.os.SystemClock
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ServiceTestRule
-import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
@@ -21,6 +20,8 @@ import org.mockito.MockitoAnnotations
 
 @RunWith(AndroidJUnit4::class)
 class HikerLocationTest {
+
+    private val DOUBLE_COMPARE_DELTA = 0.0001
 
     @get:Rule
     var serviceRule = ServiceTestRule()
@@ -45,7 +46,6 @@ class HikerLocationTest {
         //add location callback
         service.addLocationCallback(mockCallbackInterface)
 
-        //TODO: maybe automatically set mock app via adb
         //enable mocking
         service.getLocationProvider().setMockMode(true).addOnFailureListener { throw it }
     }
@@ -69,6 +69,17 @@ class HikerLocationTest {
         verify(mockCallbackInterface, after(5000).atLeastOnce()).notifyLocationUpdate(capture(locationCaptor))
 
         //TODO: extend test to verify that object is the same
+        assertLocationsEqual(mockLocation, locationCaptor.value)
+    }
+
+
+    private fun assertLocationsEqual(mockedLocation : Location, returnedLocation : Location) {
+        assertEquals(mockedLocation.latitude, returnedLocation.latitude, DOUBLE_COMPARE_DELTA)
+        assertEquals(mockedLocation.longitude, returnedLocation.longitude, DOUBLE_COMPARE_DELTA)
+        assertEquals(mockedLocation.accuracy, returnedLocation.accuracy)
+        assertEquals(mockedLocation.altitude, returnedLocation.altitude, DOUBLE_COMPARE_DELTA)
+        assertEquals(mockedLocation.time, returnedLocation.time)
+        assertEquals(mockedLocation.elapsedRealtimeNanos, returnedLocation.elapsedRealtimeNanos)
     }
 
     private fun createMockLocation() : Location{
