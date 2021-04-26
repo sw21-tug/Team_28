@@ -8,9 +8,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import junit.framework.Assert.assertEquals
+import org.hamcrest.Matchers.not
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.concurrent.thread
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -36,5 +38,26 @@ class PedometerInstrumentedTests {
         onView(withId(R.id.txtViewSteps)).check(matches(isDisplayed()))
     }
 
+    @Test
+    fun stepCountDisplayed(){
+        Thread.sleep(2500)
+        onView(withId(R.id.txtViewSteps)).check(matches(not(withText("0"))))
+    }
+
+    @Test
+    fun stepCalculationCorrect(){
+        // faultback step calculation
+        // check if steps are calculated correctly
+    }
+
+    @Test
+    fun gpsDataAvailable(){
+        // check if gps data available to calculate steps
+    }
+
+    @Test
+    fun stepCountUpdatedRealtime(){
+        // check if step count is updated in real-time
+    }
 
 }
