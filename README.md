@@ -23,13 +23,13 @@
 
 
 The Hiker introduce a simple app that will be able to do several measurements for the user’s position and ambient, it will provide information about:
-⋅⋅* Altitude of the user
-⋅⋅* Speed of moving
-⋅⋅* Humidity
+* Altitude of the user
+* Speed of moving
+* Humidity
 Furthermore the user will be able to use features such:
-⋅⋅* Psition on the map 
-⋅⋅* Pedometer
-⋅⋅* SOS message
+* Psition on the map 
+* Pedometer
+* SOS message
 
 In long terms The Hiker app tries to provide a useful app that will rise the awareness of the user regarding its environment and provides information around users ambient.
 
