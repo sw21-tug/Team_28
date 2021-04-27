@@ -63,20 +63,16 @@ class FindMeActivity : AppCompatActivity(), OnMapReadyCallback {
         _map = map
         map.setMinZoomPreference(MAP_MIN_ZOOM)
         map.setMaxZoomPreference(MAP_MAX_ZOOM)
-        setMapPosition(47.0707, 15.4395)
+        //setMapPosition(47.0707, 15.4395)
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
             return
         }
-        map.setMyLocationEnabled(true);
-        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.setMyLocationEnabled(true)
+        map.getUiSettings().setMyLocationButtonEnabled(false)
     }
 
     override fun onPause() {
