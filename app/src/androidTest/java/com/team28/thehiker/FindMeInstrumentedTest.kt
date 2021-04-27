@@ -1,5 +1,6 @@
 package com.team28.thehiker
 
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -30,7 +31,14 @@ class FindMeInstrumentedTest {
     fun is_map_displayed_when_starting_main_activity_and_clicking_on_find_me_button() {
         onView(withId(R.id.btn_position_on_map)).perform(click())
         onView(withId(R.id.mapView)).check(matches(isDisplayed()))
+    }
 
+    @Test
+    fun return_from_findMe() {
+        onView(withId(R.id.btn_position_on_map)).perform(click())
+        onView(withId(R.id.mapView)).check(matches(isDisplayed()))
+        Espresso.pressBack()
+        onView(withId(R.id.btn_altitude)).check(matches(isClickable()))
     }
 
 }

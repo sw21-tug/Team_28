@@ -77,8 +77,6 @@ class FindMeActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         map.setMyLocationEnabled(true);
         map.getUiSettings().setMyLocationButtonEnabled(false);
-
-
     }
 
     override fun onPause() {

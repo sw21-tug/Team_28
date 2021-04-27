@@ -23,16 +23,4 @@ class FindMeTest {
         var return_value = test.setMapPosition(0.0, 0.0)
         assert(return_value == -1)
     }
-
-    @Test
-    fun setMapPositionWithMap()
-    {
-        val act_ = FindMeActivity()
-        //test.onCreate(null)
-        //var intent = act_.intent(this, FindMeActivity::class.java)
-        var return_value = act_.setMapPosition(0.0, 0.0)
-
-        assert(return_value == -1)
-    }
-
 }
