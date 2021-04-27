@@ -32,7 +32,7 @@ Furthermore the user will be able to use features such:
 * Pedometer
 * SOS message
 
-In long terms The Hiker app tries to provide a useful app that will rise the awareness of the user regarding its environment and provides information around users ambient.
+In long terms The Hiker app tries to provide a useful app that will rise the awareness of the user regarding its environment and provides information about users ambient.
 
 
 ![MobileApp1](https://user-images.githubusercontent.com/79966516/114615879-7ec0c980-9ca6-11eb-85ac-ba26860b4a15.PNG)
