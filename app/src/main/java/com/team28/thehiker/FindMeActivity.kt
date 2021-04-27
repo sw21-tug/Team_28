@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.MarkerOptions
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
  * requires forwarding all the important lifecycle methods onto MapView.
  */
-class position_on_map : AppCompatActivity(), OnMapReadyCallback {
+class FindMeActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var _map: GoogleMap
     private val MAP_MIN_ZOOM = 10f
@@ -19,7 +19,7 @@ class position_on_map : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_position_on_map)
+        setContentView(R.layout.activity_find_me)
 
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
@@ -29,6 +29,7 @@ class position_on_map : AppCompatActivity(), OnMapReadyCallback {
         mapView.onCreate(mapViewBundle)
         mapView.getMapAsync(this)
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
