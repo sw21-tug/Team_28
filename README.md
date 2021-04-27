@@ -26,6 +26,7 @@ The Hiker introduce a simple app that will be able to do several measurements fo
 * Altitude of the user
 * Speed of moving
 * Humidity
+
 Furthermore the user will be able to use features such:
 * Psition on the map 
 * Pedometer
