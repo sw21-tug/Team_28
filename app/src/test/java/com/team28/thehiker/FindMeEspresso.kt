@@ -1,5 +1,5 @@
 package com.team28.thehiker
-
+/*
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityInstrumentedTest {
+class FindMeEspresso {
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
@@ -27,25 +27,25 @@ class MainActivityInstrumentedTest {
     @Test
     fun button_altitude() {
         onView(withId(R.id.btn_altitude))
-            .check(matches(isClickable()))
+                .check(matches(isClickable()))
 
         onView(withId(R.id.btn_altitude))
-            .check(matches(withText("Altitude")))
+                .check(matches(withText("Altitude")))
     }
 
     @Test
     fun button_positionOnMap() {
         onView(withId(R.id.btn_position_on_map))
-            .check(matches(isClickable()))
+                .check(matches(isClickable()))
 
         onView(withId(R.id.btn_position_on_map))
-            .check(matches(withText("Find me")))
+                .check(matches(withText("Find me")))
     }
 
     @Test
     fun check_listview_containsItems() {
         onView(withId(R.id.scrollview_menu))
-            .check(matches(hasDescendant(withId(R.id.btn_altitude))))
+                .check(matches(hasDescendant(withId(R.id.btn_altitude))))
 
         onView(withId(R.id.scrollview_menu))
                 .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
@@ -54,7 +54,7 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_Altitude_correctActivityStarted() {
         onView(withId(R.id.btn_altitude))
-            .perform(click())
+                .perform(click())
 
         //TODO: this can be changed to real activities when implemented
         //Intents.intended(hasComponent(TestActivity::class.java.name), times(1))
@@ -63,7 +63,7 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_FindMe_correctActivityStarted() {
         onView(withId(R.id.btn_position_on_map))
-            .perform(click())
+                .perform(click())
 
         //TODO: this can be changed to real activities when implemented
         //Intents.intended(hasComponent(TestActivity::class.java.name), times(1))
@@ -73,4 +73,4 @@ class MainActivityInstrumentedTest {
     fun cleanUp() {
         //Intents.release()
     }
-}
+}*/
