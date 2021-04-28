@@ -17,6 +17,11 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class LocationAltitudeTest {
 
+    /**
+     * IMPORTANT: you need to set these apps as mock location provider
+     *      in the developer settings for these test cases to work!!!
+     */
+
     @get:Rule
     var activityRule = ActivityScenarioRule(AltitudeActivity::class.java)
 
