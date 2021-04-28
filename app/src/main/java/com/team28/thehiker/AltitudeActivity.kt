@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 
 class AltitudeActivity : AppCompatActivity() {
+    private lateinit var locationService : HikerLocationService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_altitude)
@@ -18,4 +19,5 @@ class AltitudeActivity : AppCompatActivity() {
 
     }
 
+    fun getLocationService() : HikerLocationService = locationService
 }
