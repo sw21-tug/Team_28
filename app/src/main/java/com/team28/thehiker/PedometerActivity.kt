@@ -16,4 +16,11 @@ class PedometerActivity  : AppCompatActivity() {
         setContentView(R.layout.activity_pedometer)
         supportActionBar?.hide()
     }
+
+    fun updateStepCounter (steps : Int){
+        val steps_text = findViewById<TextView>(R.id.txtViewSteps)
+        steps_text.text= steps.toString()
+    }
+
+
 }
