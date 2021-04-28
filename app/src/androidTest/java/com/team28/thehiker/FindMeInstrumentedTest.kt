@@ -28,12 +28,6 @@ class FindMeInstrumentedTest {
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
 
     @Test
-    fun is_map_displayed_when_starting_main_activity_and_clicking_on_find_me_button() {
-        onView(withId(R.id.btn_position_on_map)).perform(click())
-        onView(withId(R.id.mapView)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun return_from_findMe() {
         onView(withId(R.id.btn_position_on_map)).perform(click())
         onView(withId(R.id.mapView)).check(matches(isDisplayed()))
@@ -41,4 +35,11 @@ class FindMeInstrumentedTest {
         onView(withId(R.id.btn_altitude)).check(matches(isClickable()))
     }
 
+    @Test
+    fun all_views_visible() {
+        onView(withId(R.id.btn_position_on_map)).perform(click())
+        onView(withId(R.id.mapView)).check(matches(isDisplayed()))
+        onView(withId(R.id.my_location_string)).check(matches(isDisplayed()))
+        onView(withId(R.id.map_pic)).check(matches(isDisplayed()))
+    }
 }

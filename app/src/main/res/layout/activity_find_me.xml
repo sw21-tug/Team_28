@@ -9,15 +9,16 @@
     tools:context=".FindMeActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/map_pic"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
         android:background="#00FF0A"
+        android:contentDescription="Map logo"
         map:srcCompat="@android:drawable/ic_dialog_map" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName4"
+    <TextView
+        android:id="@+id/my_location_string"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
@@ -25,7 +26,7 @@
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
         android:inputType="textPersonName"
-        android:text="My location"
+        android:text="@string/my_location_label_text"
         android:textSize="70sp"
         android:textStyle="bold"
         android:typeface="sans" />
