@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".AltitudeActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
         <activity android:name=".TestActivity"></activity>
         <service
             android:name=".HikerLocationService"
@@ -33,12 +32,6 @@
         <activity
             android:name=".FindMeActivity"
             android:label="@string/title_activity_position_on_map"></activity>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"/>
     </application>
 </manifest>
