@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             R.id.btn_position_on_map -> {
                 intent = Intent(this, TestActivity::class.java)
             }
+            R.id.btn_pedometer -> {
+                intent = Intent(this, PedometerActivity::class.java)
+            }
             else -> {
                 intent = Intent(this, TestActivity::class.java)
             }

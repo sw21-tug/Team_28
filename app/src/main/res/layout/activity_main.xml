@@ -109,7 +109,7 @@
                     android:contentDescription="@string/pedo_meter_image" />
 
                 <Button
-                    android:id="@+id/btn_position_on_map2"
+                    android:id="@+id/btn_pedometer"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
