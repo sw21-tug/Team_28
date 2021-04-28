@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TheHiker</string>
+    <string name="app_title">The Hiker</string>
+    <string name="splashscreen_descriptor">cartoon_nature</string>
+    <string name="altitude_title">Your altitude:</string>
+    <string name="altitude_userinfo">*altitude above sea level is displayed in meters</string>
+    <string name="altitude">Altitude</string>
+    <string name="find_me">Find me</string>
+    <string name="pedometer">Pedometer</string>
+    <string name="main_menu_header_image">main menu header image</string>
+    <string name="title_activity_test">TestActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="pedo_meter_image">Pedo Meter Image</string>
 </resources>
