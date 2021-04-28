@@ -54,4 +54,12 @@ class MainActivity : AppCompatActivity() {
 
         startActivity(intent)
     }
+
+    fun getSavedLocalizationString() : String {
+        TODO("Not yet implemented")
+    }
+
+    fun setSavedLocalizationString(localization: String) {
+        TODO("Not yet implemented")
+    }
 }
