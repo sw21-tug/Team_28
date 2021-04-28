@@ -62,7 +62,7 @@ class MainActivityTest {
 
         val locString = mainActivity.getSavedLocalizationString()
 
-        verify(sharedPreferenceMock, times(1)).getLocalizationString()
+        verify(sharedPreferenceMock, times(1)).getLocalizationString(context.applicationContext)
         verify(sharedPrefs, times(1)).getString(Constants.SharedPreferenceConstants.LOCALIZATION, Constants.SharedPreferenceConstants.LOCALIZATION_DEFAULT)
 
         Assert.assertEquals(locString, Constants.SharedPreferenceConstants.LOCALIZATION_DEFAULT)
@@ -77,7 +77,7 @@ class MainActivityTest {
 
         mainActivity.setSavedLocalizationString(Constants.SharedPreferenceConstants.LOCALIZATION_RU)
 
-        verify(sharedPreferenceMock, times(1)).setLocalizationString(Constants.SharedPreferenceConstants.LOCALIZATION_RU)
+        verify(sharedPreferenceMock, times(1)).setLocalizationString(context.applicationContext, Constants.SharedPreferenceConstants.LOCALIZATION_RU)
         verify(sharedPrefs, times(1)).edit()
 
         verify(sharedPrefsEditor, times(1)).putString(Constants.SharedPreferenceConstants.LOCALIZATION, Constants.SharedPreferenceConstants.LOCALIZATION_RU)

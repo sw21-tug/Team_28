@@ -1,8 +1,10 @@
 package com.team28.thehiker.SharedPreferenceHandler
 
+import android.content.Context
+
 interface ISharedPreferenceHandler {
 
-    fun getLocalizationString() : String
+    fun getLocalizationString(context: Context) : String
 
-    fun setLocalizationString(localizationString: String)
+    fun setLocalizationString(context: Context, localizationString: String)
 }
