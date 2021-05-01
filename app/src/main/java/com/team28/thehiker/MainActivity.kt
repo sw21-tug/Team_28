@@ -6,13 +6,23 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.drawer_settings.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        toggle.isDrawerIndicatorEnabled = true
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
 
         checkPermissions(PermissionHandler())
     }
