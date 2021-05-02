@@ -21,5 +21,7 @@ class LanguageSelector {
 
             context.resources.updateConfiguration(config, context.resources.displayMetrics)
         }
+        fun setLocaleToEnglish(context: Context){
+        }
     }
 }

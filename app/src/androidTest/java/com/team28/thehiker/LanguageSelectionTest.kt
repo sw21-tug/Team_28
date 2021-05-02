@@ -15,7 +15,7 @@ class LanguageSelectionTest {
     var activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun testValueUpdateWithZero(){
+    fun testLanguageSwitchToRussian(){
 
         activityRule.scenario.onActivity {
             LanguageSelector.setLocaleToRussian(it)
@@ -25,5 +25,22 @@ class LanguageSelectionTest {
             Assert.assertEquals(it.getString(R.string.app_title),"Путешественник")
         }
     }
+
+    @Test
+    fun testLanguageSwitchToEnglish(){
+        activityRule.scenario.onActivity {
+            // before test
+            LanguageSelector.setLocaleToRussian(it)
+            Assert.assertEquals(it.getString(R.string.altitude),"высота")
+
+            // actual test
+            LanguageSelector.setLocaleToEnglish(it)
+
+            Assert.assertEquals(it.getString(R.string.altitude),"Altitude")
+            Assert.assertEquals(it.getString(R.string.find_me),"Find me")
+            Assert.assertEquals(it.getString(R.string.app_title),"The Hiker")
+        }
+    }
+
 
 }
