@@ -1,0 +1,29 @@
+package com.team28.thehiker
+
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.team28.thehiker.language.LanguageSelector
+import org.junit.Assert
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+
+@RunWith(AndroidJUnit4::class)
+class LanguageSelectionTest {
+
+    @get:Rule
+    var activityRule = ActivityScenarioRule(MainActivity::class.java)
+
+    @Test
+    fun testValueUpdateWithZero(){
+
+        activityRule.scenario.onActivity {
+            LanguageSelector.setLocaleToRussian(it)
+
+            Assert.assertEquals(it.getString(R.string.altitude),"высота")
+            Assert.assertEquals(it.getString(R.string.find_me),"Найди меня")
+            Assert.assertEquals(it.getString(R.string.app_title),"Путешественник")
+        }
+    }
+
+}
