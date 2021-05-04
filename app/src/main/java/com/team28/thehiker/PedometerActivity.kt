@@ -9,8 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 
-
-class PedometerActivity  : AppCompatActivity() {
+class PedometerActivity  : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pedometer)
@@ -20,6 +19,14 @@ class PedometerActivity  : AppCompatActivity() {
     fun updateStepCounter (steps : Int){
         val steps_text = findViewById<TextView>(R.id.txtViewSteps)
         steps_text.text= steps.toString()
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        TODO("Not yet implemented")
     }
 
 

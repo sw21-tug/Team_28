@@ -18,7 +18,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import android.hardware.Sensor
 import android.hardware.SensorEvent
-
+import org.mockito.Mock
+import org.mockito.Mockito
 
 
 /**
@@ -38,15 +39,15 @@ class PedometerInstrumentedTests {
     var activityRule: ActivityScenarioRule<PedometerActivity>
             = ActivityScenarioRule<PedometerActivity>(PedometerActivity::class.java)
 
-/*    @Mock
-    private lateinit var sensorManager: SensorManager
-
     @Mock
-    private  lateinit var packetManager : PackageManager
-*/
+    private var sensorManager:SensorManager? = null
+
+
     @Before
     fun setUp() {
         Intents.init()
+        activityRule.scenario.onActivity{sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
+                as SensorManager}
     }
 
     @Test
@@ -64,19 +65,40 @@ class PedometerInstrumentedTests {
 
     @Test
     fun callSensorTest(){
-        var sensorManager:SensorManager? = null
-        activityRule.scenario.onActivity{sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
-                as SensorManager}
-
-            var stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
-
-        if (stepSensor!=null){
-            activityRule.scenario.onActivity { it.onSensorChanged (SensorEvent) }
-        }
+        var stepSensor = getMockStepSensor()
+        var mockEvent = createMockStepEvent(54)
+        activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
+        onView(withId(R.id.txtViewSteps)).check(matches(withText(mockEvent.values[0].toString())))
     }
 
     @After
     fun cleanUp() {
         Intents.release()
     }
+
+    private fun getMockStepSensor() : Sensor {
+        val mockSensor : Sensor = Mockito.mock(Sensor::class.java)
+        Mockito.`when`(mockSensor.type).thenReturn(Sensor.TYPE_STEP_DETECTOR)
+        return mockSensor
+    }
+
+    private fun getMockNoStepSensor() : Sensor {
+        val mockSensor : Sensor = Mockito.mock(Sensor::class.java)
+        Mockito.`when`(mockSensor.type).thenReturn(null)
+        return mockSensor
+    }
+
+    private fun getTypeMotionDetectSensor() : Sensor {
+        val mockSensor : Sensor = Mockito.mock(Sensor::class.java)
+        Mockito.`when`(mockSensor.type).thenReturn(Sensor.TYPE_MOTION_DETECT)
+        return mockSensor
+    }
+
+    private fun createMockStepEvent(step: Int) : SensorEvent{
+        val mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
+        mockEvent.sensor = getTypeMotionDetectSensor()
+        Mockito.`when`(mockEvent.values[0]).thenReturn(step.toFloat())
+        return mockEvent
+    }
+
 }
