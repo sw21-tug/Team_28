@@ -22,7 +22,9 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        TODO("Not yet implemented")
+
+        updateStepCounter(event?.values?.get(0) as Int)
+
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
