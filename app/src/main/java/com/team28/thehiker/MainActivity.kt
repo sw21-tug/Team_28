@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
+import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,11 +56,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun getSavedLocalizationString() : String {
-        TODO("Not yet implemented")
+    fun getSavedLocalizationString() : String? {
+        return SharedPreferenceHandler().getLocalizationString(this)
     }
 
     fun setSavedLocalizationString(localization: String) {
-        TODO("Not yet implemented")
+        SharedPreferenceHandler().setLocalizationString(this, localization)
     }
 }
