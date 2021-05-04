@@ -6,19 +6,27 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
 import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var sharedPreferenceHandler : SharedPreferenceHandler
+    lateinit var permissionHandler : PermissionHandler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        checkPermissions(PermissionHandler())
+        sharedPreferenceHandler = SharedPreferenceHandler()
+        permissionHandler = PermissionHandler()
+
+        checkPermissions()
     }
 
-    fun checkPermissions(permissionHandler: PermissionHandler) {
+    fun checkPermissions() {
         if (!permissionHandler.permissionsAlreadyGranted(this)) {
             permissionHandler.askUserForPermissions(this)
         }
@@ -57,10 +65,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getSavedLocalizationString() : String? {
-        return SharedPreferenceHandler().getLocalizationString(this)
+        return sharedPreferenceHandler.getLocalizationString(this)
     }
 
     fun setSavedLocalizationString(localization: String) {
-        SharedPreferenceHandler().setLocalizationString(this, localization)
+        sharedPreferenceHandler.setLocalizationString(this, localization)
     }
 }
