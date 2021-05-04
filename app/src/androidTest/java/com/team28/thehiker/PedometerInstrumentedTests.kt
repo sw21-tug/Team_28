@@ -1,5 +1,6 @@
 package com.team28.thehiker
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.SensorManager
 import androidx.test.espresso.Espresso.onView
@@ -15,6 +16,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import android.hardware.Sensor
+import android.hardware.SensorEvent
 
 
 
@@ -57,6 +60,19 @@ class PedometerInstrumentedTests {
     fun AddSteps(){
         activityRule.scenario.onActivity { it.updateStepCounter(7) }
         onView(withId(R.id.txtViewSteps)).check(matches(withText("7")))
+    }
+
+    @Test
+    fun callSensorTest(){
+        var sensorManager:SensorManager? = null
+        activityRule.scenario.onActivity{sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
+                as SensorManager}
+
+            var stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
+
+        if (stepSensor!=null){
+            activityRule.scenario.onActivity { it.onSensorChanged (SensorEvent) }
+        }
     }
 
     @After
