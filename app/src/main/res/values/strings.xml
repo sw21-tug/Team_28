@@ -22,4 +22,6 @@
     <string name="language">Language</string>
     <string name="russian">Russian</string>
     <string name="english">English</string>
+    <string name="title_activity_position_on_map">Map</string>
+    <string name="my_location_label_text">My Location</string>
 </resources>
