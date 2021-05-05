@@ -10,8 +10,14 @@ import android.util.Log
 
 class TemperatureWrapper(private var sensorManager: SensorManager){
 
-    fun isTemperatureSensorAvailable() : Boolean{
-        return false
+    private val temperatureSensor : Sensor?
+
+    init {
+        temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
     }
 
+    fun isTemperatureSensorAvailable() : Boolean{
+
+        return temperatureSensor != null
+    }
 }
