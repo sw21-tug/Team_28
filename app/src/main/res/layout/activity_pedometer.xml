@@ -6,20 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/dividerPedometer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/iconPedometer"
         android:layout_width="229dp"
         android:layout_height="229dp"
         android:layout_marginStart="91dp"
         android:layout_marginLeft="91dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="91dp"
         android:layout_marginRight="91dp"
+        android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_directions_walk_24"
-        android:contentDescription="TODO"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
