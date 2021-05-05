@@ -22,9 +22,7 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-
-        updateStepCounter(event?.values?.get(0) as Int)
-
+        event?.values?.get(0)?.let { updateStepCounter(it.toInt()) }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {

@@ -1,7 +1,8 @@
 package com.team28.thehiker
 
 import android.content.Context
-import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
 import android.hardware.SensorManager
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -16,10 +17,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import android.hardware.Sensor
-import android.hardware.SensorEvent
 import org.mockito.Mock
 import org.mockito.Mockito
+import java.lang.reflect.Field
 
 
 /**
@@ -65,10 +65,9 @@ class PedometerInstrumentedTests {
 
     @Test
     fun callSensorTest(){
-        var stepSensor = getMockStepSensor()
         var mockEvent = createMockStepEvent(54)
         activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
-        onView(withId(R.id.txtViewSteps)).check(matches(withText(mockEvent.values[0].toString())))
+        onView(withId(R.id.txtViewSteps)).check(matches(withText((mockEvent.values[0].toInt()).toString())))
     }
 
     @After
@@ -94,10 +93,16 @@ class PedometerInstrumentedTests {
         return mockSensor
     }
 
-    private fun createMockStepEvent(step: Int) : SensorEvent{
-        val mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
-        mockEvent.sensor = getTypeMotionDetectSensor()
-        Mockito.`when`(mockEvent.values[0]).thenReturn(step.toFloat())
+    private fun createMockStepEvent(step : Int) : SensorEvent{
+        var mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
+        var float_array = FloatArray(3)
+
+        float_array[0] = step.toFloat()
+
+        val valuesField: Field = SensorEvent::class.java.getField("values")
+        valuesField.setAccessible(true)
+
+        valuesField.set(mockEvent, float_array)
         return mockEvent
     }
 
