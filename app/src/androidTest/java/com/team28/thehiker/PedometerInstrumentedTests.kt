@@ -65,9 +65,16 @@ class PedometerInstrumentedTests {
 
     @Test
     fun callSensorTest(){
-        var mockEvent = createMockStepEvent(54)
-        activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
-        onView(withId(R.id.txtViewSteps)).check(matches(withText((mockEvent.values[0].toInt()).toString())))
+        mockFiveSteps()
+        onView(withId(R.id.txtViewSteps)).check(matches(withText("5")))
+    }
+
+    private fun mockFiveSteps() {
+        var mockEvent  : SensorEvent = createMockStepEvent(1)
+        for(i in 1..5)
+        {
+            activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
+        }
     }
 
     @After
