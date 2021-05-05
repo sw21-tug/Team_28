@@ -4,6 +4,7 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorManager
+import android.os.SystemClock
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -20,6 +21,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import java.lang.reflect.Field
+import java.time.Clock
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 /**
@@ -42,12 +46,16 @@ class PedometerInstrumentedTests {
     @Mock
     private var sensorManager:SensorManager? = null
 
+    @Mock
+    private lateinit var midnight :LocalDateTime
+
 
     @Before
     fun setUp() {
         Intents.init()
         activityRule.scenario.onActivity{sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
                 as SensorManager}
+        midnight = LocalDate.now().atStartOfDay()
     }
 
     @Test
@@ -58,16 +66,27 @@ class PedometerInstrumentedTests {
     }
 
     @Test
-    fun AddSteps(){
+    fun viewSteps(){
         activityRule.scenario.onActivity { it.updateStepCounter(7) }
         onView(withId(R.id.txtViewSteps)).check(matches(withText("7")))
     }
 
     @Test
-    fun callSensorTest(){
+    fun callSensor(){
         mockFiveSteps()
         onView(withId(R.id.txtViewSteps)).check(matches(withText("5")))
     }
+
+    @Test
+    fun resetAfterMidnight()
+    {
+        mockFiveSteps()
+        mockFiveSteps()
+        onView(withId(R.id.txtViewSteps)).check(matches(withText("10")))
+        SystemClock.setCurrentTimeMillis(0)
+        onView(withId(R.id.txtViewSteps)).check(matches(withText("0")))
+    }
+
 
     private fun mockFiveSteps() {
         var mockEvent  : SensorEvent = createMockStepEvent(1)
