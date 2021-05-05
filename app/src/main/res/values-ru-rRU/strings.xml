@@ -14,4 +14,10 @@
     <string name="previous">Предыдущий</string>
     <string name="hello_first_fragment">Привет первый фрагмент</string>
     <string name="hello_second_fragment">Привет второй фрагмент. Аргумент:%1$s</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="settings">Настройки</string>
+    <string name="language">Язык</string>
+    <string name="russian">русский</string>
+    <string name="english">английский</string>
 </resources>
