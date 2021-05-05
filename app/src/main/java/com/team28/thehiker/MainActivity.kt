@@ -79,32 +79,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.english) {
-            // TODO:
-            Log.d("TEST", "switch to english")
-
-        }
-        if (item.itemId == R.id.russian) {
-            // TODO:
-            Log.d("TEST", "switch to russian")
-
-        }
         if (item.itemId == R.id.language) {
-            val popupMenu = PopupMenu(this, drawer_menu)
-
+            val popupMenu = PopupMenu(this, findViewById(R.id.language))
             popupMenu.menuInflater.inflate(R.menu.popup_menu_language, popupMenu.menu)
-            Log.d("TEST", "PopUpMenu")
+
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when(item.itemId) {
-                    R.id.popup_russian ->
-                        Log.d("TEST", "PopUpMenu Russian")
-                    R.id.popup_english ->
-                        Log.d("TEST", "PopUpMenu English")
+                    // TODO: switch to russian
+                    // R.id.popup_russian ->
 
+                    // TODO: switch to english
+                    //R.id.popup_english ->
                 }
                 true
             })
-
             popupMenu.show()
         }
         return true

@@ -28,11 +28,11 @@ class NavigationDrawerTest {
     @Test
     fun open_and_close_navigation_drawer()
     {
-        onView(withId(R.id.english)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.language)).check(matches(not(isDisplayed())))
         onView(withId(R.id.drawerLayout)).perform(DrawerActions.open())
-        onView(withId(R.id.english)).check(matches(isDisplayed()))
+        onView(withId(R.id.language)).check(matches(isDisplayed()))
         onView(withId(R.id.drawerLayout)).perform(DrawerActions.close())
-        onView(withId(R.id.english)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.language)).check(matches(not(isDisplayed())))
     }
 
     @After
