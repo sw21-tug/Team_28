@@ -5,21 +5,22 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.internal.NavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
+import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_settings.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var sharedPreferenceHandler : SharedPreferenceHandler
+    lateinit var permissionHandler : PermissionHandler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawer_settings)
@@ -33,10 +34,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_menu.setNavigationItemSelectedListener(this)
 
-        checkPermissions(PermissionHandler())
+        sharedPreferenceHandler = SharedPreferenceHandler()
+        permissionHandler = PermissionHandler()
+
+        checkPermissions()
     }
 
-    fun checkPermissions(permissionHandler: PermissionHandler) {
+    fun checkPermissions() {
         if (!permissionHandler.permissionsAlreadyGranted(this)) {
             permissionHandler.askUserForPermissions(this)
         }
@@ -97,4 +101,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         return true
     }
+
+    fun getSavedLocalizationString() : String? {
+        return sharedPreferenceHandler.getLocalizationString(this)
+    }
+
+    fun setSavedLocalizationString(localization: String) {
+        sharedPreferenceHandler.setLocalizationString(this, localization)
+    }
 }
+

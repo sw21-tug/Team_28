@@ -3,5 +3,5 @@
 
     <item
         android:id="@+id/language"
-        android:title="Language" />
+        android:title="@string/language" />
 </menu>

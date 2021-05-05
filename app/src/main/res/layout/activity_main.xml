@@ -56,7 +56,7 @@
                     app:srcCompat="@drawable/ic_altitude"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/altitude"
-                    app:tint="@color/white"/>
+                    app:tint="@color/primary"/>
 
                 <Button
                     android:id="@+id/btn_altitude"
@@ -82,7 +82,7 @@
                     app:srcCompat="@drawable/ic_map"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/find_me"
-                    app:tint="@color/white"/>
+                    app:tint="@color/primary"/>
 
                 <Button
                     android:id="@+id/btn_position_on_map"
