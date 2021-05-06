@@ -31,6 +31,7 @@ Furthermore the user will be able to use features such:
 * Psition on the map 
 * Pedometer
 * SOS message
+* Dual language support (English & Russian)
 
 In long terms The Hiker app tries to provide a useful app that will rise the awareness of the user regarding its environment and provides information about users ambient.
 
@@ -41,3 +42,7 @@ In long terms The Hiker app tries to provide a useful app that will rise the awa
 ---
 
 ### Implemented features
+
+* Altitude of the user
+* Position on map
+* Dual language support (English & Russian)
