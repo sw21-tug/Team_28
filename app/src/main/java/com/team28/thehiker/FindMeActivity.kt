@@ -9,6 +9,7 @@ import android.location.LocationProvider
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
@@ -80,8 +81,11 @@ class FindMeActivity : AppCompatActivity(), OnMapReadyCallback {
         val loc = LocationServices.getFusedLocationProviderClient(this).lastLocation
 
         loc.addOnSuccessListener {
-            map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(loc.result.latitude,
+            val locationResult : Location? = loc.result
+            if(locationResult != null){
+                map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(loc.result.latitude,
                     loc.result.longitude)))
+            }
         }
     }
 
