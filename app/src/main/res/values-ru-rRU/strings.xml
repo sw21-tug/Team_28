@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Путешественник</string>
-    <string name="app_title">Путешественник</string>
     <string name="splashscreen_descriptor">мультфильм _природа</string>
     <string name="altitude_title">Ваша высота:</string>
     <string name="altitude_userinfo">* высота над уровнем моря отображается в метрах</string>
@@ -20,4 +18,7 @@
     <string name="language">Язык</string>
     <string name="russian">русский</string>
     <string name="english">английский</string>
+    <string name="title_activity_position_on_map">карта</string>
+    <string name="my_location_label_text">Мое местонахождение</string>
+    <string name="meters">м</string>
 </resources>

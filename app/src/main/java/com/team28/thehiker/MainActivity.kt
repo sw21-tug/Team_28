@@ -13,6 +13,7 @@ import com.google.android.material.navigation.NavigationView
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
 import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import com.team28.thehiker.language.LanguageSelector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_settings.*
 
@@ -89,11 +90,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when(item.itemId) {
-                    // TODO: switch to russian
-                    // R.id.popup_russian ->
+                    R.id.popup_russian -> {
+                        LanguageSelector.setLocaleToRussian(this)
+                        setSavedLocalizationString("ru")
+                        recreate()
+                    }
 
-                    // TODO: switch to english
-                    //R.id.popup_english ->
+                    R.id.popup_english -> {
+                        LanguageSelector.setLocaleToEnglish(this)
+                        setSavedLocalizationString("en")
+                        recreate()
+                    }
                 }
                 true
             })

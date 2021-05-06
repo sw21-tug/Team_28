@@ -6,12 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import androidx.annotation.RequiresApi
+import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
 import com.team28.thehiker.language.LanguageSelector
 
 class SplashscreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //LanguageSelector.setLocaleToRussian(this)
+
+        val language = SharedPreferenceHandler().getLocalizationString(this)
+        if (language.equals("ru")){
+            LanguageSelector.setLocaleToRussian(this)
+        }else{
+            LanguageSelector.setLocaleToEnglish(this)
+        }
+
         setContentView(R.layout.activity_splashscreen)
 
         supportActionBar?.hide()

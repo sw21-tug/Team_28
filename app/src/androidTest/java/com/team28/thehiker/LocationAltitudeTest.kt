@@ -20,6 +20,7 @@ class LocationAltitudeTest {
     /**
      * IMPORTANT: you need to set these apps as mock location provider
      *      in the developer settings for these test cases to work!!!
+     *      e.g. enable Developer Settings -> enter them -> find mock location provider setting under debugging
      */
 
     @get:Rule
