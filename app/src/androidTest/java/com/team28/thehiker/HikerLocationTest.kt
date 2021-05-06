@@ -27,6 +27,9 @@ class HikerLocationTest {
      * IMPORTANT: you need to set this app as mock location provider
      *      in the developer settings for these test cases to work!!!
      *      e.g. enable Developer Settings -> enter them -> find mock location provider setting under debugging
+     *
+     *      ALSO IMPORTANT: don't forget to set the mock location provider to None afterwards!!!
+     *      Otherwise the app won't work normally
      */
 
     private val DOUBLE_COMPARE_DELTA = 0.0001
