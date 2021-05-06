@@ -30,12 +30,13 @@ The Hiker introduce a simple app that will be able to show several statistics fo
 
 ---
 
-### Implemented Features
+### Remarks to test our App:
 
-| **Ticket**        | **Description** |
-| ------------- |:-------------: |
-| [The Hiker] [#3](https://github.com/sw21-tug/Team_28/issues/3) | Main Screen: shows a picture of the nature and contains the functions of the
-| [The Hiker] [#2](https://github.com/sw21-tug/Team_28/issues/2) | Splashscreen
-| [The Hiker] [#17](https://github.com/sw21-tug/Team_28/issues/17) | Altitude Backend: Hiker location
+* Please enable developer settings
+* Set this App as Mock Location Provider: Systems -> Advanced -> Developer Options -> Debugging -> Select Mock Location App 
+* Set it to None afterwards for a correct behavior of the App
 
+### Known Limitations for Release 1:
 
+* On the real device the LanguageIntegrationTests are failing. But the App shows the correct selected language, also on the real device. So the tests are failing but the Apps language behaviour is correct. (In the Simulator everything works correct.)
+* This issue will be handled in the next Release.
