@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 import android.app.ActivityManager
 import android.content.Context
+import android.util.Log
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
@@ -19,6 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.lang.StringBuilder
+import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class LanguageIntegrationTest {
@@ -59,10 +61,13 @@ class LanguageIntegrationTest {
         }
     }
 
-    fun switchLanguage(languageStringID : Int, sharedPreferenceTag : String, languageTag : String) {
+    private fun switchLanguage(languageStringID : Int, sharedPreferenceTag : String, languageTag : String) {
         onView(withId(R.id.drawerLayout)).perform(DrawerActions.open())
         onView(withId(R.id.language)).perform(ViewActions.click())
         onView(withText(languageStringID)).inRoot(RootMatchers.isPlatformPopup()).perform(ViewActions.click())
+
+        //wait for the ui to update
+        Thread.sleep(1000)
 
         lateinit var altitudeLabel : String
         lateinit var findMeLabel : String
