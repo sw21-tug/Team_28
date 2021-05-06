@@ -67,7 +67,7 @@ class LanguageIntegrationTest {
         onView(withText(languageStringID)).inRoot(RootMatchers.isPlatformPopup()).perform(ViewActions.click())
 
         //wait for the ui to update
-        Thread.sleep(1000)
+        Thread.sleep(2000)
 
         lateinit var altitudeLabel : String
         lateinit var findMeLabel : String
