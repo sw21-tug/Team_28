@@ -6,14 +6,17 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationProvider
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.util.*
 
 /**
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
@@ -27,6 +30,12 @@ class FindMeActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_me)
+
+        if(isRussian()){
+            val titleTextView : TextView = findViewById(R.id.my_location_string)
+            titleTextView.textSize = 35.0f
+            titleTextView.invalidate()
+        }
 
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
@@ -93,5 +102,12 @@ class FindMeActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
+    }
+
+    private fun isRussian() : Boolean{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return resources.configuration.locales[0].toLanguageTag().equals("ru-RU")
+        }
+        return resources.configuration.locale.language.equals(Locale("ru").language)
     }
 }

@@ -38,6 +38,7 @@ class LanguageIntegrationTest {
 
     @Test
     fun checkLanguageSwitchPersistsAppRestart(){
+        //ensure app is in russian language
         switchLanguage(R.string.russian, "ru", "ru-RU")
 
         //close the app
