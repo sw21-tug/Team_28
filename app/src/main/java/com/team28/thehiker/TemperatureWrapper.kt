@@ -8,7 +8,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.util.Log
 
-class TemperatureWrapper(private var sensorManager: SensorManager){
+open class TemperatureWrapper(private var sensorManager: SensorManager){
 
     private val temperatureSensor : Sensor?
 
@@ -16,7 +16,7 @@ class TemperatureWrapper(private var sensorManager: SensorManager){
         temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
     }
 
-    fun isTemperatureSensorAvailable() : Boolean{
+    open fun isTemperatureSensorAvailable() : Boolean{
 
         return temperatureSensor != null
     }

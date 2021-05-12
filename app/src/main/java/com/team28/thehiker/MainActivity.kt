@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
+    lateinit var temperatureWrapper :TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

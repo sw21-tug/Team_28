@@ -1,23 +1,32 @@
 package com.team28.thehiker
 
+import android.hardware.Sensor
+import android.hardware.SensorManager
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.times
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import com.team28.thehiker.Permissions.PermissionHandler
+import org.hamcrest.CoreMatchers.not
+import org.junit.*
 import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito
 
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityInstrumentedTest {
+
+    @Mock
+    var tempWrapper = Mockito.mock(TemperatureWrapper::class.java)
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
@@ -74,5 +83,39 @@ class MainActivityInstrumentedTest {
     @After
     fun cleanUp() {
         Intents.release()
+    }
+
+    @Test
+    fun buttonTemperatureIsAvailable() {
+
+
+        Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(true)
+        activityRule.scenario.onActivity {
+            it.temperatureWrapper = tempWrapper
+        }
+
+        onView(withId(R.id.btn_temperature))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.btn_temperature))
+            .check(matches(isClickable()))
+
+
+        onView(withId(R.id.btn_temperature))
+            .check(matches(withText("Temperature")))
+    }
+
+    @Test
+    fun button_TemperatureIsNotAvailable() {
+
+
+        Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(false)
+        activityRule.scenario.onActivity {
+            it.temperatureWrapper = tempWrapper
+        }
+
+        onView(withId(R.id.btn_temperature))
+            .check(matches(not(isDisplayed())))
+
     }
 }

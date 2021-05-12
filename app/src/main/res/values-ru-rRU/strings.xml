@@ -14,4 +14,5 @@
     <string name="previous">Предыдущий</string>
     <string name="hello_first_fragment">Привет первый фрагмент</string>
     <string name="hello_second_fragment">Привет второй фрагмент. Аргумент:%1$s</string>
+    <string name="temperature">Температура</string>
 </resources>
