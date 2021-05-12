@@ -81,7 +81,7 @@ class MainActivityInstrumentedTest {
             .perform(click())
 
         //TODO: this can be changed to real activities when implemented
-        Intents.intended(hasComponent(TestActivity::class.java.name), times(1))
+        Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
     }
 
     @Test

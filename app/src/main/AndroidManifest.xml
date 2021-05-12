@@ -19,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
      <activity android:name=".PedometerActivity"></activity>
         <activity android:name=".AltitudeActivity"></activity>
         <activity android:name=".MainActivity"></activity>
@@ -26,7 +27,14 @@
         <service
             android:name=".HikerLocationService"
             android:enabled="true"
-            android:foregroundServiceType="location" ></service>
+            android:foregroundServiceType="location" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <activity
+            android:name=".FindMeActivity"
+            android:label="@string/title_activity_position_on_map"/>
     </application>
 
 </manifest>

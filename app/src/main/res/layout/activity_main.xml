@@ -8,14 +8,15 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/main_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/main_menu_header_image"
         android:scaleType="center"
         android:src="@drawable/main_menu_header"
         app:layout_constraintBottom_toTopOf="@id/divideHomeScreenGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/main_menu_header_image" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/divideHomeScreenGuideline"
@@ -55,7 +56,7 @@
                     app:srcCompat="@drawable/ic_altitude"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/altitude"
-                    app:tint="@color/white"/>
+                    app:tint="@color/primary"/>
 
                 <Button
                     android:id="@+id/btn_altitude"
@@ -81,7 +82,7 @@
                     app:srcCompat="@drawable/ic_map"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/find_me"
-                    app:tint="@color/white"/>
+                    app:tint="@color/primary"/>
 
                 <Button
                     android:id="@+id/btn_position_on_map"
@@ -121,5 +122,16 @@
 
     </ScrollView>
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0024DA17"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
