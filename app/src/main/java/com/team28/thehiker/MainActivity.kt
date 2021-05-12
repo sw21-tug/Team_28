@@ -3,9 +3,12 @@ package com.team28.thehiker
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Visibility
 import android.view.View
+import android.widget.Button
 import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
@@ -23,6 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         sharedPreferenceHandler = SharedPreferenceHandler()
         permissionHandler = PermissionHandler()
+
+        val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        temperatureWrapper = TemperatureWrapper(sensorManager)
+
+        decidedButtonsShown()
 
         checkPermissions()
     }
@@ -71,5 +79,17 @@ class MainActivity : AppCompatActivity() {
 
     fun setSavedLocalizationString(localization: String) {
         sharedPreferenceHandler.setLocalizationString(this, localization)
+    }
+
+    fun decidedButtonsShown(){
+        //decide whether to show the temperature button
+        val temperatureButton : Button = findViewById(R.id.btn_temperature)
+        if(temperatureWrapper.isTemperatureSensorAvailable()){
+            temperatureButton.visibility = View.VISIBLE
+        }else{
+            temperatureButton.visibility = View.GONE
+        }
+
+        temperatureButton.invalidate()
     }
 }

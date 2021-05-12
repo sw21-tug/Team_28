@@ -92,6 +92,7 @@ class MainActivityInstrumentedTest {
         Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(true)
         activityRule.scenario.onActivity {
             it.temperatureWrapper = tempWrapper
+            it.decidedButtonsShown()
         }
 
         onView(withId(R.id.btn_temperature))
@@ -107,11 +108,10 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun button_TemperatureIsNotAvailable() {
-
-
         Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(false)
         activityRule.scenario.onActivity {
             it.temperatureWrapper = tempWrapper
+            it.decidedButtonsShown()
         }
 
         onView(withId(R.id.btn_temperature))
