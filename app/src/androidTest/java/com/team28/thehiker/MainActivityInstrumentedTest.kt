@@ -1,21 +1,17 @@
 package com.team28.thehiker
 
-import android.hardware.Sensor
-import android.hardware.SensorManager
-import androidx.test.espresso.Espresso
+import android.os.Bundle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.times
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.team28.thehiker.Permissions.PermissionHandler
 import org.hamcrest.CoreMatchers.not
+import org.junit.Assert.*
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -24,6 +20,9 @@ import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityInstrumentedTest {
+
+    private val TEMP_KEY = "TEMPERATURE"
+    private val TEMP_TEST_VALUE = 22.2
 
     @Mock
     var tempWrapper = Mockito.mock(TemperatureWrapper::class.java)
@@ -87,8 +86,6 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun buttonTemperatureIsAvailable() {
-
-
         Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(true)
         activityRule.scenario.onActivity {
             it.temperatureWrapper = tempWrapper
@@ -116,6 +113,37 @@ class MainActivityInstrumentedTest {
 
         onView(withId(R.id.btn_temperature))
             .check(matches(not(isDisplayed())))
-
     }
+
+    @Test
+    fun buttonTemperatureCorrectIntent() {
+        Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(true)
+        Mockito.`when`(tempWrapper.getTemperature()).thenReturn(TEMP_TEST_VALUE)
+        activityRule.scenario.onActivity {
+            it.temperatureWrapper = tempWrapper
+            it.decidedButtonsShown()
+        }
+
+        onView(withId(R.id.btn_temperature))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.btn_temperature)).perform(click())
+
+        Intents.intended(hasComponent(TemperatureActivity::class.java.name), times(1))
+        var intentFound : Boolean = false;
+        Intents.getIntents().forEach {
+            if(it.component != null && it.component!!.equals(TemperatureActivity::class.java.name)){
+                intentFound = true;
+                validateTemperatureExtras(it.extras)
+            }
+        }
+        assert(intentFound)
+    }
+
+    private fun validateTemperatureExtras(extras : Bundle?){
+        assertNotNull(extras)
+        assert(extras!!.containsKey(TEMP_KEY))
+        assert(extras.getDouble(TEMP_KEY).equals(TEMP_TEST_VALUE))
+    }
+
 }

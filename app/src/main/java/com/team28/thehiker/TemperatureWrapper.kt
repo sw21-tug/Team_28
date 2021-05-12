@@ -20,4 +20,8 @@ open class TemperatureWrapper(private var sensorManager: SensorManager){
 
         return temperatureSensor != null
     }
+
+    open fun getTemperature() : Double?{
+        return null
+    }
 }
