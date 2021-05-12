@@ -13,10 +13,11 @@
         android:layout_marginTop="32dp"
         android:minWidth="200sp"
         android:minHeight="200sp"
-        android:src="@drawable/ic_arrow"
+        android:src="@drawable/ic_altitude"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/primary" />
 
     <TextView
         android:layout_width="match_parent"

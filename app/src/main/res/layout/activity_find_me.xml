@@ -13,20 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
-        android:background="#00FF0A"
-        android:contentDescription="Map logo"
-        map:srcCompat="@android:drawable/ic_dialog_map" />
+        android:background="@color/primary"
+        android:contentDescription="@string/map_logo"
+        map:srcCompat="@drawable/ic_map"
+        map:tint="@color/white"
+        tools:ignore="VectorDrawableCompat" />
 
     <TextView
         android:id="@+id/my_location_string"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
-        android:background="#00FF0A"
+        android:background="@color/primary"
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
         android:inputType="textPersonName"
         android:text="@string/my_location_label_text"
+        android:textColor="@color/white"
         android:textSize="70sp"
         android:textStyle="bold"
         android:typeface="sans" />

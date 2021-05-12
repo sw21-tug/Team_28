@@ -23,20 +23,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:background="#6db594"
+        android:background="@color/primary"
         android:elegantTextHeight="true"
         android:ems="10"
         android:gravity="center"
+        android:importantForAutofill="no"
         android:text="@string/app_title"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="48sp"
         android:textStyle="bold"
-        android:visibility="visible"
 
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewSplashscreen"
-        android:importantForAutofill="no"
-        tools:targetApi="lollipop"
-        />
+        tools:targetApi="lollipop" />
 </androidx.constraintlayout.widget.ConstraintLayout>

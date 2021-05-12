@@ -25,4 +25,5 @@
     <string name="title_activity_position_on_map">Map</string>
     <string name="my_location_label_text">My Location</string>
     <string name="meters">m</string>
+    <string name="map_logo">Map logo</string>
 </resources>

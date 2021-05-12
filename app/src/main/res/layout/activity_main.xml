@@ -60,9 +60,10 @@
 
                 <Button
                     android:id="@+id/btn_altitude"
-                    android:text="@string/altitude"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
-                    android:onClick="navigateTo"/>
+                    android:onClick="navigateTo"
+                    android:text="@string/altitude"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -86,9 +87,10 @@
 
                 <Button
                     android:id="@+id/btn_position_on_map"
-                    android:text="@string/find_me"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
-                    android:onClick="navigateTo"/>
+                    android:onClick="navigateTo"
+                    android:text="@string/find_me"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
         </LinearLayout>
