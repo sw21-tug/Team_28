@@ -1,5 +1,6 @@
 package com.team28.thehiker
 
+import android.widget.Button
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -69,6 +70,11 @@ class MainActivityInstrumentedTest {
 
         //TODO: this can be changed to real activities when implemented
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
+    }
+
+    @Test
+    fun check_correctColors() {
+      // onView(withId(R.id.btn_altitude)).check(matches(with(R.color.primary)))
     }
 
     @After
