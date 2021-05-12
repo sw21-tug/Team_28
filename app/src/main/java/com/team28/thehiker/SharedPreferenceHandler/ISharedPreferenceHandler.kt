@@ -14,8 +14,8 @@ interface ISharedPreferenceHandler {
 
     fun setSavedStepCount(context: Activity, numberOfSteps : Int)
 
-    fun getLastStepCountUpdate(context: Activity) : LocalDate
+    fun getLastStepCountUpdate(context: Activity) : String?
 
-    fun setLastStepCountUpdate(context: Activity, lastStepUpdate: LocalDate)
+    fun setLastStepCountUpdate(context: Activity, lastStepUpdate: String)
 
 }

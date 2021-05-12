@@ -5,6 +5,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import java.time.LocalDate
+import java.util.*
 
 class PedometerActivityTest {
 
@@ -46,10 +47,11 @@ class PedometerActivityTest {
         val pedometerActivity = PedometerActivity()
 
         pedometerActivity.sharedPreferenceHandler = sharedPreferenceMock
-        val date = LocalDate.now()
-        pedometerActivity.setLastStepCountUpdate(date)
+        val calendar = Calendar.getInstance()
+
+        pedometerActivity.setLastStepCountUpdate(calendar)
 
         Mockito.verify(sharedPreferenceMock, Mockito.times(1))
-            .setLastStepCountUpdate(pedometerActivity, date)
+            .setLastStepCountUpdate(pedometerActivity, calendar.time.toString())
     }
 }

@@ -6,6 +6,8 @@ class Constants {
     }
 
     object SharedPreferenceConstants {
+        const val LOCAL_DATE: String = "date"
+        const val STEP_COUNT: String = "Step Count"
         const val LOCALIZATION_DEFAULT = "en"
         const val LOCALIZATION = "Localization"
 
