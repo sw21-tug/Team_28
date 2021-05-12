@@ -3,6 +3,7 @@ package com.team28.thehiker.SharedPreferenceHandler
 import android.app.Activity
 import android.content.Context
 import com.team28.thehiker.Constants.Constants
+import java.time.LocalDate
 
 class SharedPreferenceHandler : ISharedPreferenceHandler {
 
@@ -17,6 +18,22 @@ class SharedPreferenceHandler : ISharedPreferenceHandler {
             putString(Constants.SharedPreferenceConstants.LOCALIZATION, localizationString)
             apply()
         }
+    }
+
+    override fun getSavedStepCount(context: Activity): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun setSavedStepCount(context: Activity, numberOfSteps: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLastStepCountUpdate(context: Activity): LocalDate {
+        TODO("Not yet implemented")
+    }
+
+    override fun setLastStepCountUpdate(context: Activity, lastStepUpdate: LocalDate) {
+        TODO("Not yet implemented")
     }
 
 }

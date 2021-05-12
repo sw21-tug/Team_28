@@ -14,14 +14,20 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
+import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
 import kotlinx.coroutines.Delay
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 class PedometerActivity  : AppCompatActivity(), SensorEventListener {
+
+    lateinit var sharedPreferenceHandler : SharedPreferenceHandler
+
     private lateinit var sensorManager : SensorManager
     private lateinit var stepSensor : Sensor
     private var sensorPresent : Boolean = false
-    private var stepsTaken : Int = 0
+    var stepsTaken : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +83,21 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         this.stepsTaken = 0
     }
 
+    fun getSavedStepCount() : Int {
+        TODO("Not yet implemented")
+    }
+
+    fun setSavedStepCount() {
+        TODO("Not yet implemented")
+    }
+
+    fun getLastStepCountUpdate() : LocalDate {
+        TODO("Not yet implemented")
+    }
+
+    fun setLastStepCountUpdate(dateTime : LocalDate) {
+        TODO("Not yet implemented")
+    }
 
     private class  ResetAlarm : BroadcastReceiver() {
         override fun onReceive(
