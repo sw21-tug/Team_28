@@ -1,6 +1,10 @@
 package com.team28.thehiker
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -53,6 +57,34 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
 
+    }
+
+    private fun setAlarm(timeInMillieSeconds : Long)
+    {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, ResetAlarm::class.java)
+        val resetStepsIntent = PendingIntent.getBroadcast(this, 0, intent,0)
+        alarmManager.setRepeating(
+            AlarmManager.RTC,
+            timeInMillieSeconds,
+            AlarmManager.INTERVAL_DAY,
+            resetStepsIntent
+        )
+    }
+
+    public fun resetSteps()
+    {
+        this.stepsTaken = 0
+    }
+
+
+    private class  ResetAlarm : BroadcastReceiver() {
+        override fun onReceive(
+            context: Context,
+            intent: Intent
+        ) {
+
+        }
     }
 
 }
