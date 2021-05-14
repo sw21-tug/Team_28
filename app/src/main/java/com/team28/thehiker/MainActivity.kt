@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
+    lateinit var humidityWrapper: HumidityWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         sharedPreferenceHandler = SharedPreferenceHandler()
         permissionHandler = PermissionHandler()
+
 
         checkPermissions()
     }
@@ -75,6 +77,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.btn_position_on_map -> {
                 intent = Intent(this, FindMeActivity::class.java)
             }
+            R.id.btn_humidity -> {
+                intent = Intent(this, HumidityActivity::class.java)
+            }
             else -> {
                 intent = Intent(this, TestActivity::class.java)
             }
@@ -107,6 +112,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             popupMenu.show()
         }
         return true
+    }
+    fun decidedButtonHumidityShown(){
+
     }
 
     fun getSavedLocalizationString() : String? {

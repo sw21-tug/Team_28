@@ -14,10 +14,15 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.hamcrest.CoreMatchers.not
 
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityInstrumentedTest {
+    @Mock
+    var humWrapper = Mockito.mock(HumidityWrapper::class.java)
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
@@ -79,6 +84,43 @@ class MainActivityInstrumentedTest {
         //TODO: this can be changed to real activities when implemented
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
     }
+
+    @Test
+    fun onButtonClick_Humidity_correctActivityStarted() {
+        onView(withId(R.id.btn_humidity))
+            .perform(click())
+
+        Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
+    }
+
+    @Test
+    fun button_HumidityIsNotAvailable() {
+        Mockito.`when`(humWrapper.isHumiditySensorAvailable()).thenReturn(false)
+        activityRule.scenario.onActivity {
+            it.humidityWrapper = humWrapper
+            it.decidedButtonHumidityShown()
+        }
+
+        onView(withId(R.id.btn_humidity))
+            .check(matches(not(isDisplayed())))
+
+    }
+    @Test
+    fun buttonHumidityStartsCorrectActivity(){
+        Mockito.`when`(humWrapper.isHumiditySensorAvailable()).thenReturn(true)
+        activityRule.scenario.onActivity {
+            it.humidityWrapper = humWrapper
+            it.decidedButtonHumidityShown()
+        }
+
+        onView(withId(R.id.btn_humidity))
+            .perform(click())
+
+        Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
+
+    }
+
+
 
     @After
     fun cleanUp() {
