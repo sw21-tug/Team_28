@@ -3,7 +3,8 @@
     <string name="splashscreen_descriptor">мультфильм _природа</string>
     <string name="humidity_title">Влажность</string>
     <string name="altitude_title">Ваша высота:</string>
-    <string name="altitude_userinfo">* высота над уровнем моря отображается в метрах</string>
+    <string name="altitude_userinfo">*высота над уровнем моря отображается в метрах</string>
+    <string name="humidity_userinfo">*относительная влажность в процентах</string>
     <string name="altitude">высота</string>
     <string name="find_me">Найди меня</string>
     <string name="main_menu_header_image">изображение заголовка главного меню</string>

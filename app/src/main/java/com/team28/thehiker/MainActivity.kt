@@ -3,10 +3,12 @@ package com.team28.thehiker
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
@@ -39,6 +41,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler = SharedPreferenceHandler()
         permissionHandler = PermissionHandler()
 
+        val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        humidityWrapper = HumidityWrapper(sensorManager)
+        decidedButtonHumidityShown()
 
         checkPermissions()
     }
@@ -113,8 +118,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         return true
     }
-    fun decidedButtonHumidityShown(){
 
+    fun decidedButtonHumidityShown(){
+        //decide whether to show the humidity button
+        val humidityButton : Button = findViewById(R.id.btn_humidity)
+        if(humidityWrapper.isHumiditySensorAvailable()){
+            humidityButton.visibility = View.VISIBLE
+        }else{
+            humidityButton.visibility = View.GONE
+        }
+
+        humidityButton.invalidate()
     }
 
     fun getSavedLocalizationString() : String? {
