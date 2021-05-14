@@ -21,9 +21,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import java.lang.reflect.Field
-import java.time.Clock
-import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.*
 
 
 /**
@@ -47,7 +45,10 @@ class PedometerInstrumentedTests {
     private var sensorManager:SensorManager? = null
 
     @Mock
-    private lateinit var midnight :LocalDateTime
+    private var day : Long =  LocalDateTime.of(2000,1,1,10,10,10,0).
+    toEpochSecond(ZoneId.systemDefault() as ZoneOffset?)
+
+
 
 
     @Before
@@ -55,7 +56,6 @@ class PedometerInstrumentedTests {
         Intents.init()
         activityRule.scenario.onActivity{sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
                 as SensorManager}
-        midnight = LocalDate.now().atStartOfDay()
     }
 
     @Test
@@ -78,15 +78,20 @@ class PedometerInstrumentedTests {
     }
 
     @Test
-    fun resetAfterMidnight()
+    fun onCreateGetSavedSteps()
     {
         mockFiveSteps()
-        mockFiveSteps()
-        onView(withId(R.id.txtViewSteps)).check(matches(withText("10")))
-        SystemClock.setCurrentTimeMillis(0)
-        onView(withId(R.id.txtViewSteps)).check(matches(withText("0")))
+        activityRule.scenario.recreate()
+        onView(withId(R.id.txtViewSteps)).check(matches(withText("5")))
     }
 
+    @Test
+    fun onCreateResetSteps()
+    {
+        mockStepsWithTimeStamp()
+        activityRule.scenario.recreate()
+        onView(withId(R.id.txtViewSteps)).check(matches(withText("0")))
+    }
 
     private fun mockFiveSteps() {
         var mockEvent  : SensorEvent = createMockStepEvent(1)
@@ -94,6 +99,17 @@ class PedometerInstrumentedTests {
         {
             activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
         }
+    }
+
+
+    private fun mockStepsWithTimeStamp() {
+        var mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, day)
+
+        for(i in 1..5)
+        {
+            activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
+        }
+
     }
 
     @After
@@ -129,7 +145,27 @@ class PedometerInstrumentedTests {
         valuesField.setAccessible(true)
 
         valuesField.set(mockEvent, float_array)
+
         return mockEvent
     }
+
+    private fun createMockStepWithTimeStamp(step : Int, time_stamp: Long) : SensorEvent{
+        var mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
+        var float_array = FloatArray(3)
+
+        float_array[0] = step.toFloat()
+
+        val valuesField: Field = SensorEvent::class.java.getField("values")
+        valuesField.setAccessible(true)
+
+        val tsField: Field = SensorEvent::class.java.getField("timestamp")
+        valuesField.setAccessible(true)
+
+        valuesField.set(mockEvent, float_array)
+        tsField.set(mockEvent,time_stamp)
+
+        return mockEvent
+    }
+
 
 }
