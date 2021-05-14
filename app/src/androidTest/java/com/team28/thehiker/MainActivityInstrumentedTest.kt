@@ -85,13 +85,6 @@ class MainActivityInstrumentedTest {
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
     }
 
-    @Test
-    fun onButtonClick_Humidity_correctActivityStarted() {
-        onView(withId(R.id.btn_humidity))
-            .perform(click())
-
-        Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
-    }
 
     @Test
     fun button_HumidityIsNotAvailable() {

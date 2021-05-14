@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
@@ -121,7 +122,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun decidedButtonHumidityShown(){
         //decide whether to show the humidity button
-        val humidityButton : Button = findViewById(R.id.btn_humidity)
+        val humidityButton : LinearLayout = findViewById(R.id.ll_humidity)
         if(humidityWrapper.isHumiditySensorAvailable()){
             humidityButton.visibility = View.VISIBLE
         }else{
