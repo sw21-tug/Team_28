@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="splashscreen_descriptor">мультфильм _природа</string>
+    <string name="humidity_title">Влажность</string>
     <string name="altitude_title">Ваша высота:</string>
     <string name="altitude_userinfo">* высота над уровнем моря отображается в метрах</string>
     <string name="altitude">высота</string>
