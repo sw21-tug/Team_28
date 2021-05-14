@@ -28,6 +28,15 @@ class MainActivityInstrumentedTest {
     }
 
     @Test
+    fun button_humidity() {
+        onView(withId(R.id.btn_humidity))
+            .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_humidity))
+            .check(matches(withText("Humidity")))
+    }
+
+    @Test
     fun button_altitude() {
         onView(withId(R.id.btn_altitude))
             .check(matches(isClickable()))
