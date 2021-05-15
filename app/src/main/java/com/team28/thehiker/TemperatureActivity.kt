@@ -15,4 +15,9 @@ class TemperatureActivity : AppCompatActivity() {
         setContentView(R.layout.activity_temperature)
     }
 
+    fun updateTemperature(temperature: Double) {
+
+
+    }
+
 }
