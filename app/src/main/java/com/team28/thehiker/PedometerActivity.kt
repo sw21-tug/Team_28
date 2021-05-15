@@ -8,8 +8,8 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -27,6 +27,8 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         setContentView(R.layout.activity_pedometer)
         supportActionBar?.hide()
 
+        sharedPreferenceHandler = SharedPreferenceHandler()
+
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         checkStepSensorAvailable()
@@ -34,6 +36,26 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         if (sensorPresent)
             sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL)
 
+        checkIfNewDay()
+
+        getSavedStepCount()
+        updatePedometerView()
+    }
+
+    fun checkIfNewDay() {
+        val last = getLastStepCountUpdate()
+        val now = Calendar.getInstance()
+
+        val lastEventDayOfYear = last.get(Calendar.DAY_OF_YEAR)
+        val lastEventYear = last.get(Calendar.YEAR)
+
+        val nowEventDayOfYear = now.get(Calendar.DAY_OF_YEAR)
+        val nowEventYear = now.get(Calendar.YEAR)
+
+        if (nowEventDayOfYear > lastEventDayOfYear && nowEventYear >= lastEventYear) {
+            stepsTaken = 0
+            setSavedStepCount()
+        }
     }
 
     fun checkStepSensorAvailable() {
@@ -43,20 +65,22 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    fun updateStepCounter(steps: Int) {
+    fun updatePedometerView() {
         val steps_text = findViewById<TextView>(R.id.txtViewSteps)
-        steps_text.text = steps.toString()
+        steps_text.text = stepsTaken.toString()
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
-            updateStepCounter(++stepsTaken)
+            ++stepsTaken
+            updatePedometerView()
+
+            setLastStepCountUpdate(Calendar.getInstance())
+            setSavedStepCount()
         }
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-    }
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) { }
 
 
     fun getSavedStepCount() {
@@ -68,18 +92,38 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
     }
 
     fun getLastStepCountUpdate(): Calendar {
-        val date = sharedPreferenceHandler.getLastStepCountUpdate(this)
+        val stringToParse = sharedPreferenceHandler.getLastStepCountUpdate(this)
+
+        if (stringToParse == null) {
+            var default = Calendar.getInstance()
+            default.set(Calendar.YEAR, 1970)
+            return default
+        }
+
+        if (stringToParse == Constants.SharedPreferenceConstants.LAST_STEPCOUNT_DEFAULT) {
+            var default = Calendar.getInstance()
+            default.set(Calendar.YEAR, 1970)
+            return default
+        }
+        val split = stringToParse.split("_")
+        val day = Integer.getInteger(split[1])
+        val year = Integer.getInteger(split[0])
         val cal = Calendar.getInstance()
-        val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
-        if(date != null)
-            cal.time = sdf.parse(date) 
+        if (day != null && year != null) {
+            cal.set(Calendar.DAY_OF_YEAR, day)
+            cal.set(Calendar.YEAR, year)
+        }
 
         return cal
     }
 
     fun setLastStepCountUpdate(calendar: Calendar) {
-        val date = calendar.time.toString()
-        sharedPreferenceHandler.setLastStepCountUpdate(this, date)
+        val dayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+        val year = calendar.get(Calendar.YEAR)
+
+        val saveAs = year.toString() + "_" + dayOfYear.toString()
+
+        sharedPreferenceHandler.setLastStepCountUpdate(this, saveAs)
     }
 
 }

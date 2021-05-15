@@ -4,7 +4,6 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorManager
-import android.os.SystemClock
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -22,6 +21,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import java.lang.reflect.Field
 import java.time.*
+import java.util.*
 
 
 /**
@@ -45,8 +45,7 @@ class PedometerInstrumentedTests {
     private var sensorManager:SensorManager? = null
 
     @Mock
-    private var day : Long =  LocalDateTime.of(2000,1,1,10,10,10,0).
-    toEpochSecond(ZoneId.systemDefault() as ZoneOffset?)
+    private var day : Long = 42
 
 
 
@@ -55,7 +54,9 @@ class PedometerInstrumentedTests {
     fun setUp() {
         Intents.init()
         activityRule.scenario.onActivity{sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
-                as SensorManager}
+                as SensorManager
+                it.stepsTaken = 0
+        }
     }
 
     @Test
@@ -67,7 +68,8 @@ class PedometerInstrumentedTests {
 
     @Test
     fun viewSteps(){
-        activityRule.scenario.onActivity { it.updateStepCounter(7) }
+        activityRule.scenario.onActivity { it.stepsTaken = 7 }
+        activityRule.scenario.onActivity { it.updatePedometerView() }
         onView(withId(R.id.txtViewSteps)).check(matches(withText("7")))
     }
 
@@ -78,19 +80,25 @@ class PedometerInstrumentedTests {
     }
 
     @Test
-    fun onCreateGetSavedSteps()
-    {
-        mockFiveSteps()
-        activityRule.scenario.recreate()
-        onView(withId(R.id.txtViewSteps)).check(matches(withText("5")))
-    }
-
-    @Test
     fun onCreateResetSteps()
     {
         mockStepsWithTimeStamp()
-        activityRule.scenario.recreate()
+        activityRule.scenario.onActivity {
+            it.checkIfNewDay()
+            it.updatePedometerView()
+        }
         onView(withId(R.id.txtViewSteps)).check(matches(withText("0")))
+    }
+
+    @Test
+    fun onCreateDontResetSteps()
+    {
+        mockStepsWithTimeStampNow()
+        activityRule.scenario.onActivity {
+            it.checkIfNewDay()
+            it.updatePedometerView()
+        }
+        onView(withId(R.id.txtViewSteps)).check(matches(withText("5")))
     }
 
     private fun mockFiveSteps() {
@@ -104,12 +112,19 @@ class PedometerInstrumentedTests {
 
     private fun mockStepsWithTimeStamp() {
         var mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, day)
+        for(i in 1..5)
+        {
+            activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
+        }
+    }
+
+    private fun mockStepsWithTimeStampNow() {
+        var mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, Calendar.getInstance().timeInMillis)
 
         for(i in 1..5)
         {
             activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
         }
-
     }
 
     @After
@@ -126,12 +141,6 @@ class PedometerInstrumentedTests {
     private fun getMockNoStepSensor() : Sensor {
         val mockSensor : Sensor = Mockito.mock(Sensor::class.java)
         Mockito.`when`(mockSensor.type).thenReturn(null)
-        return mockSensor
-    }
-
-    private fun getTypeMotionDetectSensor() : Sensor {
-        val mockSensor : Sensor = Mockito.mock(Sensor::class.java)
-        Mockito.`when`(mockSensor.type).thenReturn(Sensor.TYPE_MOTION_DETECT)
         return mockSensor
     }
 

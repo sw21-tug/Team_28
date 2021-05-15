@@ -36,7 +36,7 @@ class SharedPreferenceHandler : ISharedPreferenceHandler {
 
     override fun getLastStepCountUpdate(context: Activity): String? {
         val sharedPref = context.applicationContext.getSharedPreferences("hiker_preferences",Context.MODE_PRIVATE)
-        return sharedPref.getString(Constants.SharedPreferenceConstants.LOCAL_DATE, "0")
+        return sharedPref.getString(Constants.SharedPreferenceConstants.LOCAL_DATE, Constants.SharedPreferenceConstants.LAST_STEPCOUNT_DEFAULT)
     }
 
     override fun setLastStepCountUpdate(context: Activity, lastStepUpdate: String) {
