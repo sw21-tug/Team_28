@@ -11,6 +11,7 @@ import android.util.Log
 open class TemperatureWrapper(private var sensorManager: SensorManager): SensorEventListener{
 
     private val temperatureSensor : Sensor?
+    private var temperature : Double? = null
 
 
     init {
@@ -25,18 +26,18 @@ open class TemperatureWrapper(private var sensorManager: SensorManager): SensorE
     }
 
     open fun isTemperatureSensorAvailable() : Boolean{
-
         return temperatureSensor != null
     }
 
     open fun getTemperature() : Double?{
-        return null
+        return temperature
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
+        if(event != null){
+            temperature = event.values[0].toDouble()
+        }
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-    }
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 }

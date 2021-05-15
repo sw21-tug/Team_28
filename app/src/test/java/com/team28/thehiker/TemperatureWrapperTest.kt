@@ -40,7 +40,7 @@ class TemperatureWrapperTest {
         val temperatureWrapper = TemperatureWrapper(sensorManager)
 
         val temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
-        verify(sensorManager, after(2000).atLeast(1)).registerListener(temperatureWrapper, temperatureSensor, 1000)
+        verify(sensorManager, atLeast(1)).registerListener(temperatureWrapper, temperatureSensor, 1000)
     }
 
     @Test

@@ -36,6 +36,11 @@ class MainActivity : AppCompatActivity() {
         checkPermissions()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        temperatureWrapper.kill()
+    }
+
     fun checkPermissions() {
         if (!permissionHandler.permissionsAlreadyGranted(this)) {
             permissionHandler.askUserForPermissions(this)
