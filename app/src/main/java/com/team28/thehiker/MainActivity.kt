@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.transition.Visibility
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
             R.id.btn_position_on_map -> {
                 intent = Intent(this, TestActivity::class.java)
             }
+            R.id.btn_temperature ->{
+                intent = Intent(this, TemperatureActivity::class.java)
+                val temperature : Double? = temperatureWrapper.getTemperature()
+                intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
+            }
             else -> {
                 intent = Intent(this, TestActivity::class.java)
             }
@@ -83,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     fun decidedButtonsShown(){
         //decide whether to show the temperature button
-        val temperatureButton : Button = findViewById(R.id.btn_temperature)
+        val temperatureButton : LinearLayout = findViewById(R.id.ll_temperature)
         if(temperatureWrapper.isTemperatureSensorAvailable()){
             temperatureButton.visibility = View.VISIBLE
         }else{

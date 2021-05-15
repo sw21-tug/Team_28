@@ -21,14 +21,15 @@ import org.mockito.Mockito
 @RunWith(AndroidJUnit4::class)
 class MainActivityInstrumentedTest {
 
-    private val TEMP_KEY = "TEMPERATURE"
+
     private val TEMP_TEST_VALUE = 22.2
 
     @Mock
     var tempWrapper = Mockito.mock(TemperatureWrapper::class.java)
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
+    var activityRule: ActivityScenarioRule<MainActivity> =
+        ActivityScenarioRule<MainActivity>(MainActivity::class.java)
 
     @Before
     fun setUp() {
@@ -59,7 +60,7 @@ class MainActivityInstrumentedTest {
             .check(matches(hasDescendant(withId(R.id.btn_altitude))))
 
         onView(withId(R.id.scrollview_menu))
-                .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
+            .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
     }
 
     @Test
@@ -130,9 +131,9 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_temperature)).perform(click())
 
         Intents.intended(hasComponent(TemperatureActivity::class.java.name), times(1))
-        var intentFound : Boolean = false;
+        var intentFound: Boolean = false;
         Intents.getIntents().forEach {
-            if(it.component != null && it.component!!.equals(TemperatureActivity::class.java.name)){
+            if (it.component != null && it.component!!.className == (TemperatureActivity::class.java.name)) {
                 intentFound = true;
                 validateTemperatureExtras(it.extras)
             }
@@ -140,10 +141,10 @@ class MainActivityInstrumentedTest {
         assert(intentFound)
     }
 
-    private fun validateTemperatureExtras(extras : Bundle?){
+    private fun validateTemperatureExtras(extras: Bundle?) {
         assertNotNull(extras)
-        assert(extras!!.containsKey(TEMP_KEY))
-        assert(extras.getDouble(TEMP_KEY).equals(TEMP_TEST_VALUE))
+        assert(extras!!.containsKey(TemperatureActivity.TEMP_KEY))
+        assert(extras.getDouble(TemperatureActivity.TEMP_KEY).equals(TEMP_TEST_VALUE))
     }
 
 }
