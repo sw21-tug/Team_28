@@ -22,7 +22,8 @@ class LanguageSelectionTest {
 
             Assert.assertEquals(it.getString(R.string.altitude),"высота")
             Assert.assertEquals(it.getString(R.string.find_me),"Найди меня")
-            Assert.assertEquals(it.getString(R.string.app_title),"Путешественник")
+            //The brand name shouldn't be translated
+            Assert.assertEquals(it.getString(R.string.app_title),"The Hiker")
         }
     }
 

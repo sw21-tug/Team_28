@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">TheHiker</string>
-    <string name="app_title">The Hiker</string>
+    <string name="app_name" translatable="false">TheHiker</string>
+    <string name="app_title" translatable="false">The Hiker</string>
     <string name="splashscreen_descriptor">cartoon_nature</string>
     <string name="altitude_title">Your altitude:</string>
     <string name="altitude_userinfo">*altitude above sea level is displayed in meters</string>
@@ -16,6 +16,15 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
+    <string name="title_activity_position_on_map">Map</string>
+    <string name="my_location_label_text">My Location</string>
+    <string name="meters">m</string>
     <string name="temperature">Temperature</string>
     <string name="temperature_title">Current Temperature:</string>
 </resources>

@@ -25,8 +25,13 @@ class AltitudeActivity : AppCompatActivity(), ServiceConnection, HikerLocationCa
     }
 
     fun updateAltitude(altitude : Double){
-        val altitude_text = findViewById<TextView>(R.id.altitude)
-        altitude_text.text = String.format("%.2f m",altitude)
+        val altitudeText = findViewById<TextView>(R.id.altitude)
+
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(String.format("%.2f",altitude).replace(",","."))
+        stringBuilder.append(" ")
+        stringBuilder.append(resources.getString(R.string.meters))
+        altitudeText.text = stringBuilder.toString()
     }
 
     fun getLocationService() : HikerLocationService = locationService
