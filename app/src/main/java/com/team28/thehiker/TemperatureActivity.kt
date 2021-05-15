@@ -14,6 +14,9 @@ class TemperatureActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_temperature)
+
+        val temperature = intent.getDoubleExtra(TEMP_KEY, Double.MIN_VALUE)
+        updateTemperature(temperature)
     }
 
     fun updateTemperature(temperature: Double) {
