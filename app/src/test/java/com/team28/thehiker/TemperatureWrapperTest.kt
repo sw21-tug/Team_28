@@ -2,8 +2,7 @@ package com.team28.thehiker
 
 import android.hardware.Sensor
 import android.hardware.SensorManager
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mockito.*
 
@@ -29,6 +28,17 @@ class TemperatureWrapperTest {
         assertTrue(tempWrapper.isTemperatureSensorAvailable())
     }
 
+    @Test
+    fun testRegistersListener(){
+        val sensorManager : SensorManager = mock(SensorManager::class.java)
+        val mockedSensor : Sensor = mock(Sensor::class.java)
+        `when`(sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)).thenReturn(mockedSensor)
+
+        val temperatureWrapper = TemperatureWrapper(sensorManager)
+
+        val temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+        verify(sensorManager, after(2000).atLeast(1)).registerListener(temperatureWrapper, temperatureSensor, 1000)
+    }
 
 
 }
