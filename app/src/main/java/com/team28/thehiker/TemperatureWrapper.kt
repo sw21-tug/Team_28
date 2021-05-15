@@ -1,12 +1,9 @@
 package com.team28.thehiker
 
-import android.content.Context
-import android.content.Context.SENSOR_SERVICE
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 
 open class TemperatureWrapper(private var sensorManager: SensorManager): SensorEventListener{
 
@@ -22,7 +19,9 @@ open class TemperatureWrapper(private var sensorManager: SensorManager): SensorE
     }
 
     fun kill(){
-        sensorManager.unregisterListener(this)
+        if(temperatureSensor != null){
+            sensorManager.unregisterListener(this)
+        }
     }
 
     open fun isTemperatureSensorAvailable() : Boolean{
