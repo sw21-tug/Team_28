@@ -2,11 +2,12 @@ package com.team28.thehiker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 
 class TemperatureActivity : AppCompatActivity() {
 
     companion object{
-        public val TEMP_KEY = "TEMPERATURE"
+        val TEMP_KEY = "TEMPERATURE"
     }
 
 
@@ -16,8 +17,14 @@ class TemperatureActivity : AppCompatActivity() {
     }
 
     fun updateTemperature(temperature: Double) {
+        val temperatureTextView : TextView = findViewById(R.id.temperature)
 
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(String.format("%.1f",temperature).replace(",","."))
+        stringBuilder.append(" ")
+        stringBuilder.append("°C")
 
+        temperatureTextView.text = stringBuilder.toString()
     }
 
 }
