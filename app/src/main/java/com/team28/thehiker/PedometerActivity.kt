@@ -106,13 +106,13 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
             return default
         }
         val split = stringToParse.split("_")
-        val day = Integer.getInteger(split[1])
-        val year = Integer.getInteger(split[0])
+        val day = split[1].toInt()
+        val year = split[0].toInt()
+
         val cal = Calendar.getInstance()
-        if (day != null && year != null) {
-            cal.set(Calendar.DAY_OF_YEAR, day)
-            cal.set(Calendar.YEAR, year)
-        }
+        cal.set(Calendar.DAY_OF_YEAR, day)
+        cal.set(Calendar.YEAR, year)
+
 
         return cal
     }
