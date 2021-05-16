@@ -1,9 +1,11 @@
 package com.team28.thehiker
 
 import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import java.time.LocalDate
 import java.util.*
 
@@ -49,9 +51,53 @@ class PedometerActivityTest {
         pedometerActivity.sharedPreferenceHandler = sharedPreferenceMock
         val calendar = Calendar.getInstance()
 
+        val dayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+        val year = calendar.get(Calendar.YEAR)
+
+
         pedometerActivity.setLastStepCountUpdate(calendar)
 
         Mockito.verify(sharedPreferenceMock, Mockito.times(1))
-            .setLastStepCountUpdate(pedometerActivity, calendar.time.toString())
+            .setLastStepCountUpdate(pedometerActivity, year.toString() + "_" + dayOfYear.toString())
+    }
+
+    @Test
+    fun testNextDayReset_NoResetIfSameDay() {
+        val pedometerActivity = PedometerActivity()
+        pedometerActivity.sharedPreferenceHandler = sharedPreferenceMock
+        pedometerActivity.stepsTaken = 42
+
+        val calendar = Calendar.getInstance()
+        val dayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+        val year = calendar.get(Calendar.YEAR)
+
+        val saveAs = year.toString() + "_" + dayOfYear.toString()
+
+        `when`(sharedPreferenceMock.getLastStepCountUpdate(pedometerActivity))
+                .thenReturn(saveAs)
+
+        pedometerActivity.checkIfNewDay()
+
+        Assert.assertEquals(pedometerActivity.stepsTaken, 42)
+    }
+
+    @Test
+    fun testNextDayReset_ResetIfNotSameDay() {
+        val pedometerActivity = PedometerActivity()
+        pedometerActivity.sharedPreferenceHandler = sharedPreferenceMock
+        pedometerActivity.stepsTaken = 42
+
+        val calendar = Calendar.getInstance()
+        val dayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+        val year = calendar.get(Calendar.YEAR)
+
+        val saveAs = year.toString() + "_" + (dayOfYear - 1).toString()
+
+        `when`(sharedPreferenceMock.getLastStepCountUpdate(pedometerActivity))
+                .thenReturn(saveAs)
+
+        pedometerActivity.checkIfNewDay()
+
+        Assert.assertEquals(pedometerActivity.stepsTaken, 0)
     }
 }
