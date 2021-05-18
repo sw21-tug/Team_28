@@ -1,6 +1,8 @@
 package com.team28.thehiker
 
+import android.os.Build
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
@@ -24,7 +26,13 @@ class PermissionHandlingInstrumentedTest {
 
     fun grantPermission() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val allowPermission = UiDevice.getInstance(instrumentation).findObject(UiSelector().text("Allow"))
+        val allowPermission = UiDevice.getInstance(instrumentation).findObject(UiSelector().text(
+                when {
+                    Build.VERSION.SDK_INT == 23 -> "Allow"
+                    Build.VERSION.SDK_INT <= 28 -> "ALLOW"
+                    Build.VERSION.SDK_INT == 29 -> "Allow only while using the app"
+                    else -> "While using the app"
+                }))
         if(allowPermission.exists())
             allowPermission.click()
     }
@@ -35,6 +43,8 @@ class PermissionHandlingInstrumentedTest {
         if(denyPermission.exists())
             denyPermission.click()
     }
+
+
 
     @Test
     fun a_testMainScreenWithoutPermission(){
@@ -60,5 +70,16 @@ class PermissionHandlingInstrumentedTest {
         return
     }
 
+    @Test
+    fun c_testLatePermission() {
+        denyPermission()
+        onView(withId(R.id.btn_altitude)).check(ViewAssertions.matches(ViewMatchers.withText("Altitude")))
 
+        onView(withId(R.id.btn_altitude)).perform(ViewActions.click())
+        grantPermission()
+        onView(withId(R.id.btn_position_on_map)).check(ViewAssertions.matches(ViewMatchers.withText("Find me")))
+        onView(withId(R.id.btn_altitude)).perform(ViewActions.click())
+        onView(withId(R.id.altitude)).check(ViewAssertions.matches(ViewMatchers.withText("0.00 m")))
+        return
+    }
 }
