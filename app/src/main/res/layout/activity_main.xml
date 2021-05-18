@@ -12,18 +12,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/main_menu_header_image"
-        android:scaleType="center"
-        android:src="@drawable/main_menu_header"
+        android:scaleType="fitEnd"
         app:layout_constraintBottom_toTopOf="@id/divideHomeScreenGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/thehiker_header" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/divideHomeScreenGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintGuide_begin="219dp" />
 
     <ScrollView
         android:id="@+id/scrollview_menu"
