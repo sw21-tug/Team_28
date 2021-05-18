@@ -24,6 +24,9 @@ class PermissionHandlingInstrumentedTest {
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
 
+    @get: Rule
+    var altitudeRule = ActivityScenarioRule(AltitudeActivity::class.java)
+
     fun grantPermission() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val allowPermission = UiDevice.getInstance(instrumentation).findObject(UiSelector().text(
@@ -79,6 +82,7 @@ class PermissionHandlingInstrumentedTest {
         grantPermission()
         onView(withId(R.id.btn_position_on_map)).check(ViewAssertions.matches(ViewMatchers.withText("Find me")))
         onView(withId(R.id.btn_altitude)).perform(ViewActions.click())
+        altitudeRule.scenario.onActivity { it.updateAltitude(0.0) }
         onView(withId(R.id.altitude)).check(ViewAssertions.matches(ViewMatchers.withText("0.00 m")))
         return
     }

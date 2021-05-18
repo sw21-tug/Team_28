@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
 import com.team28.thehiker.Constants.Constants
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
+    var permissionStatus = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +42,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         sharedPreferenceHandler = SharedPreferenceHandler()
         permissionHandler = PermissionHandler()
-
         checkPermissions()
     }
 
     fun checkPermissions() {
-        if (!permissionHandler.permissionsAlreadyGranted(this)) {
+        permissionStatus = permissionHandler.permissionsAlreadyGranted(this)
+        if (!permissionStatus) {
             permissionHandler.askUserForPermissions(this)
         }
     }
@@ -77,6 +80,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     intent = Intent(this, AltitudeActivity::class.java)
                 } else {
                         permissionHandler.askUserForPermissions(this)
+                        if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            showdialog()
+                        }
                         return
                 }
             }
@@ -85,10 +91,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     intent = Intent(this, FindMeActivity::class.java)
                 } else {
                     permissionHandler.askUserForPermissions(this)
-                    //helpful website
-                    //https://www.techotopia.com/index.php/Kotlin_-_Making_Runtime_Permission_Requests_in_Androidhttps://www.techotopia.com/index.php/Kotlin_-_Making_Runtime_Permission_Requests_in_Android
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showdialog()
+                    }
                     return
-
                 }
             }
             else -> {
@@ -135,6 +141,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun setSavedLocalizationString(localization: String) {
         sharedPreferenceHandler.setLocalizationString(this, localization)
+    }
+
+    fun showdialog() {
+        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle("Permission access needed")
+        builder.setMessage("We need location permission for this tool to work. " +
+                "To grant us permission go to Settings -> (Searchbar)'permission' -> Permission Manager." +
+                "Search for 'The Hiker' and provide access to location.")
+        builder.show()
     }
 }
 
