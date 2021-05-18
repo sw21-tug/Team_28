@@ -23,15 +23,11 @@ class HumidityActivity : AppCompatActivity(), SensorEventListener {
 
         sensor_RH = my_sensor_manager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY)
         my_sensor_manager.registerListener(this, sensor_RH, SensorManager.SENSOR_DELAY_NORMAL)
-
-
-
     }
     @Override
     public override fun onSensorChanged(event: SensorEvent?) {
-
         if (event != null) {
-            txt_RH.text = event.values[0].toString()
+            txt_RH.text = event.values[0].toString().plus(" %")
         }
     }
 
