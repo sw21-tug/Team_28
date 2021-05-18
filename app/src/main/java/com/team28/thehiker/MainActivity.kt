@@ -1,6 +1,7 @@
 package com.team28.thehiker
 
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
@@ -56,7 +58,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if ((grantResults.isEmpty() ||
                             grantResults[0] == PackageManager.PERMISSION_DENIED)
                 ) {
-                    finish()
+                    //finish()
+                    return
                 }
                 return
             }
@@ -67,19 +70,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun navigateTo(view: View) {
         val intent: Intent
-
+        val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         when (view.id) {
             R.id.btn_altitude -> {
-                intent = Intent(this, AltitudeActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, AltitudeActivity::class.java)
+                } else {
+                        permissionHandler.askUserForPermissions(this)
+                        return
+                }
             }
             R.id.btn_position_on_map -> {
-                intent = Intent(this, FindMeActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, FindMeActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    //helpful website
+                    //https://www.techotopia.com/index.php/Kotlin_-_Making_Runtime_Permission_Requests_in_Androidhttps://www.techotopia.com/index.php/Kotlin_-_Making_Runtime_Permission_Requests_in_Android
+                    return
+
+                }
             }
             else -> {
-                intent = Intent(this, TestActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, TestActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    return
+                }
             }
         }
-
         startActivity(intent)
     }
 
