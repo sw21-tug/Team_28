@@ -157,9 +157,9 @@ class PedometerInstrumentedTests {
         activityRule.scenario.onActivity { sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
                 as SensorManager }
         if(sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) == null)
-            activityRule.scenario.onActivity { assertTrue(it.sensorPresent) }
-        else
             activityRule.scenario.onActivity { assertFalse(it.sensorPresent) }
+        else
+            activityRule.scenario.onActivity { assertTrue(it.sensorPresent) }
     }
 
     @Test
