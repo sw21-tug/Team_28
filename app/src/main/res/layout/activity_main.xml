@@ -147,6 +147,32 @@
                     android:onClick="navigateTo"
                     android:text="@string/pedometer" />
             </LinearLayout>
+  
+              <LinearLayout
+                android:id="@+id/ll_humidity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/ic_humidity"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:contentDescription="@string/humidity"
+                    app:srcCompat="?android:attr/textSelectHandle"
+                    app:tint="@color/primary"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <Button
+                    android:id="@+id/btn_humidity"
+                    android:text="@string/humidity_title"
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                    android:onClick="navigateTo"/>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
