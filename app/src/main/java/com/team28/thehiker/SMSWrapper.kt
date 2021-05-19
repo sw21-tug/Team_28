@@ -2,7 +2,7 @@ package com.team28.thehiker
 
 import android.telephony.SmsManager
 
-class SMSWrapper (val smsManager : SmsManager, val delayMS : Long){
+class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, numbers: List<String>){
 
     private var thread : Thread
     private var message = "This is a placeholder message: [Chuckles] I'm in danger"
