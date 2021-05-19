@@ -1,13 +1,13 @@
 package com.team28.thehiker
 
+import android.location.Location
 import android.telephony.SmsManager
-import java.util.function.Consumer
 
-class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: List<String>){
+class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: List<String>) : HikerLocationCallback{
 
     private var thread : Thread
-    private var message = "This is a placeholder message: [Chuckles] I'm in danger"
-    private var messageFineAgain = "This is a placeholder message: [Chuckles] I'm not in danger anymore"
+    private val message = "This is a placeholder message: [Chuckles] I'm in danger"
+    private val messageFineAgain = "This is a placeholder message: [Chuckles] I'm not in danger anymore"
     private var stopAlarm = false
 
     init {
@@ -30,5 +30,11 @@ class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: Lis
         numbers.forEach {
             smsManager.sendTextMessage(it, null, message, null, null)
         };
+    }
+
+    override fun notifyLocationUpdate(location: Location) {}
+
+    fun getMessage() : String{
+        return message
     }
 }
