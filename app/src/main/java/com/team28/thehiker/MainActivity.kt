@@ -7,12 +7,16 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.transition.Visibility
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
 import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
@@ -24,7 +28,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
+
     lateinit var humidityWrapper: HumidityWrapper
+    lateinit var temperatureWrapper :TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +49,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         permissionHandler = PermissionHandler()
 
         val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
         humidityWrapper = HumidityWrapper(sensorManager)
         decidedButtonHumidityShown()
+        temperatureWrapper = TemperatureWrapper(sensorManager)
+
+        decidedButtonsShown()
+
 
         checkPermissions()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        temperatureWrapper.kill()
     }
 
     fun checkPermissions() {
@@ -85,6 +101,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.btn_humidity -> {
                 intent = Intent(this, HumidityActivity::class.java)
+            }
+            R.id.btn_temperature ->{
+                intent = Intent(this, TemperatureActivity::class.java)
+                val temperature : Double? = temperatureWrapper.getTemperature()
+                intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
+            }
+            R.id.btn_pedometer -> {
+                intent = Intent(this, PedometerActivity::class.java)
             }
             else -> {
                 intent = Intent(this, TestActivity::class.java)
@@ -138,6 +162,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun setSavedLocalizationString(localization: String) {
         sharedPreferenceHandler.setLocalizationString(this, localization)
+    }
+
+    fun decidedButtonsShown(){
+        //decide whether to show the temperature button
+        val temperatureButton : LinearLayout = findViewById(R.id.ll_temperature)
+        if(temperatureWrapper.isTemperatureSensorAvailable()){
+            temperatureButton.visibility = View.VISIBLE
+        }else{
+            temperatureButton.visibility = View.GONE
+        }
+
+        temperatureButton.invalidate()
     }
 }
 

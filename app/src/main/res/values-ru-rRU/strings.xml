@@ -23,4 +23,8 @@
     <string name="title_activity_position_on_map">карта</string>
     <string name="my_location_label_text">Мое местонахождение</string>
     <string name="meters">м</string>
+    <string name="temperature">Температура</string>
+    <string name="temperature_title">Ваша температура:</string>
+    <string name="pedometer">Шагомер</string>
+
 </resources>
