@@ -13,10 +13,11 @@
         android:layout_marginTop="32dp"
         android:minWidth="200sp"
         android:minHeight="200sp"
-        android:src="@drawable/ic_arrow"
+        app:srcCompat="@drawable/ic_altitude"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/primary" />
         android:contentDescription="TODO" />
 
     <TextView
@@ -25,6 +26,8 @@
         android:gravity="center_horizontal"
         android:text="@string/altitude_title"
         android:textSize="40sp"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
