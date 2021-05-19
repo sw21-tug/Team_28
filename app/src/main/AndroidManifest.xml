@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity android:name=".AltitudeActivity"/>
+        <activity android:name=".SpeedActivity"/>
         <activity android:name=".TestActivity"/>
         <service
             android:name=".HikerLocationService"

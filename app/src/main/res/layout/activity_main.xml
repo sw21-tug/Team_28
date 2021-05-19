@@ -108,7 +108,7 @@
                     android:layout_marginRight="20dp"
                     app:srcCompat="@drawable/ic_speed_of_moving"
                     tools:ignore="VectorDrawableCompat"
-                    android:contentDescription="@string/find_me"
+                    android:contentDescription="@string/speed_of_moving"
                     app:tint="@color/primary"/>
 
                 <Button

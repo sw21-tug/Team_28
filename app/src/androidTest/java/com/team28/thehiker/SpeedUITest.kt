@@ -26,6 +26,6 @@ class SpeedUITest {
     @Test
     fun testValueUpdateWithPositiveNumber(){
         activityRule.scenario.onActivity { it.updateSpeed(6.0) }
-        onView(withId(R.id.altitude)).check(matches(withText("6.00 km/h")))
+        onView(withId(R.id.speed)).check(matches(withText("6.00 km/h")))
     }
 }
