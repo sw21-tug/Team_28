@@ -24,7 +24,10 @@
     <string name="my_location_label_text">Мое местонахождение</string>
     <string name="meters">м</string>
     <string name="temperature">Температура</string>
+
     <string name="temperature_title">Ваша температура:</string>
     <string name="pedometer">Шагомер</string>
+    <string name="humidity">Значок влажности</string>
+    <string name="map_logo">карта логотип</string>
 
 </resources>

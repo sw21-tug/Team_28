@@ -32,7 +32,6 @@
         <activity android:name=".HumidityActivity"></activity>
         <activity android:name=".PedometerActivity" />
         <activity android:name=".AltitudeActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".TestActivity" />
 
         <service

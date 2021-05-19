@@ -14,8 +14,6 @@ import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
