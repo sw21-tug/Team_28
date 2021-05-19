@@ -1,5 +1,6 @@
 package com.team28.thehiker
 
+import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -46,12 +47,24 @@ class MainActivityInstrumentedTest {
     }
 
     @Test
+    fun button_pedometer() {
+        onView(withId(R.id.btn_pedometer))
+            .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_pedometer))
+            .check(matches(withText("Pedometer")))
+    }
+
+    @Test
     fun check_listview_containsItems() {
         onView(withId(R.id.scrollview_menu))
             .check(matches(hasDescendant(withId(R.id.btn_altitude))))
 
         onView(withId(R.id.scrollview_menu))
                 .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
+
+        onView(withId(R.id.scrollview_menu))
+            .check(matches(hasDescendant(withId(R.id.btn_pedometer))))
     }
 
     @Test
@@ -69,6 +82,13 @@ class MainActivityInstrumentedTest {
 
         //TODO: this can be changed to real activities when implemented
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
+    }
+
+    @Test
+    fun onButtonClick_Pedometer_correctActivityStarted() {
+        onView(withId(R.id.btn_pedometer))
+            .perform(click())
+        Intents.intended(hasComponent(PedometerActivity::class.java.name), times(1))
     }
 
     @After
