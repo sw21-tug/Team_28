@@ -106,14 +106,14 @@
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    app:srcCompat="@drawable/ic_map"
+                    app:srcCompat="@drawable/ic_speed_of_moving"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/find_me"
                     app:tint="@color/primary"/>
 
                 <Button
                     android:id="@+id/btn_speed_of_moving"
-                    android:text="@string/find_me"
+                    android:text="@string/speed_of_moving"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:onClick="navigateTo"/>
 
