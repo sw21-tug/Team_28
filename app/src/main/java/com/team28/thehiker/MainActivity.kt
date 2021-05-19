@@ -96,6 +96,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val temperature : Double? = temperatureWrapper.getTemperature()
                 intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
             }
+            R.id.btn_pedometer -> {
+                intent = Intent(this, PedometerActivity::class.java)
+            }
             else -> {
                 intent = Intent(this, TestActivity::class.java)
             }

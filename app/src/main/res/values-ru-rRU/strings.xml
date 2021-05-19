@@ -23,4 +23,6 @@
     <string name="meters">м</string>
     <string name="temperature">Температура</string>
     <string name="temperature_title">Ваша температура:</string>
+    <string name="pedometer">Шагомер</string>
+
 </resources>
