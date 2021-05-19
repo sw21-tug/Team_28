@@ -28,4 +28,6 @@
     <string name="title_activity_position_on_map">Map</string>
     <string name="my_location_label_text">My Location</string>
     <string name="meters">m</string>
+    <string name="temperature">Temperature</string>
+    <string name="temperature_title">Current Temperature:</string>
 </resources>
