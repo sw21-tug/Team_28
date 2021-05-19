@@ -40,7 +40,7 @@ class SpeedTest {
         Thread.sleep(1000)
         val location2 = createMockLocation(47.061190704295825, 15.452698657207094)
         activityRule.scenario.onActivity { it.calculateSpeed(location1, location2) }
-        onView(withId(R.id.speed)).check(matches(withText("36.00 km/h")))
+        onView(withId(R.id.speed)).check(matches(withText("49.97 km/h")))
     }
 
 

@@ -31,8 +31,15 @@ class SpeedActivity : AppCompatActivity() {
         speedText.text = stringBuilder.toString()
     }
 
-    fun calculateSpeed(location1 : Location, location2 : Location){
+    fun calculateSpeed(location1 : Location, location2 : Location) {
+        val distance = location1.distanceTo(location2)
+        val time = (location2.time - location1.time) / 1000
 
+        Log.d("HALLO distance", distance.toString())
+        Log.d("HALLO time", time.toString())
+        Log.d("HALLO m/s", ((distance/time) * 3.6).toString())
+
+        updateSpeed(((distance/time) * 3.6).toFloat())
     }
 
 }
