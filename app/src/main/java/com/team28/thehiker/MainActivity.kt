@@ -1,11 +1,15 @@
 package com.team28.thehiker
 
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.transition.Visibility
 import android.view.View
@@ -13,6 +17,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
 import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
@@ -26,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
-
+    var permissionStatus = false
     lateinit var humidityWrapper: HumidityWrapper
     lateinit var temperatureWrapper :TemperatureWrapper
 
@@ -46,6 +53,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler = SharedPreferenceHandler()
         permissionHandler = PermissionHandler()
 
+        checkPermissions()
+        
         val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         humidityWrapper = HumidityWrapper(sensorManager)
@@ -53,9 +62,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         temperatureWrapper = TemperatureWrapper(sensorManager)
 
         decidedButtonsShown()
-
-
-        checkPermissions()
     }
 
     override fun onDestroy() {
@@ -64,7 +70,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun checkPermissions() {
-        if (!permissionHandler.permissionsAlreadyGranted(this)) {
+        permissionStatus = permissionHandler.permissionsAlreadyGranted(this)
+        if (!permissionStatus) {
             permissionHandler.askUserForPermissions(this)
         }
     }
@@ -78,7 +85,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if ((grantResults.isEmpty() ||
                             grantResults[0] == PackageManager.PERMISSION_DENIED)
                 ) {
-                    finish()
+                    //finish()
+                    return
                 }
                 return
             }
@@ -89,13 +97,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun navigateTo(view: View) {
         val intent: Intent
-
+        val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         when (view.id) {
             R.id.btn_altitude -> {
-                intent = Intent(this, AltitudeActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, AltitudeActivity::class.java)
+                } else {
+                        permissionHandler.askUserForPermissions(this)
+                        if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            showdialog()
+                        }
+                        return
+                }
             }
             R.id.btn_position_on_map -> {
-                intent = Intent(this, FindMeActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, FindMeActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showdialog()
+                    }
+                    return
+                }
             }
             R.id.btn_humidity -> {
                 intent = Intent(this, HumidityActivity::class.java)
@@ -109,10 +133,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent = Intent(this, PedometerActivity::class.java)
             }
             else -> {
-                intent = Intent(this, TestActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, TestActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    return
+                }
             }
         }
-
         startActivity(intent)
     }
 
@@ -160,6 +188,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun setSavedLocalizationString(localization: String) {
         sharedPreferenceHandler.setLocalizationString(this, localization)
+    }
+
+
+    fun showdialog() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri: Uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivity(intent)
     }
 
     fun decidedButtonsShown(){
