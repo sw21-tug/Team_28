@@ -1,6 +1,7 @@
 package com.team28.thehiker
 
 import android.os.Build
+import androidx.test.InstrumentationRegistry.getTargetContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
@@ -13,6 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +33,7 @@ class PermissionHandlingInstrumentedTest {
                 when {
                     Build.VERSION.SDK_INT == 23 -> "Allow"
                     Build.VERSION.SDK_INT <= 28 -> "ALLOW"
-                    Build.VERSION.SDK_INT == 29 -> "ALLOW ONLY WHILE USING THE APP"
+                    Build.VERSION.SDK_INT == 29 -> "Allow only while using the app"
                     else -> "While using the app"
                 }))
         if(allowPermission.exists())
@@ -40,7 +42,13 @@ class PermissionHandlingInstrumentedTest {
 
     fun denyPermission() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val denyPermission = UiDevice.getInstance(instrumentation).findObject(UiSelector().text("DENY"))
+        val denyPermission = UiDevice.getInstance(instrumentation).findObject(UiSelector().text(
+                when {
+                   Build.VERSION.SDK_INT == 23 -> "Deny"
+                   Build.VERSION.SDK_INT <= 28 -> "Deny"
+                   Build.VERSION.SDK_INT == 29 -> "Deny"
+                   else -> "Deny"
+                }))
         if(denyPermission.exists())
             denyPermission.click()
     }
@@ -56,7 +64,7 @@ class PermissionHandlingInstrumentedTest {
     }
 
     @Test
-    fun b_tesMainScreenWithoutPermissionBtnCheck() {
+    fun b_testMainScreenWithoutPermissionBtnCheck() {
         denyPermission()
         onView(withId(R.id.btn_altitude))
                 .check(ViewAssertions.matches(ViewMatchers.withText("Altitude")))

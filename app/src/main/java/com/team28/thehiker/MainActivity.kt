@@ -5,12 +5,14 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
@@ -144,12 +146,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun showdialog() {
-        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
-        builder.setTitle("Permission access needed")
-        builder.setMessage("We need location permission for this tool to work. " +
-                "To grant us permission go to Settings -> (Searchbar)'permission' -> Permission Manager." +
-                "Search for 'The Hiker' and provide access to location.")
-        builder.show()
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri: Uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivity(intent)
+
+        //val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        //builder.setTitle("Permission access needed")
+        //builder.setMessage("We need location permission for this tool to work. " +
+        //        "To grant us permission go to Settings -> (Searchbar)'permission' -> Permission Manager." +
+        //        "Search for 'The Hiker' and provide access to location.")
+        //builder.show()
     }
 }
 
