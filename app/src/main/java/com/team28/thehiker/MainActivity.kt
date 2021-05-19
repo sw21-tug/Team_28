@@ -6,9 +6,12 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.hardware.SensorManager
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
+import android.transition.Visibility
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -16,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
 import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
@@ -28,6 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
     var permissionStatus = false
+    lateinit var temperatureWrapper :TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +51,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         sharedPreferenceHandler = SharedPreferenceHandler()
         permissionHandler = PermissionHandler()
+
         checkPermissions()
+        
+        val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        temperatureWrapper = TemperatureWrapper(sensorManager)
+
+        decidedButtonsShown()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        temperatureWrapper.kill()
     }
 
     fun checkPermissions() {
@@ -99,6 +117,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     return
                 }
             }
+            R.id.btn_temperature ->{
+                intent = Intent(this, TemperatureActivity::class.java)
+                val temperature : Double? = temperatureWrapper.getTemperature()
+                intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
+            }
             R.id.btn_pedometer -> {
                 intent = Intent(this, PedometerActivity::class.java)
             }
@@ -148,18 +171,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler.setLocalizationString(this, localization)
     }
 
+
     fun showdialog() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
+    }
 
-        //val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
-        //builder.setTitle("Permission access needed")
-        //builder.setMessage("We need location permission for this tool to work. " +
-        //        "To grant us permission go to Settings -> (Searchbar)'permission' -> Permission Manager." +
-        //        "Search for 'The Hiker' and provide access to location.")
-        //builder.show()
+    fun decidedButtonsShown(){
+        //decide whether to show the temperature button
+        val temperatureButton : LinearLayout = findViewById(R.id.ll_temperature)
+        if(temperatureWrapper.isTemperatureSensorAvailable()){
+            temperatureButton.visibility = View.VISIBLE
+        }else{
+            temperatureButton.visibility = View.GONE
+        }
+
+        temperatureButton.invalidate()
     }
 }
 
