@@ -3,7 +3,9 @@
     <string name="app_title" translatable="false">The Hiker</string>
     <string name="splashscreen_descriptor">cartoon_nature</string>
     <string name="altitude_title">Your altitude:</string>
+    <string name="speed_title">Moving speed:</string>
     <string name="altitude_userinfo">*altitude above sea level is displayed in meters</string>
+    <string name="speed_userinfo">*the indoor speed ist not accurate</string>
     <string name="altitude">Altitude</string>
     <string name="find_me">Find me</string>
     <string name="speed_of_moving">Speed</string>
