@@ -72,11 +72,6 @@ class MainActivityInstrumentedTest {
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
     }
 
-    @Test
-    fun check_correctColors() {
-      // onView(withId(R.id.btn_altitude)).check(matches(with(R.color.primary)))
-    }
-
     @After
     fun cleanUp() {
         Intents.release()
