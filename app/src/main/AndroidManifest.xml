@@ -22,6 +22,8 @@
         <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity android:name=".AltitudeActivity"/>
         <activity android:name=".TestActivity"/>
+        <activity android:name=".StepCountHistoryActivity"/>
+
         <service
             android:name=".HikerLocationService"
             android:enabled="true"
