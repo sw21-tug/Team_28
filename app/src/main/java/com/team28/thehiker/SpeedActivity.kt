@@ -15,11 +15,16 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 
-class SpeedActivity : AppCompatActivity() {
+class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallback {
+
+    private val previousLocation : Location? = null
+
+    private lateinit var locationService : HikerLocationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_speed)
+        bindService(Intent(this, HikerLocationService::class.java), this, Context.BIND_AUTO_CREATE)
     }
 
     fun updateSpeed(speed : Float){
@@ -35,11 +40,30 @@ class SpeedActivity : AppCompatActivity() {
         val distance = location1.distanceTo(location2)
         val time = (location2.time - location1.time) / 1000
 
-        Log.d("HALLO distance", distance.toString())
-        Log.d("HALLO time", time.toString())
-        Log.d("HALLO m/s", ((distance/time) * 3.6).toString())
-
         updateSpeed(((distance/time) * 3.6).toFloat())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(this)
+    }
+
+    fun getLocationService()  : HikerLocationService = locationService
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun notifyLocationUpdate(location: Location) {
+        TODO("Not yet implemented")
+    }
+
+     fun getPreviousLocation() : Location? {
+        return previousLocation
     }
 
 }
