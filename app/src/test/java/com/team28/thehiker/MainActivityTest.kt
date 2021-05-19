@@ -1,0 +1,67 @@
+package com.team28.thehiker
+
+
+import com.team28.thehiker.Constants.Constants
+import com.team28.thehiker.Permissions.PermissionHandler
+import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import org.junit.Test
+import org.mockito.Mock
+import org.mockito.Mockito.*
+
+
+class MainActivityTest {
+
+    @Mock
+    var permissionHandlerMock = mock(PermissionHandler::class.java)
+
+    @Mock
+    var sharedPreferenceMock = mock(SharedPreferenceHandler::class.java)
+
+    @Test
+    fun testPermissions_PermissionsGranted() {
+        val mainActivity = MainActivity()
+
+        `when`(permissionHandlerMock.permissionsAlreadyGranted(mainActivity))
+                .thenReturn(true)
+
+        mainActivity.permissionHandler = permissionHandlerMock
+        mainActivity.checkPermissions()
+
+        verify(permissionHandlerMock, times(1)).permissionsAlreadyGranted(mainActivity)
+        verify(permissionHandlerMock, never()).askUserForPermissions(mainActivity)
+    }
+
+    @Test
+    fun testPermissions_PermissionsNotGranted() {
+        val mainActivity = MainActivity()
+
+        `when`(permissionHandlerMock.permissionsAlreadyGranted(mainActivity))
+            .thenReturn(false)
+
+        mainActivity.permissionHandler = permissionHandlerMock
+        mainActivity.checkPermissions()
+
+        verify(permissionHandlerMock, times(1)).permissionsAlreadyGranted(mainActivity)
+        verify(permissionHandlerMock, times(1)).askUserForPermissions(mainActivity)
+    }
+
+    @Test
+    fun testSharedPref_getSharedPrefAccessed() {
+        val mainActivity = MainActivity()
+        mainActivity.sharedPreferenceHandler = sharedPreferenceMock
+
+        mainActivity.getSavedLocalizationString()
+
+        verify(sharedPreferenceMock, times(1)).getLocalizationString(mainActivity)
+    }
+
+    @Test
+    fun testSharedPref_setSharedPrefAccessed() {
+        val mainActivity = MainActivity()
+
+        mainActivity.sharedPreferenceHandler = sharedPreferenceMock
+        mainActivity.setSavedLocalizationString(Constants.SharedPreferenceConstants.LOCALIZATION_RU)
+
+        verify(sharedPreferenceMock, times(1)).setLocalizationString(mainActivity, Constants.SharedPreferenceConstants.LOCALIZATION_RU)
+    }
+}
