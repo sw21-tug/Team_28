@@ -71,6 +71,17 @@ class MainActivityInstrumentedTest {
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
     }
 
+
+    @Test
+    fun button_SpeedOfMoving() {
+        onView(withId(R.id.btn_speed_of_moving))
+                .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_speed_of_moving))
+                .check(matches(withText("Speed of moving")))
+    }
+
+
     @After
     fun cleanUp() {
         Intents.release()

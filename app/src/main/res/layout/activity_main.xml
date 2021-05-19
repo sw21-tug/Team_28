@@ -91,6 +91,33 @@
                     android:onClick="navigateTo"/>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_speed_of_moving"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/ic_speed_of_moving"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    app:srcCompat="@drawable/ic_map"
+                    tools:ignore="VectorDrawableCompat"
+                    android:contentDescription="@string/find_me"
+                    app:tint="@color/primary"/>
+
+                <Button
+                    android:id="@+id/btn_speed_of_moving"
+                    android:text="@string/find_me"
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                    android:onClick="navigateTo"/>
+
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
