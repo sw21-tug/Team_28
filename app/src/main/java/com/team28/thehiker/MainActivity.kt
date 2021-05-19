@@ -99,6 +99,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     return
                 }
             }
+            R.id.btn_pedometer -> {
+                intent = Intent(this, PedometerActivity::class.java)
+            }
             else -> {
                 if(permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, TestActivity::class.java)
