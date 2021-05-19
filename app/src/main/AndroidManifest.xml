@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.team28.thehiker">
 
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
@@ -15,6 +16,7 @@
             android:theme="@style/Theme.TheHiker">
         <activity android:name=".TemperatureActivity">
         </activity>
+
         <activity android:name=".SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,10 +25,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <activity android:name=".HumidityActivity"></activity>
         <activity android:name=".PedometerActivity" />
         <activity android:name=".AltitudeActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".TestActivity" />
+
         <service
             android:name=".HikerLocationService"
             android:enabled="true"
@@ -35,9 +42,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".FindMeActivity"
-            android:label="@string/title_activity_position_on_map"/>
+            android:label="@string/title_activity_position_on_map" />
     </application>
 
 </manifest>

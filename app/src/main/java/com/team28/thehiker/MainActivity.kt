@@ -13,14 +13,14 @@ import android.provider.Settings
 import android.view.MenuItem
 import android.transition.Visibility
 import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.Permissions.PermissionHandler
@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
     var permissionStatus = false
+    lateinit var humidityWrapper: HumidityWrapper
     lateinit var temperatureWrapper :TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +56,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         checkPermissions()
         
         val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        humidityWrapper = HumidityWrapper(sensorManager)
+        decidedButtonHumidityShown()
         temperatureWrapper = TemperatureWrapper(sensorManager)
 
         decidedButtonsShown()
@@ -117,6 +121,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     return
                 }
             }
+            R.id.btn_humidity -> {
+                intent = Intent(this, HumidityActivity::class.java)
+            }
             R.id.btn_temperature ->{
                 intent = Intent(this, TemperatureActivity::class.java)
                 val temperature : Double? = temperatureWrapper.getTemperature()
@@ -161,6 +168,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             popupMenu.show()
         }
         return true
+    }
+
+    fun decidedButtonHumidityShown(){
+        //decide whether to show the humidity button
+        val humidityButton : LinearLayout = findViewById(R.id.ll_humidity)
+        if(humidityWrapper.isHumiditySensorAvailable()){
+            humidityButton.visibility = View.VISIBLE
+        }else{
+            humidityButton.visibility = View.GONE
+        }
+
+        humidityButton.invalidate()
     }
 
     fun getSavedLocalizationString() : String? {

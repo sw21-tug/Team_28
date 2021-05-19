@@ -2,8 +2,12 @@
     <string name="app_name" translatable="false">TheHiker</string>
     <string name="app_title" translatable="false">The Hiker</string>
     <string name="splashscreen_descriptor">cartoon_nature</string>
+
+    <string name="humidity_title">Humidity</string>
     <string name="altitude_title">Your Altitude:</string>
+
     <string name="altitude_userinfo">*altitude above sea level is displayed in meters</string>
+    <string name="humidity_userinfo">*relative humidity in percent</string>
     <string name="altitude">Altitude</string>
     <string name="find_me">Find me</string>
     <string name="pedometer">Pedometer</string>
@@ -31,4 +35,5 @@
     <string name="map_logo">Map logo</string>
     <string name="temperature">Temperature</string>
     <string name="temperature_title">Current Temperature:</string>
+    <string name="humidity">Humidity Icon</string>
 </resources>
