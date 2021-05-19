@@ -31,24 +31,22 @@ import java.util.*
  */
 @RunWith(AndroidJUnit4::class)
 class PedometerInstrumentedTests {
+
     @Test
     fun useAppContext() {
-        // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.team28.thehiker", appContext.packageName)
     }
+
     @get:Rule
     var activityRule: ActivityScenarioRule<PedometerActivity>
-            = ActivityScenarioRule<PedometerActivity>(PedometerActivity::class.java)
+            = ActivityScenarioRule(PedometerActivity::class.java)
 
     @Mock
     private var sensorManager:SensorManager? = null
 
     @Mock
     private var day : Long = 42
-
-
-
 
     @Before
     fun setUp() {
@@ -80,17 +78,6 @@ class PedometerInstrumentedTests {
     }
 
     @Test
-    fun onCreateResetSteps()
-    {
-        mockStepsWithTimeStamp()
-        activityRule.scenario.onActivity {
-            it.checkIfNewDay()
-            it.updatePedometerView()
-        }
-        onView(withId(R.id.txtViewSteps)).check(matches(withText("0")))
-    }
-
-    @Test
     fun onCreateDontResetSteps()
     {
         mockStepsWithTimeStampNow()
@@ -102,7 +89,7 @@ class PedometerInstrumentedTests {
     }
 
     private fun mockFiveSteps() {
-        var mockEvent  : SensorEvent = createMockStepEvent(1)
+        val mockEvent  : SensorEvent = createMockStepEvent(1)
         for(i in 1..5)
         {
             activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
@@ -111,7 +98,7 @@ class PedometerInstrumentedTests {
 
 
     private fun mockStepsWithTimeStamp() {
-        var mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, day)
+        val mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, day)
         for(i in 1..5)
         {
             activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
@@ -119,7 +106,7 @@ class PedometerInstrumentedTests {
     }
 
     private fun mockStepsWithTimeStampNow() {
-        var mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, Calendar.getInstance().timeInMillis)
+        val mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, Calendar.getInstance().timeInMillis)
 
         for(i in 1..5)
         {
@@ -132,21 +119,9 @@ class PedometerInstrumentedTests {
         Intents.release()
     }
 
-    private fun getMockStepSensor() : Sensor {
-        val mockSensor : Sensor = Mockito.mock(Sensor::class.java)
-        Mockito.`when`(mockSensor.type).thenReturn(Sensor.TYPE_STEP_DETECTOR)
-        return mockSensor
-    }
-
-    private fun getMockNoStepSensor() : Sensor {
-        val mockSensor : Sensor = Mockito.mock(Sensor::class.java)
-        Mockito.`when`(mockSensor.type).thenReturn(null)
-        return mockSensor
-    }
-
     private fun createMockStepEvent(step : Int) : SensorEvent{
-        var mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
-        var float_array = FloatArray(3)
+        val mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
+        val float_array = FloatArray(3)
 
         float_array[0] = step.toFloat()
 
@@ -159,8 +134,8 @@ class PedometerInstrumentedTests {
     }
 
     private fun createMockStepWithTimeStamp(step : Int, time_stamp: Long) : SensorEvent{
-        var mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
-        var float_array = FloatArray(3)
+        val mockEvent : SensorEvent = Mockito.mock(SensorEvent::class.java)
+        val float_array = FloatArray(3)
 
         float_array[0] = step.toFloat()
 
@@ -175,6 +150,4 @@ class PedometerInstrumentedTests {
 
         return mockEvent
     }
-
-
 }

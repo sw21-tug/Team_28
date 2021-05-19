@@ -66,8 +66,8 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
     }
 
     fun updatePedometerView() {
-        val steps_text = findViewById<TextView>(R.id.txtViewSteps)
-        steps_text.text = stepsTaken.toString()
+        val stepsText = findViewById<TextView>(R.id.txtViewSteps)
+        stepsText.text = stepsTaken.toString()
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -95,13 +95,13 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         val stringToParse = sharedPreferenceHandler.getLastStepCountUpdate(this)
 
         if (stringToParse == null) {
-            var default = Calendar.getInstance()
+            val default = Calendar.getInstance()
             default.set(Calendar.YEAR, 1970)
             return default
         }
 
         if (stringToParse == Constants.SharedPreferenceConstants.LAST_STEPCOUNT_DEFAULT) {
-            var default = Calendar.getInstance()
+            val default = Calendar.getInstance()
             default.set(Calendar.YEAR, 1970)
             return default
         }
@@ -112,7 +112,6 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         val cal = Calendar.getInstance()
         cal.set(Calendar.DAY_OF_YEAR, day)
         cal.set(Calendar.YEAR, year)
-
 
         return cal
     }
@@ -126,4 +125,10 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         sharedPreferenceHandler.setLastStepCountUpdate(this, saveAs)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        checkIfNewDay()
+        updatePedometerView()
+    }
 }
