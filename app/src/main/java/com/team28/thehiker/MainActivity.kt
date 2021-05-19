@@ -75,6 +75,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.btn_position_on_map -> {
                 intent = Intent(this, FindMeActivity::class.java)
             }
+            R.id.btn_pedometer -> {
+                intent = Intent(this, PedometerActivity::class.java)
+            }
             else -> {
                 intent = Intent(this, TestActivity::class.java)
             }
