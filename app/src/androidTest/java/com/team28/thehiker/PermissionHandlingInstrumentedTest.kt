@@ -1,5 +1,6 @@
 package com.team28.thehiker
 
+import android.content.Context
 import android.os.Build
 import androidx.test.InstrumentationRegistry.getTargetContext
 import androidx.test.espresso.Espresso.onView
@@ -15,6 +16,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,7 +27,6 @@ class PermissionHandlingInstrumentedTest {
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
-
 
     fun grantPermission() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -45,15 +46,13 @@ class PermissionHandlingInstrumentedTest {
         val denyPermission = UiDevice.getInstance(instrumentation).findObject(UiSelector().text(
                 when {
                    Build.VERSION.SDK_INT == 23 -> "Deny"
-                   Build.VERSION.SDK_INT <= 28 -> "Deny"
+                   Build.VERSION.SDK_INT <= 28 -> "DENY"
                    Build.VERSION.SDK_INT == 29 -> "Deny"
                    else -> "Deny"
                 }))
         if(denyPermission.exists())
             denyPermission.click()
     }
-
-
 
     @Test
     fun a_testMainScreenWithoutPermission(){
