@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 import android.telephony.SmsManager
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.*
 
@@ -21,14 +22,16 @@ class SMSWrapperTest {
         verify(smsMock, never()).sendTextMessage(anyString(), any(), anyString(), any(), any())
 
         smsWrapper.start()
-        verify(smsMock, after(3 * UPDATE_INTERVAL).atLeast(3)).sendTextMessage(numbers[0], any(), anyString(), any(), any())
-        verify(smsMock, after(3 * UPDATE_INTERVAL).atLeast(3)).sendTextMessage(numbers[1], any(), anyString(), any(), any())
-        verify(smsMock, after(3 * UPDATE_INTERVAL).atLeast(6)).sendTextMessage(anyString(), any(), anyString(), any(), any())
+        Thread.sleep(3 * UPDATE_INTERVAL)
+        verify(smsMock, atLeast(3)).sendTextMessage(ArgumentMatchers.eq(numbers[0]), any(), anyString(), any(), any())
+        verify(smsMock, atLeast(3)).sendTextMessage(ArgumentMatchers.eq(numbers[1]), any(), anyString(), any(), any())
+        verify(smsMock, atLeast(6)).sendTextMessage(anyString(), any(), anyString(), any(), any())
 
         smsWrapper.stop()
-        verify(smsMock, after(2 * UPDATE_INTERVAL).atMost(5)).sendTextMessage(numbers[0], any(), anyString(), any(), any())
-        verify(smsMock, after(2 * UPDATE_INTERVAL).atMost(5)).sendTextMessage(numbers[1], any(), anyString(), any(), any())
-        verify(smsMock, after(2 * UPDATE_INTERVAL).atMost(10)).sendTextMessage(anyString(), any(), anyString(), any(), any())
+        Thread.sleep(2 * UPDATE_INTERVAL)
+        verify(smsMock, atMost(5)).sendTextMessage(ArgumentMatchers.eq(numbers[0]), any(), anyString(), any(), any())
+        verify(smsMock, atMost(5)).sendTextMessage(ArgumentMatchers.eq(numbers[1]), any(), anyString(), any(), any())
+        verify(smsMock, atMost(10)).sendTextMessage(anyString(), any(), anyString(), any(), any())
     }
     
 }
