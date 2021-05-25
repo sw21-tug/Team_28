@@ -1,4 +1,4 @@
-package com.team28.thehiker
+package com.team28.thehiker.features.humidity
 
 import android.hardware.Sensor
 import android.hardware.SensorManager
@@ -11,7 +11,6 @@ open class HumidityWrapper(private var sensorManager: SensorManager) {
     }
 
     open fun isHumiditySensorAvailable() : Boolean{
-
         return humiditySensor != null
     }
 }

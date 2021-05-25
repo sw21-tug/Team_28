@@ -1,9 +1,10 @@
-package com.team28.thehiker
+package com.team28.thehiker.features.sosmessage
 
 import android.location.Location
 import android.telephony.SmsManager
+import com.team28.thehiker.location.HikerLocationCallback
 
-class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: List<String>) : HikerLocationCallback{
+class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: List<String>) : HikerLocationCallback {
 
     private var thread : Thread
     private val message = "This is a placeholder message: [Chuckles] I'm in danger"

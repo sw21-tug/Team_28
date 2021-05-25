@@ -1,4 +1,4 @@
-package com.team28.thehiker.Permissions
+package com.team28.thehiker.permissions
 
 import android.app.Activity
 

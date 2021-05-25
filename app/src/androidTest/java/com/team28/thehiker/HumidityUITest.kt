@@ -6,6 +6,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.team28.thehiker.features.humidity.HumidityActivity
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito

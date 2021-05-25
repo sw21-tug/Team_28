@@ -3,6 +3,7 @@ package com.team28.thehiker
 
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import com.team28.thehiker.features.humidity.HumidityWrapper
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test

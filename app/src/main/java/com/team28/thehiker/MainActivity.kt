@@ -2,7 +2,6 @@ package com.team28.thehiker
 
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -11,20 +10,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
-import android.transition.Visibility
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
-import androidx.annotation.VisibleForTesting
-import com.team28.thehiker.Constants.Constants
-import com.team28.thehiker.Permissions.PermissionHandler
-import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import com.team28.thehiker.constants.Constants
+import com.team28.thehiker.features.altitude.AltitudeActivity
+import com.team28.thehiker.features.findme.FindMeActivity
+import com.team28.thehiker.features.humidity.HumidityActivity
+import com.team28.thehiker.features.humidity.HumidityWrapper
+import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.temperature.TemperatureActivity
+import com.team28.thehiker.features.temperature.TemperatureWrapper
+import com.team28.thehiker.permissions.PermissionHandler
+import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import com.team28.thehiker.language.LanguageSelector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_settings.*
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var permissionHandler : PermissionHandler
     var permissionStatus = false
     lateinit var humidityWrapper: HumidityWrapper
-    lateinit var temperatureWrapper :TemperatureWrapper
+    lateinit var temperatureWrapper : TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                         permissionHandler.askUserForPermissions(this)
                         if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                            showdialog()
+                            showDialog()
                         }
                         return
                 }
@@ -116,7 +118,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                     permissionHandler.askUserForPermissions(this)
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showdialog()
+                        showDialog()
                     }
                     return
                 }
@@ -133,12 +135,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent = Intent(this, PedometerActivity::class.java)
             }
             else -> {
-                if(permission == PackageManager.PERMISSION_GRANTED) {
-                    intent = Intent(this, TestActivity::class.java)
-                } else {
-                    permissionHandler.askUserForPermissions(this)
-                    return
-                }
+                intent = Intent(this, MainActivity::class.java)
             }
         }
         startActivity(intent)
@@ -149,8 +146,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val popupMenu = PopupMenu(this, findViewById(R.id.language))
             popupMenu.menuInflater.inflate(R.menu.popup_menu_language, popupMenu.menu)
 
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                when(item.itemId) {
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { menuItem ->
+                when(menuItem.itemId) {
                     R.id.popup_russian -> {
                         LanguageSelector.setLocaleToRussian(this)
                         setSavedLocalizationString("ru")
@@ -190,8 +187,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler.setLocalizationString(this, localization)
     }
 
-
-    fun showdialog() {
+    fun showDialog() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri

@@ -36,4 +36,5 @@
     <string name="temperature">Temperature</string>
     <string name="temperature_title">Current Temperature:</string>
     <string name="humidity">Humidity Icon</string>
+    <string name="default_no_sensor_data_yet" translatable="false">---</string>
 </resources>
