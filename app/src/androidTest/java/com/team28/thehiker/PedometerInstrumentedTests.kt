@@ -1,7 +1,6 @@
 package com.team28.thehiker
 
 import android.content.Context
-import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorManager
 import android.location.Location
@@ -14,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.team28.thehiker.features.pedometer.PedometerActivity
 import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
@@ -25,7 +25,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import java.lang.reflect.Field
-import java.time.*
 import java.util.*
 import kotlin.concurrent.thread
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AltitudeActivity">
+    tools:context=".features.altitude.AltitudeActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/primary" />
-        android:contentDescription="TODO" />
 
     <TextView
         android:layout_width="match_parent"
@@ -52,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         android:gravity="center_horizontal"
-        android:hint="---"/>
+        android:hint="@string/default_no_sensor_data_yet"/>
 
     <TextView
         android:id="@+id/userInfo_text"

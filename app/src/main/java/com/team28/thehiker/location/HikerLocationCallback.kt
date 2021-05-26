@@ -1,4 +1,4 @@
-package com.team28.thehiker
+package com.team28.thehiker.location
 
 import android.location.Location
 

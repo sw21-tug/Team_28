@@ -1,4 +1,4 @@
-package com.team28.thehiker
+package com.team28.thehiker.features.pedometer
 
 import android.content.ComponentName
 import android.content.Context
@@ -14,8 +14,9 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.team28.thehiker.Constants.Constants
-import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import com.team28.thehiker.constants.Constants
+import com.team28.thehiker.R
+import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import java.util.*
 
 

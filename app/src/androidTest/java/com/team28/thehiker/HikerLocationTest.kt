@@ -8,6 +8,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ServiceTestRule
+import com.team28.thehiker.location.HikerLocationCallback
+import com.team28.thehiker.location.HikerLocationService
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -54,7 +56,7 @@ class HikerLocationTest {
         MockitoAnnotations.initMocks(this)
 
         // bind service and retrieve service object from binder
-        val binder = serviceRule.bindService(Intent(ApplicationProvider.getApplicationContext(),HikerLocationService::class.java))
+        val binder = serviceRule.bindService(Intent(ApplicationProvider.getApplicationContext(), HikerLocationService::class.java))
         service = (binder as HikerLocationService.HikerLocationBinder).getService()
 
         //add location callback

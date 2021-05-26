@@ -53,7 +53,6 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     app:srcCompat="@drawable/ic_altitude"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/altitude"
@@ -63,8 +62,7 @@
                     android:id="@+id/btn_altitude"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:onClick="navigateTo"
-                    android:text="@string/altitude"
-                    android:textColor="?android:attr/colorBackground" />
+                    android:text="@string/altitude"/>
             </LinearLayout>
 
             <LinearLayout
@@ -80,7 +78,6 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     android:contentDescription="@string/temperature"
                     app:srcCompat="@drawable/ic_temperature"
                     app:tint="@color/primary"
@@ -106,7 +103,6 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     app:srcCompat="@drawable/ic_map"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/find_me"
@@ -116,8 +112,7 @@
                     android:id="@+id/btn_position_on_map"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:onClick="navigateTo"
-                    android:text="@string/find_me"
-                    android:textColor="?android:attr/colorBackground" />
+                    android:text="@string/find_me"/>
 
             </LinearLayout>
 
@@ -134,7 +129,6 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     app:srcCompat="@drawable/ic_baseline_directions_walk_24"
                     android:contentDescription="@string/pedo_meter_image" />
 
@@ -161,11 +155,9 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     android:contentDescription="@string/humidity"
                     app:srcCompat="?android:attr/textSelectHandle"
-                    app:tint="@color/primary"
-                    tools:ignore="VectorDrawableCompat" />
+                    app:tint="@color/primary"/>
 
                 <Button
                     android:id="@+id/btn_humidity"
