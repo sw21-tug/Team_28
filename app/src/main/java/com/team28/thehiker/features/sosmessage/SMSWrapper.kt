@@ -51,7 +51,7 @@ class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: Lis
         else
             stringBuilder.appendLine(context.getString(R.string.sms_message_emergency_over))
 
-        stringBuilder.append("https://www.google.com/maps/@").append(location.latitude).append(",").append(location.longitude).append("z")
+        stringBuilder.append("https://www.google.com/maps/search/?api=1&query=").append(location.latitude).append(",").append(location.longitude)
                 .append("  ")
                 .append("(").append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE)).append(")")
 

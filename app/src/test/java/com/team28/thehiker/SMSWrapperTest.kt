@@ -22,14 +22,11 @@ class SMSWrapperTest {
     @Test
     fun testStartStopInterval(){
         val testLocation = mock(Location::class.java)
-
-        val smsActivity = SosMessageActivity()
-
         `when`(testLocation.latitude)
-            .thenReturn(10.0)
+            .thenReturn(51.9901615)
 
         `when`(testLocation.longitude)
-            .thenReturn(20.0)
+            .thenReturn(20.7911654)
 
         `when`(activity.getString(R.string.sms_message_sos))
             .thenReturn("SOS!")
