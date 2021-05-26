@@ -16,6 +16,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.team28.thehiker.constants.Constants
 import com.team28.thehiker.R
+import com.team28.thehiker.location.HikerLocationCallback
+import com.team28.thehiker.location.HikerLocationService
 import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import java.util.*
 
