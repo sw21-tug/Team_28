@@ -1,14 +1,16 @@
 package com.team28.thehiker.features.sosmessage
 
+import android.app.Activity
 import android.location.Location
 import android.telephony.SmsManager
+import com.team28.thehiker.R
 import com.team28.thehiker.location.HikerLocationCallback
+import java.lang.StringBuilder
+import java.util.*
 
-class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: List<String>) : HikerLocationCallback {
+class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: List<String>, val context: Activity) : HikerLocationCallback {
 
     private var thread : Thread
-    private val message = "This is a placeholder message: [Chuckles] I'm in danger"
-    private val messageFineAgain = "This is a placeholder message: [Chuckles] I'm not in danger anymore"
     private lateinit var location : Location
 
     private var stopAlarm = false
@@ -18,7 +20,7 @@ class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: Lis
         thread = Thread(Runnable {
             while (!stopAlarm) {
                 numbers.forEach {
-                    smsManager.sendTextMessage(it, null, "$message $location", null, null)
+                    smsManager.sendTextMessage(it, null, getGoogleMapsLocationMessage(true), null, null)
                 }
                 Thread.sleep(delayMS)
             }
@@ -28,7 +30,7 @@ class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: Lis
     fun stop() {
         stopAlarm = true
         numbers.forEach {
-            smsManager.sendTextMessage(it, null, messageFineAgain, null, null)
+            smsManager.sendTextMessage(it, null, getGoogleMapsLocationMessage(), null, null)
         }
     }
 
@@ -40,7 +42,19 @@ class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers: Lis
         }
     }
 
-    fun getMessage() : String{
-        return message
+    fun getGoogleMapsLocationMessage(isEmergencyStart : Boolean = false) : String {
+        val stringBuilder = StringBuilder()
+        val calendar = Calendar.getInstance()
+
+        if (isEmergencyStart)
+            stringBuilder.appendLine(context.getString(R.string.sms_message_sos))
+        else
+            stringBuilder.appendLine(context.getString(R.string.sms_message_emergency_over))
+
+        stringBuilder.append("https://www.google.com/maps/@").append(location.latitude).append(",").append(location.longitude).append("z")
+                .append("  ")
+                .append("(").append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE)).append(")")
+
+        return stringBuilder.toString()
     }
 }
