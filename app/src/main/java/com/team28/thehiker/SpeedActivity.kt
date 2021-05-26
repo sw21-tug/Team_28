@@ -51,7 +51,6 @@ class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallb
     fun getLocationService()  : HikerLocationService = locationService
 
     override fun onServiceDisconnected(name: ComponentName?) {
-        Log.d("SpeedActivity", "onServiceDisconnected")
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -60,15 +59,9 @@ class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallb
     }
 
     override fun notifyLocationUpdate(location: Location) {
-        Log.d("SpeedActivity", "SpeedActivity::notifyLocationUpdate")
         if(previousLocation == null) {
-            Log.d("SpeedActivity", "SpeedActivity::notifyLocationUpdate set previvousLocation")
             previousLocation = location
-            //return
-            Log.d("SpeedActivity long", previousLocation!!.longitude.toString())
-            Log.d("SpeedActivity lat", previousLocation!!.latitude.toString())
         } else {
-            Log.d("SpeedActivity", "SpeedActivity::notifyLocationUpdate calculateSpeed")
             calculateSpeed(previousLocation!!, location)
             previousLocation = location
         }
