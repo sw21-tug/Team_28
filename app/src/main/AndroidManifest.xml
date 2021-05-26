@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheHiker">
-        <activity android:name=".SplashscreenActivity">
-            <intent-filter>
+            <activity android:name=".SplashscreenActivity">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,16 +24,19 @@
         <activity android:name=".TestActivity"/>
         <activity android:name=".StepCountHistoryActivity"/>
 
-        <service
-            android:name=".HikerLocationService"
-            android:enabled="true"
-            android:foregroundServiceType="location" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-        <activity
-            android:name=".FindMeActivity"
-            android:label="@string/title_activity_position_on_map"/>
-    </application>
+
+
+        <service
+                android:name=".HikerLocationService"
+                android:enabled="true"
+                android:foregroundServiceType="location" />
+
+            <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/google_maps_key" />
+            <activity
+                android:name=".FindMeActivity"
+                android:label="@string/title_activity_position_on_map"/>
+        </application>
 </manifest>
