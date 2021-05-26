@@ -1,11 +1,13 @@
 package com.team28.thehiker
 
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.team28.thehiker.Constants.Constants
@@ -40,6 +42,13 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
 
         getSavedStepCount()
         updatePedometerView()
+
+    }
+
+    fun openHistory(view: View)
+    {
+        if(view.id == R.id.button_history)
+            startActivity(Intent(this, StepCountHistoryActivity::class.java))
     }
 
     fun checkIfNewDay() {

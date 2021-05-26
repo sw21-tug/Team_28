@@ -6,6 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/button_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pedometer_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="openHistory"/>
+
     <View
         android:id="@+id/dividerPedometer"
         android:layout_width="match_parent"
