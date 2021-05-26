@@ -10,8 +10,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.team28.thehiker.Constants.Constants
 import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -51,6 +55,8 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
             startActivity(Intent(this, StepCountHistoryActivity::class.java))
     }
 
+    inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
+
     fun checkIfNewDay() {
         val last = getLastStepCountUpdate()
         val now = Calendar.getInstance()
@@ -62,6 +68,28 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
         val nowEventYear = now.get(Calendar.YEAR)
 
         if (nowEventDayOfYear > lastEventDayOfYear && nowEventYear >= lastEventYear) {
+            val gson = Gson()
+            var step_history_json = sharedPreferenceHandler.getStepCountHistory(this)
+
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+            val formatter: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val date: String = formatter.format(calendar.time)
+            var step_history = mutableListOf<String>()
+
+            if(step_history_json != "")
+            {
+                val type = genericType<MutableList<String>>()
+                step_history = gson.fromJson(step_history_json, type)
+
+                while (step_history.size > 19)
+                    step_history.removeAt(0)
+            }
+
+            step_history.add(date + "_" + stepsTaken)
+            step_history_json = gson.toJson(step_history)
+            sharedPreferenceHandler.setStepCountHistory(this, step_history_json)
+
             stepsTaken = 0
             setSavedStepCount()
         }

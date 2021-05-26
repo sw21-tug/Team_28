@@ -18,4 +18,8 @@ interface ISharedPreferenceHandler {
 
     fun setLastStepCountUpdate(context: Activity, lastStepUpdate: String)
 
+    fun setStepCountHistory(context: Activity, history: String)
+
+    fun getStepCountHistory(context: Activity) : String?
+
 }

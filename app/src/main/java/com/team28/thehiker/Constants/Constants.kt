@@ -9,6 +9,8 @@ class Constants {
         const val LAST_STEPCOUNT_DEFAULT = "00"
         const val LOCAL_DATE = "date"
         const val STEP_COUNT = "Step Count"
+        const val STEP_HISTORY = "step_history"
+        const val STEP_HISTORY_DEFAULT = ""
         const val LOCALIZATION_DEFAULT = "en"
         const val LOCALIZATION = "Localization"
 

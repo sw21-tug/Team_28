@@ -47,4 +47,17 @@ class SharedPreferenceHandler : ISharedPreferenceHandler {
         }
     }
 
+    override fun setStepCountHistory(context: Activity, history: String) {
+        val sharedPref = context.applicationContext.getSharedPreferences("hiker_preferences",Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString(Constants.SharedPreferenceConstants.STEP_HISTORY, history)
+            apply()
+        }
+    }
+
+    override fun getStepCountHistory(context: Activity): String? {
+        val sharedPref = context.applicationContext.getSharedPreferences("hiker_preferences",Context.MODE_PRIVATE)
+        return sharedPref.getString(Constants.SharedPreferenceConstants.STEP_HISTORY, Constants.SharedPreferenceConstants.STEP_HISTORY_DEFAULT)
+    }
+
 }
