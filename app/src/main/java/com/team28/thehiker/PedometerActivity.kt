@@ -26,11 +26,13 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener,
     private lateinit var locationService : HikerLocationService
     fun getLocationService() : HikerLocationService = locationService
 
-    private var locationOld: Location? = null
+
     private lateinit var sensorManager: SensorManager
     private lateinit var stepSensor: Sensor
+    var locationOld: Location? = null
     var sensorPresent: Boolean = false
     var stepsTaken: Int = 0
+    var faultbackStepsLengthThreshold = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -153,7 +155,7 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener,
         if(locationOld == null)
             locationOld = location
 
-        if(locationOld!!.distanceTo(location) < 5)
+        if(locationOld!!.distanceTo(location) < faultbackStepsLengthThreshold)
             return
 
         stepsTaken += (locationOld!!.distanceTo(location) / 0.7).toInt()
