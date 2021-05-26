@@ -160,7 +160,7 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun onButtonClick_SOS_correctActivityStarted() {
-        onView(withId(R.id.btn_altitude))
+        onView(withId(R.id.btn_sos))
             .perform(click())
 
         Intents.intended(hasComponent(SosMessageActivity::class.java.name), times(1))

@@ -130,7 +130,8 @@
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
                     app:srcCompat="@drawable/ic_baseline_directions_walk_24"
-                    android:contentDescription="@string/pedo_meter_image" />
+                    android:contentDescription="@string/pedo_meter_image"
+                    app:tint="@color/primary"/>
 
                 <Button
                     android:id="@+id/btn_pedometer"
@@ -165,6 +166,34 @@
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:onClick="navigateTo"/>
             </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/ll_sos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="20dp">
+
+                <ImageView
+                        android:id="@+id/imageViewSos"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="20dp"
+                        app:srcCompat="@drawable/ic_baseline_add_ic_call_24"
+                        android:contentDescription="@string/sos_btn"
+                        app:tint="@color/primary" />
+
+                <Button
+                        android:id="@+id/btn_sos"
+                        style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="navigateTo"
+                        android:text="@string/sos_btn" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

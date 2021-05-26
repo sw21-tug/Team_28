@@ -23,6 +23,7 @@ import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
 import com.team28.thehiker.permissions.PermissionHandler
@@ -133,6 +134,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.btn_pedometer -> {
                 intent = Intent(this, PedometerActivity::class.java)
+            }
+            R.id.btn_sos -> {
+                intent = Intent(this, SosMessageActivity::class.java)
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
