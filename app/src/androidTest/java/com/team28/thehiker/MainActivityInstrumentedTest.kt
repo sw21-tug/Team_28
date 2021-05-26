@@ -1,5 +1,7 @@
 package com.team28.thehiker
 
+
+import android.widget.Button
 import android.content.Intent
 import android.os.Bundle
 import androidx.test.espresso.Espresso.onView
@@ -19,8 +21,11 @@ import org.mockito.Mock
 import org.mockito.Mockito
 
 
+
 @RunWith(AndroidJUnit4::class)
 class MainActivityInstrumentedTest {
+    @Mock
+    var humWrapper = Mockito.mock(HumidityWrapper::class.java)
 
 
     private val TEMP_TEST_VALUE = 22.2
@@ -35,6 +40,15 @@ class MainActivityInstrumentedTest {
     @Before
     fun setUp() {
         Intents.init()
+    }
+
+    @Test
+    fun button_humidity() {
+        onView(withId(R.id.btn_humidity))
+            .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_humidity))
+            .check(matches(withText("Humidity")))
     }
 
     @Test
@@ -93,12 +107,44 @@ class MainActivityInstrumentedTest {
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
     }
 
+
+
+    @Test
+    fun button_HumidityIsNotAvailable() {
+        Mockito.`when`(humWrapper.isHumiditySensorAvailable()).thenReturn(false)
+        activityRule.scenario.onActivity {
+            it.humidityWrapper = humWrapper
+            it.decidedButtonHumidityShown()
+        }
+
+        onView(withId(R.id.btn_humidity))
+            .check(matches(not(isDisplayed())))
+
+    }
+    @Test
+    fun buttonHumidityStartsCorrectActivity(){
+        Mockito.`when`(humWrapper.isHumiditySensorAvailable()).thenReturn(true)
+        activityRule.scenario.onActivity {
+            it.humidityWrapper = humWrapper
+            it.decidedButtonHumidityShown()
+        }
+
+        onView(withId(R.id.btn_humidity))
+            .perform(click())
+
+        Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
+
+    }
+
+
+
     @Test
     fun onButtonClick_Pedometer_correctActivityStarted() {
         onView(withId(R.id.btn_pedometer))
             .perform(click())
         Intents.intended(hasComponent(PedometerActivity::class.java.name), times(1))
     }
+
 
     @After
     fun cleanUp() {
