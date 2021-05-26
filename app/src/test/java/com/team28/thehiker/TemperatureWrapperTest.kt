@@ -3,6 +3,7 @@ package com.team28.thehiker
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorManager
+import com.team28.thehiker.features.temperature.TemperatureWrapper
 import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mockito.*

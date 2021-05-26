@@ -19,11 +19,7 @@ class LanguageSelector {
 
         private fun setLocale(context: Context, locale: Locale) {
             val config = Configuration(context.resources.configuration)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                config.setLocale(locale)
-            } else {
-                config.locale = locale
-            }
+            config.setLocale(locale)
             context.resources.updateConfiguration(config, context.resources.displayMetrics)
         }
     }

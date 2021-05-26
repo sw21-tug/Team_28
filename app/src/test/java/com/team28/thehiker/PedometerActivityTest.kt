@@ -1,12 +1,12 @@
 package com.team28.thehiker
 
-import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import java.time.LocalDate
 import java.util.*
 
 class PedometerActivityTest {

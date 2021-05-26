@@ -1,10 +1,10 @@
-package com.team28.thehiker.Permissions
+package com.team28.thehiker.permissions
 
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import com.team28.thehiker.Constants.Constants
+import com.team28.thehiker.constants.Constants
 
 class PermissionHandler : IPermissionHandler {
     override fun permissionsAlreadyGranted(context: Activity) : Boolean {

@@ -1,8 +1,9 @@
-package com.team28.thehiker
+package com.team28.thehiker.features.temperature
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.team28.thehiker.R
 
 class TemperatureActivity : AppCompatActivity() {
 

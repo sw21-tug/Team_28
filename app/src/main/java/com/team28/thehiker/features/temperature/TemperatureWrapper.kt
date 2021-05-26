@@ -1,4 +1,4 @@
-package com.team28.thehiker
+package com.team28.thehiker.features.temperature
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -14,7 +14,7 @@ open class TemperatureWrapper(private var sensorManager: SensorManager): SensorE
     init {
         temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
         if (temperatureSensor != null) {
-            sensorManager.registerListener(this, temperatureSensor, 1000);
+            sensorManager.registerListener(this, temperatureSensor, 1000)
         }
     }
 

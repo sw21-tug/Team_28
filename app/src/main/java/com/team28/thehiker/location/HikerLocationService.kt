@@ -1,4 +1,4 @@
-package com.team28.thehiker
+package com.team28.thehiker.location
 
 import android.annotation.SuppressLint
 import android.app.Service
@@ -7,8 +7,8 @@ import android.os.Binder
 import android.os.IBinder
 import android.os.Looper
 import com.google.android.gms.location.*
-import com.team28.thehiker.HikerLocationService.LocationConstants.LOCATION_UPDATE_FASTEST_INTERVAL
-import com.team28.thehiker.HikerLocationService.LocationConstants.LOCATION_UPDATE_INTERVAL
+import com.team28.thehiker.location.HikerLocationService.LocationConstants.LOCATION_UPDATE_FASTEST_INTERVAL
+import com.team28.thehiker.location.HikerLocationService.LocationConstants.LOCATION_UPDATE_INTERVAL
 
 class HikerLocationService : Service() {
 
@@ -57,7 +57,7 @@ class HikerLocationService : Service() {
     }
 
     inner class HikerLocationBinder : Binder() {
-        fun getService() :HikerLocationService {
+        fun getService() : HikerLocationService {
             return this@HikerLocationService
         }
     }

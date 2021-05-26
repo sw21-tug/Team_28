@@ -1,8 +1,6 @@
 package com.team28.thehiker
 
 
-import android.widget.Button
-import android.content.Intent
 import android.os.Bundle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -13,6 +11,13 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.team28.thehiker.features.altitude.AltitudeActivity
+import com.team28.thehiker.features.findme.FindMeActivity
+import com.team28.thehiker.features.humidity.HumidityActivity
+import com.team28.thehiker.features.humidity.HumidityWrapper
+import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.temperature.TemperatureActivity
+import com.team28.thehiker.features.temperature.TemperatureWrapper
 import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.*
 import org.junit.*
@@ -103,11 +108,8 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_position_on_map))
             .perform(click())
 
-        //TODO: this can be changed to real activities when implemented
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
     }
-
-
 
     @Test
     fun button_HumidityIsNotAvailable() {
@@ -135,8 +137,6 @@ class MainActivityInstrumentedTest {
         Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
 
     }
-
-
 
     @Test
     fun onButtonClick_Pedometer_correctActivityStarted() {
@@ -197,10 +197,10 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_temperature)).perform(click())
 
         Intents.intended(hasComponent(TemperatureActivity::class.java.name), times(1))
-        var intentFound: Boolean = false;
+        var intentFound = false
         Intents.getIntents().forEach {
             if (it.component != null && it.component!!.className == (TemperatureActivity::class.java.name)) {
-                intentFound = true;
+                intentFound = true
                 validateTemperatureExtras(it.extras)
             }
         }
