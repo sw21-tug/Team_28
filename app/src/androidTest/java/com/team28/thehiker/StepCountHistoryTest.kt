@@ -20,7 +20,7 @@ import org.junit.runner.RunWith
 class StepCountHistoryTest {
 
     @get:Rule
-    var activityRule = ActivityScenarioRule(AltitudeActivity::class.java)
+    var activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Before
     fun setUp() {
@@ -31,11 +31,12 @@ class StepCountHistoryTest {
     fun checkOldStepHistory() {
         //check the history of the last 20 days(?)
 
-        onView(withId(R.id.btn_altitude))
+        onView(withId(R.id.btn_pedometer)).perform(click())
+        onView(withId(R.id.button_history))
             .check(matches(isClickable()))
 
-        onView(withId(R.id.btn_altitude))
-            .check(matches(withText("Altitude")))
+        onView(withId(R.id.button_history))
+            .check(matches(withText("History")))
     }
 
     @Test
