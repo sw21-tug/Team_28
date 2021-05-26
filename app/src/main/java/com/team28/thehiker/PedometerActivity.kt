@@ -158,13 +158,17 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener,
         if(locationOld!!.distanceTo(location) < faultbackStepsLengthThreshold)
             return
 
-        stepsTaken += (locationOld!!.distanceTo(location) / 0.7).toInt()
+        stepsTaken += calculateSteps(locationOld!!.distanceTo(location))
 
         updatePedometerView()
 
         setLastStepCountUpdate(Calendar.getInstance())
         setSavedStepCount()
         locationOld = location
+    }
+
+    fun calculateSteps(distance : Float) : Int {
+        return (distance / 0.7).toInt()
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {

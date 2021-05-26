@@ -135,6 +135,13 @@ class PedometerInstrumentedTests {
     }
 
     @Test
+    fun testStepsCalculatedCorrect(){
+        activityRule.scenario.onActivity {
+            assertEquals(it.calculateSteps(10.0f), 14)
+        }
+    }
+
+    @Test
     fun gpsDataAvailable(){
         activityRule.scenario.onActivity { if(!it.sensorPresent) {
             assertEquals(it.getLocationService().javaClass, HikerLocationService::class.java)
