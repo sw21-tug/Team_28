@@ -4,6 +4,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.SystemClock
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.*
@@ -60,13 +61,14 @@ class SpeedTest {
             val service = speedActivity.getLocationService()
             service.getLocationProvider().setMockMode(true).addOnFailureListener { throw it }
             service.getLocationProvider().setMockLocation(location).addOnFailureListener { throw it }
+        }
 
-            Thread.sleep(2500) // wait for location update to arrive
+        Thread.sleep(3000) // wait for location update to arrive
 
+        activityRule.scenario.onActivity { speedActivity ->
             assertEquals(location.longitude, speedActivity.getPreviousLocation()!!.longitude , DOUBLE_COMPARE_DELTA)
             assertEquals(location.latitude, speedActivity.getPreviousLocation()!!.latitude , DOUBLE_COMPARE_DELTA)
         }
-
     }
 
     private fun createMockLocation(longitude : Double, latitude : Double) : Location {

@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallback {
 
-    private val previousLocation : Location? = null
+    private var previousLocation : Location? = null
 
     private lateinit var locationService : HikerLocationService
 
@@ -51,15 +51,27 @@ class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallb
     fun getLocationService()  : HikerLocationService = locationService
 
     override fun onServiceDisconnected(name: ComponentName?) {
-        TODO("Not yet implemented")
+        Log.d("SpeedActivity", "onServiceDisconnected")
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        TODO("Not yet implemented")
+        locationService = (service as HikerLocationService.HikerLocationBinder).getService()
+        locationService.addLocationCallback(this)
     }
 
     override fun notifyLocationUpdate(location: Location) {
-        TODO("Not yet implemented")
+        Log.d("SpeedActivity", "SpeedActivity::notifyLocationUpdate")
+        if(previousLocation == null) {
+            Log.d("SpeedActivity", "SpeedActivity::notifyLocationUpdate set previvousLocation")
+            previousLocation = location
+            //return
+            Log.d("SpeedActivity long", previousLocation!!.longitude.toString())
+            Log.d("SpeedActivity lat", previousLocation!!.latitude.toString())
+        } else {
+            Log.d("SpeedActivity", "SpeedActivity::notifyLocationUpdate calculateSpeed")
+            calculateSpeed(previousLocation!!, location)
+            previousLocation = location
+        }
     }
 
      fun getPreviousLocation() : Location? {
