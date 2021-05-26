@@ -40,7 +40,10 @@ class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallb
         val distance = location1.distanceTo(location2)
         val time = (location2.time - location1.time) / 1000
 
-        updateSpeed(((distance/time) * 3.6).toFloat())
+        if (time != 0L){
+            updateSpeed(((distance/time) * 3.6).toFloat())
+        }
+
     }
 
     override fun onDestroy() {
