@@ -143,6 +143,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.btn_pedometer -> {
                 intent = Intent(this, PedometerActivity::class.java)
             }
+            R.id.btn_speed_of_moving -> {
+                intent = Intent(this, SpeedActivity::class.java)
+            }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
             }

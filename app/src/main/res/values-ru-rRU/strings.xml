@@ -5,8 +5,11 @@
     <string name="altitude_title">Ваша высота:</string>
     <string name="altitude_userinfo">*высота над уровнем моря отображается в метрах</string>
     <string name="humidity_userinfo">*относительная влажность в процентах</string>
+    <string name="speed_title">Скорость перемещения:</string>
+    <string name="speed_userinfo">*скорость внутри помещения не является точной</string>
     <string name="altitude">высота</string>
     <string name="find_me">Найди меня</string>
+    <string name="speed_of_moving">Скорость</string>
     <string name="main_menu_header_image">изображение заголовка главного меню</string>
     <string name="next">Следующий</string>
     <string name="previous">Предыдущий</string>

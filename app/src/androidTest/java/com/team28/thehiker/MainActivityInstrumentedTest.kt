@@ -146,6 +146,17 @@ class MainActivityInstrumentedTest {
     }
 
 
+
+    @Test
+    fun button_SpeedOfMoving() {
+        onView(withId(R.id.btn_speed_of_moving))
+                .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_speed_of_moving))
+                .check(matches(withText("Speed")))
+    }
+
+
     @After
     fun cleanUp() {
         Intents.release()
