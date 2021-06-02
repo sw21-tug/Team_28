@@ -3,14 +3,20 @@ package com.team28.thehiker
 import android.location.Location
 import android.location.LocationManager
 import android.os.SystemClock
+import android.widget.Button
 import androidx.test.espresso.Espresso.*
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.sosmessage.SMSWrapper
 import com.team28.thehiker.features.sosmessage.SosMessageActivity
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -38,8 +44,6 @@ class SosActivityTest {
     @Captor
     private lateinit var locationCaptor: ArgumentCaptor<Location>
 
-
-
     @Before
     fun init(){
         //initialize mock objects and captors
@@ -57,7 +61,7 @@ class SosActivityTest {
         activityRule.scenario.onActivity { activity ->
             activity.injectWrapper(mockSmsWrapper)
             val service = activity.getLocationService()
-            service!!.getLocationProvider().setMockMode(true).addOnFailureListener { throw it }
+            service.getLocationProvider().setMockMode(true).addOnFailureListener { throw it }
             service.getLocationProvider().setMockLocation(mockLocation1).addOnFailureListener { throw it }
         }
 
@@ -74,6 +78,20 @@ class SosActivityTest {
 
         onView(ViewMatchers.withId(R.id.stop_sos_btn)).perform(click())
         verify(mockSmsWrapper, atLeastOnce()).stop()
+    }
+
+    @Test
+    fun button_sos() {
+        onView(ViewMatchers.withId(R.id.stop_sos_btn))
+            .check(ViewAssertions.matches(ViewMatchers.isClickable()))
+
+        onView(ViewMatchers.withId(R.id.stop_sos_btn))
+            .check(ViewAssertions.matches(ViewMatchers.withText("STOP SOS")))
+
+        activityRule.scenario.onActivity {
+            val button = it.findViewById<Button>(R.id.stop_sos_btn)
+            Assert.assertTrue(button.width == button.height)
+        }
     }
 
     private fun createMockLocation(altitude : Double) : Location {
