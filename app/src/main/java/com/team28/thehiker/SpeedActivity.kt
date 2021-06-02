@@ -37,8 +37,11 @@ class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallb
         val distance = location1.distanceTo(location2)
         val time = (location2.time - location1.time) / 1000
 
-        if (time != 0L){
-            updateSpeed(((distance/time) * 3.6).toFloat())
+        val speed = (distance/time) * 3.6.toFloat()
+        if (time != 0L && speed >= 0.0f){
+            updateSpeed(speed)
+        }else{
+            updateSpeed(0.0f)
         }
 
     }
