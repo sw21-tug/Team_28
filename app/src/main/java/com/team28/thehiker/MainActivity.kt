@@ -134,7 +134,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
             }
             R.id.btn_pedometer -> {
-                intent = Intent(this, PedometerActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, PedometerActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
+                        showPermissionAlertDialog("PHYSICAL_ACTIVITY")
+                    }
+                    return
+                }
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
