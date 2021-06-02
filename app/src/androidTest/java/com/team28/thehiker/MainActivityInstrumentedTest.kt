@@ -145,6 +145,12 @@ class MainActivityInstrumentedTest {
         Intents.intended(hasComponent(PedometerActivity::class.java.name), times(1))
     }
 
+    @Test
+    fun onButtonClick_SOS_NoNumbers_AlertDialogShown() { //TODO sos button and alert dialog instead of pedometer btn
+        onView(withId(R.id.btn_pedometer))
+                .perform(click())
+        onView(withId(R.id.btn_pedometer)).check(matches(isDisplayed()))
+    }
 
     @After
     fun cleanUp() {

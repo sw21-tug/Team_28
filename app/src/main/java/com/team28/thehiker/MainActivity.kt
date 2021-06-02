@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 
-                intent = Intent(this, MainActivity::class.java)
+                intent = Intent(this, MainActivity::class.java) //TODO revert to pedometer activity
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
@@ -225,12 +225,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         temperatureButton.invalidate()
     }
 
-    fun getNumbers() {
-        TODO("Not yet implemented")
+    fun getNumbers() : List<String?> {
+        return sharedPreferenceHandler.getNumbers(this)
     }
 
     fun setNumbers(numbers: List<String>) {
-        TODO("Not yet implemented")
+        sharedPreferenceHandler.setNumbers(this, numbers)
     }
 
 }
