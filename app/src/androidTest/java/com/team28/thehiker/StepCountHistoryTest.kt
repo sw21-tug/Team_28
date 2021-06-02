@@ -1,14 +1,20 @@
 package com.team28.thehiker
 
+import android.view.View
+import android.widget.ListView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.times
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.team28.thehiker.matchers.ListViewMatcher
+import junit.framework.Assert.assertTrue
+import org.hamcrest.Description
+import org.hamcrest.Matcher
+import org.hamcrest.TypeSafeMatcher
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -48,6 +54,20 @@ class StepCountHistoryTest {
     fun checkHistorySaved(){
         // check if step count history is saved when closing the app
     }
+
+    @Test
+
+    fun checkItems(){
+
+        onView(withId(R.id.btn_pedometer)).perform(click())
+        onView(withId(R.id.button_history)).perform(click())
+
+        onView (withId (android.R.id.list)).check (ViewAssertions.matches (ListViewMatcher (20)));
+
+    }
+
+
+
 
 
     @After
