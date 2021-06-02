@@ -1,27 +1,41 @@
 package com.team28.thehiker.features.pedometer
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.Location
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.team28.thehiker.constants.Constants
 import com.team28.thehiker.R
+import com.team28.thehiker.location.HikerLocationCallback
+import com.team28.thehiker.location.HikerLocationService
 import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import java.util.*
 
 
-class PedometerActivity  : AppCompatActivity(), SensorEventListener {
+class PedometerActivity  : AppCompatActivity(), SensorEventListener,
+    ServiceConnection, HikerLocationCallback {
 
     lateinit var sharedPreferenceHandler: SharedPreferenceHandler
+    private lateinit var locationService : HikerLocationService
+    fun getLocationService() : HikerLocationService = locationService
+
 
     private lateinit var sensorManager: SensorManager
     private lateinit var stepSensor: Sensor
-    private var sensorPresent: Boolean = false
+    var locationOld: Location? = null
+    var sensorPresent: Boolean = false
     var stepsTaken: Int = 0
+    var faultbackStepsLengthThreshold = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +50,8 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
 
         if (sensorPresent)
             sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        else
+            bindService(Intent(this, HikerLocationService::class.java), this, Context.BIND_AUTO_CREATE)
 
         checkIfNewDay()
 
@@ -131,5 +147,40 @@ class PedometerActivity  : AppCompatActivity(), SensorEventListener {
 
         checkIfNewDay()
         updatePedometerView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(this)
+    }
+
+    override fun notifyLocationUpdate(location: Location) {
+        if(locationOld == null)
+            locationOld = location
+
+        if(locationOld!!.distanceTo(location) < faultbackStepsLengthThreshold)
+            return
+
+        stepsTaken += calculateSteps(locationOld!!.distanceTo(location))
+
+        updatePedometerView()
+
+        setLastStepCountUpdate(Calendar.getInstance())
+        setSavedStepCount()
+        locationOld = location
+    }
+
+    fun calculateSteps(distance : Float) : Int {
+        return (distance / 0.7).toInt()
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        Log.d("PedometerActivity", "Service for Pedometer faultback Connected")
+        locationService = (service as HikerLocationService.HikerLocationBinder).getService()
+        locationService.addLocationCallback(this)
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        Log.d("PedometerActivity", "Service Disconnected")
     }
 }
