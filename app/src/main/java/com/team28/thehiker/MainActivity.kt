@@ -24,6 +24,7 @@ import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
 import com.team28.thehiker.permissions.PermissionHandler
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun navigateTo(view: View) {
         val intent: Intent
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
         when (view.id) {
             R.id.btn_altitude -> {
                 if(permission == PackageManager.PERMISSION_GRANTED) {
@@ -145,6 +147,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.btn_speed_of_moving -> {
                 intent = Intent(this, SpeedActivity::class.java)
+            }
+            R.id.btn_sos -> {
+                if(permission == PackageManager.PERMISSION_GRANTED &&
+                    permissionSMS == PackageManager.PERMISSION_GRANTED) {
+
+                    intent = Intent(this, SosMessageActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showDialog()
+                    }
+                    return
+                }
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
