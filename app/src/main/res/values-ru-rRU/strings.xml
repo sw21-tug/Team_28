@@ -28,4 +28,10 @@
 
     <string name="sms_message_sos">SOS!</string>
     <string name="sms_message_emergency_over">Аварийное состояние закончилось!</string>
+    <string name="title_permission_alert">Предупреждение о разрешении</string>
+    <string name="permission_alert_message">Для этой функции требуются следующие разрешения:</string>
+    <string name="permission_alert_query">Хотели бы вы изменить это в настройках?</string>
+    <string name="string_yes">ДА</string>
+    <string name="string_no">Нет</string>
+
 </resources>

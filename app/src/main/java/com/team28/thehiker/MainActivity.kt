@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -108,7 +109,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                         permissionHandler.askUserForPermissions(this)
                         if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                            showDialog("LOCATION")
+                            showPermissionAlertDialog("LOCATION")
                         }
                         return
                 }
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                     permissionHandler.askUserForPermissions(this)
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showDialog("LOCATION")
+                        showPermissionAlertDialog("LOCATION")
                     }
                     return
                 }
@@ -188,16 +189,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler.setLocalizationString(this, localization)
     }
 
-    fun showDialog(permission_text: String) {
+    fun showPermissionAlertDialog(permission_text: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.title_permission_alert)
+
+        builder.setMessage(R.string.permission_alert_message,  permission_text +"\n\n",
+        R.string.permission_alert_query)
+
+        builder.setPositiveButton(R.string.string_yes,DialogInterface.OnClickListener{
+                _, _ ->openSettings()
+        })
+        builder.setNegativeButton(R.string.string_no, DialogInterface.OnClickListener{
+            _,_->return@OnClickListener
+        })
+        builder.show()
+    }
+
+    fun openSettings()
+    {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Permission Alert!")
-        builder.setMessage("This features needs $permission_text permission.")
-        builder.show()
     }
 
     fun decidedButtonsShown(){
