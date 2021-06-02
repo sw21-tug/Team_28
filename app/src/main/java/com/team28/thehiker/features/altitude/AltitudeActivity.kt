@@ -1,4 +1,4 @@
-package com.team28.thehiker
+package com.team28.thehiker.features.altitude
 
 import android.content.ComponentName
 import android.content.Context
@@ -10,6 +10,9 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.widget.TextView
+import com.team28.thehiker.location.HikerLocationCallback
+import com.team28.thehiker.location.HikerLocationService
+import com.team28.thehiker.R
 
 class AltitudeActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallback {
     private lateinit var locationService : HikerLocationService

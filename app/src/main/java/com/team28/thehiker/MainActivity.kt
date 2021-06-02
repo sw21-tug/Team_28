@@ -1,18 +1,32 @@
 package com.team28.thehiker
 
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
-import com.team28.thehiker.Constants.Constants
-import com.team28.thehiker.Permissions.PermissionHandler
-import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import com.team28.thehiker.constants.Constants
+import com.team28.thehiker.features.altitude.AltitudeActivity
+import com.team28.thehiker.features.findme.FindMeActivity
+import com.team28.thehiker.features.humidity.HumidityActivity
+import com.team28.thehiker.features.humidity.HumidityWrapper
+import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.temperature.TemperatureActivity
+import com.team28.thehiker.features.temperature.TemperatureWrapper
+import com.team28.thehiker.permissions.PermissionHandler
+import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import com.team28.thehiker.language.LanguageSelector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_settings.*
@@ -21,6 +35,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
+    var permissionStatus = false
+    lateinit var humidityWrapper: HumidityWrapper
+    lateinit var temperatureWrapper : TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +56,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         permissionHandler = PermissionHandler()
 
         checkPermissions()
+        
+        val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        humidityWrapper = HumidityWrapper(sensorManager)
+        decidedButtonHumidityShown()
+        temperatureWrapper = TemperatureWrapper(sensorManager)
+
+        decidedButtonsShown()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        temperatureWrapper.kill()
     }
 
     fun checkPermissions() {
-        if (!permissionHandler.permissionsAlreadyGranted(this)) {
+        permissionStatus = permissionHandler.permissionsAlreadyGranted(this)
+        if (!permissionStatus) {
             permissionHandler.askUserForPermissions(this)
         }
     }
@@ -56,7 +87,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if ((grantResults.isEmpty() ||
                             grantResults[0] == PackageManager.PERMISSION_DENIED)
                 ) {
-                    finish()
+                    //finish()
+                    return
                 }
                 return
             }
@@ -67,22 +99,48 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun navigateTo(view: View) {
         val intent: Intent
-
+        val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         when (view.id) {
             R.id.btn_altitude -> {
-                intent = Intent(this, AltitudeActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, AltitudeActivity::class.java)
+                } else {
+                        permissionHandler.askUserForPermissions(this)
+                        if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            showDialog()
+                        }
+                        return
+                }
             }
             R.id.btn_position_on_map -> {
-                intent = Intent(this, FindMeActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, FindMeActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showDialog()
+                    }
+                    return
+                }
+            }
+            R.id.btn_humidity -> {
+                intent = Intent(this, HumidityActivity::class.java)
+            }
+            R.id.btn_temperature ->{
+                intent = Intent(this, TemperatureActivity::class.java)
+                val temperature : Double? = temperatureWrapper.getTemperature()
+                intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
+            }
+            R.id.btn_pedometer -> {
+                intent = Intent(this, PedometerActivity::class.java)
             }
             R.id.btn_speed_of_moving -> {
                 intent = Intent(this, SpeedActivity::class.java)
             }
             else -> {
-                intent = Intent(this, TestActivity::class.java)
+                intent = Intent(this, MainActivity::class.java)
             }
         }
-
         startActivity(intent)
     }
 
@@ -91,8 +149,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val popupMenu = PopupMenu(this, findViewById(R.id.language))
             popupMenu.menuInflater.inflate(R.menu.popup_menu_language, popupMenu.menu)
 
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                when(item.itemId) {
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { menuItem ->
+                when(menuItem.itemId) {
                     R.id.popup_russian -> {
                         LanguageSelector.setLocaleToRussian(this)
                         setSavedLocalizationString("ru")
@@ -112,12 +170,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    fun decidedButtonHumidityShown(){
+        //decide whether to show the humidity button
+        val humidityButton : LinearLayout = findViewById(R.id.ll_humidity)
+        if(humidityWrapper.isHumiditySensorAvailable()){
+            humidityButton.visibility = View.VISIBLE
+        }else{
+            humidityButton.visibility = View.GONE
+        }
+
+        humidityButton.invalidate()
+    }
+
     fun getSavedLocalizationString() : String? {
         return sharedPreferenceHandler.getLocalizationString(this)
     }
 
     fun setSavedLocalizationString(localization: String) {
         sharedPreferenceHandler.setLocalizationString(this, localization)
+    }
+
+    fun showDialog() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri: Uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivity(intent)
+    }
+
+    fun decidedButtonsShown(){
+        //decide whether to show the temperature button
+        val temperatureButton : LinearLayout = findViewById(R.id.ll_temperature)
+        if(temperatureWrapper.isTemperatureSensorAvailable()){
+            temperatureButton.visibility = View.VISIBLE
+        }else{
+            temperatureButton.visibility = View.GONE
+        }
+
+        temperatureButton.invalidate()
     }
 }
 

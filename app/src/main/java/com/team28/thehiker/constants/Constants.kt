@@ -1,4 +1,4 @@
-package com.team28.thehiker.Constants
+package com.team28.thehiker.constants
 
 class Constants {
     object PermissionConstants {
@@ -6,6 +6,9 @@ class Constants {
     }
 
     object SharedPreferenceConstants {
+        const val LAST_STEPCOUNT_DEFAULT = "00"
+        const val LOCAL_DATE = "date"
+        const val STEP_COUNT = "Step Count"
         const val LOCALIZATION_DEFAULT = "en"
         const val LOCALIZATION = "Localization"
 
