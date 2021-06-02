@@ -62,7 +62,7 @@ class StepCountHistoryTest {
         onView(withId(R.id.btn_pedometer)).perform(click())
         onView(withId(R.id.button_history)).perform(click())
 
-        onView (withId (android.R.id.list)).check (ViewAssertions.matches (ListViewMatcher (20)));
+        onView (withId (R.id.step_list)).check (ViewAssertions.matches (ListViewMatcher (20)));
 
     }
 

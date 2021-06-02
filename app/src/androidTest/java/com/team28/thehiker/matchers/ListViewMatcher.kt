@@ -5,7 +5,9 @@ import android.widget.ListView
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
-class ListViewMatcher(size:Int): TypeSafeMatcher<View>() {
+class ListViewMatcher(size : Int): TypeSafeMatcher<View>() {
+
+    private var passedSize : Int = size
 
 
     override fun describeTo(description: Description?) {
@@ -14,7 +16,7 @@ class ListViewMatcher(size:Int): TypeSafeMatcher<View>() {
     override fun matchesSafely(item: View?): Boolean {
 
         val listView: ListView = item as ListView
-        return listView.childCount <= size
+        return listView.count <= passedSize
     }
 
 }

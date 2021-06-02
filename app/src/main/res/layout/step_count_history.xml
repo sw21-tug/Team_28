@@ -7,7 +7,7 @@ android:layout_height="match_parent"
 tools:context=".StepCountHistoryActivity">
 
 <ListView
-    android:id="@+id/list"
+    android:id="@+id/step_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_editor_absoluteX="22dp"
