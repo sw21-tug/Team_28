@@ -30,4 +30,5 @@
     <string name="sms_message_emergency_over">Аварийное состояние закончилось!</string>
     <string name="sos_btn">SOS сообщение</string>
     <string name="stop_sos">ОСТАНОВИТЬ SOS</string>
+    <string name="sos_img_caption">SOS заставка</string>
 </resources>

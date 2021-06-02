@@ -34,9 +34,10 @@ class SosMessageActivity : AppCompatActivity(), ServiceConnection {
         wrapper = SMSWrapper(manager, DELAY_MS_3_MINS, numbers, this)
 
         val button = findViewById<Button>(R.id.stop_sos_btn)
-        button.setOnClickListener { wrapper.stop() }
-
-        //TODO: ensure permissions are available
+        button.setOnClickListener {
+            wrapper.stop()
+            finish()
+        }
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
