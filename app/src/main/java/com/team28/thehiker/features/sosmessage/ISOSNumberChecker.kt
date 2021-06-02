@@ -4,4 +4,6 @@ interface ISOSNumberChecker {
 
     fun checkSOSNumber(number: String): Boolean
 
+    fun checkSOSNumberLength(number: String): Boolean
+
 }

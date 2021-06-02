@@ -93,12 +93,14 @@ class MainActivityTest {
         val number = "+436643338885"
 
         Assert.assertTrue(SOSNumberChecker().checkSOSNumber(number))
+        Assert.assertTrue(SOSNumberChecker().checkSOSNumberLength(number))
     }
 
     @Test
     fun testNumbersParser_wrongFormat() {
-        val number = "+43664-8885"
+        val number = "+43664-8885374652"
 
         Assert.assertFalse(SOSNumberChecker().checkSOSNumber(number))
+        Assert.assertFalse(SOSNumberChecker().checkSOSNumberLength(number))
     }
 }

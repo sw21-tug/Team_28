@@ -16,7 +16,7 @@ interface ISharedPreferenceHandler {
 
     fun setLastStepCountUpdate(context: Activity, lastStepUpdate: String)
 
-    fun getNumbers(context: Activity) : List<String>
+    fun getNumbers(context: Activity) : List<String?>
 
     fun setNumbers(context: Activity, numbers: List<String>)
 
