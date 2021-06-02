@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
@@ -107,7 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                         permissionHandler.askUserForPermissions(this)
                         if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                            showDialog()
+                            showDialog("LOCATION")
                         }
                         return
                 }
@@ -118,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                     permissionHandler.askUserForPermissions(this)
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showDialog()
+                        showDialog("LOCATION")
                     }
                     return
                 }
@@ -187,11 +188,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler.setLocalizationString(this, localization)
     }
 
-    fun showDialog() {
+    fun showDialog(permission_text: String) {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Permission Alert!")
+        builder.setMessage("This features needs $permission_text permission.")
+        builder.show()
     }
 
     fun decidedButtonsShown(){
