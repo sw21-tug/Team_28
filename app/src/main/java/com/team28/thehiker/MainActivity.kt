@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                     permissionHandler.askUserForPermissions(this)
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showDialog()
+                        showPermissionAlertDialog("LOCATION, SEND_SMS")
                     }
                     return
                 }
