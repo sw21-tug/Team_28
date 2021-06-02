@@ -45,4 +45,12 @@ class SharedPreferenceHandler : ISharedPreferenceHandler {
         }
     }
 
+    override fun getNumbers(context: Activity): List<String> {
+        TODO("Not yet implemented")
+    }
+
+    override fun setNumbers(context: Activity, numbers: List<String>) {
+        TODO("Not yet implemented")
+    }
+
 }
