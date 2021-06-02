@@ -2,14 +2,16 @@
     <string name="app_name" translatable="false">TheHiker</string>
     <string name="app_title" translatable="false">The Hiker</string>
     <string name="splashscreen_descriptor">cartoon_nature</string>
-
     <string name="humidity_title">Humidity</string>
     <string name="altitude_title">Your Altitude:</string>
+    <string name="speed_title">Moving speed:</string>
     <string name="altitude_userinfo">*altitude above sea level is displayed in meters</string>
     <string name="humidity_userinfo">*relative humidity in percent</string>
+    <string name="speed_userinfo">*the indoor speed ist not accurate</string>
     <string name="altitude">Altitude</string>
     <string name="find_me">Find me</string>
     <string name="pedometer">Pedometer</string>
+    <string name="speed_of_moving">Speed</string>
     <string name="main_menu_header_image">main menu header image</string>
     <string name="title_activity_test" translatable="false">TestActivity</string>
     <string name="next">Next</string>
