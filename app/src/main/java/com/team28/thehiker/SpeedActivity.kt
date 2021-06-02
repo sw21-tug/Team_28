@@ -5,15 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.location.Location
-import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.os.SystemClock
-import android.util.Log
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.team28.thehiker.location.HikerLocationCallback
+import com.team28.thehiker.location.HikerLocationService
 
 class SpeedActivity : AppCompatActivity(), ServiceConnection, HikerLocationCallback {
 
