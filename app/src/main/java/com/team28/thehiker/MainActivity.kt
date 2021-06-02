@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -10,11 +11,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
@@ -24,6 +28,7 @@ import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.sosmessage.SOSNumberChecker
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
 import com.team28.thehiker.permissions.PermissionHandler
@@ -142,9 +147,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.btn_pedometer -> {
 
+                if(getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
+                    showSOSDialog()
 
-
-
+                }
                 intent = Intent(this, MainActivity::class.java) //TODO revert to pedometer activity
             }
             else -> {
@@ -152,6 +158,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         startActivity(intent)
+    }
+
+    private fun showSOSDialog() {
+       val builder = AlertDialog.Builder(this)
+        val layout = layoutInflater.inflate(R.layout.alert_SOS_layout, null)
+        builder.setTitle(R.string.title_SOS_alert)
+        //builder.setView(layout)
+        builder.setPositiveButton("Save", DialogInterface.OnClickListener { _,_ ->
+            val phone_nr1 : String = layout.findViewById(R.id.sos_phone_1)
+            val phone_nr2 : String = layout.findViewById(R.id.sos_phone2)
+        })
+        builder.setNegativeButton("Cancel",DialogInterface.OnClickListener { _,_->
+            return@OnClickListener
+        })
+        builder.show()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
