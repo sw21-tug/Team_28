@@ -101,6 +101,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun navigateTo(view: View) {
         val intent: Intent
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
         when (view.id) {
             R.id.btn_altitude -> {
                 if(permission == PackageManager.PERMISSION_GRANTED) {
@@ -136,7 +137,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent = Intent(this, PedometerActivity::class.java)
             }
             R.id.btn_sos -> {
-                intent = Intent(this, SosMessageActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED &&
+                    permissionSMS == PackageManager.PERMISSION_GRANTED) {
+
+                    intent = Intent(this, SosMessageActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showDialog()
+                    }
+                    return
+                }
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
