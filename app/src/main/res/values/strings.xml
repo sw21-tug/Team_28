@@ -33,4 +33,6 @@
     <string name="sms_message_emergency_over">Emergency state is over!</string>
     <string name="title_activity_sos_message" translatable="false">SosMessageActivity</string>
     <string name="title_SOS_alert">Add Emergency Contact</string>
+    <string name="phonenumber1">Phone Number One</string>
+    <string name="phonenumber2">Phone Number Two</string>
 </resources>

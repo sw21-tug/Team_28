@@ -162,12 +162,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showSOSDialog() {
        val builder = AlertDialog.Builder(this)
-        val layout = layoutInflater.inflate(R.layout.alert_SOS_layout, null)
+        val layout = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
         builder.setTitle(R.string.title_SOS_alert)
         //builder.setView(layout)
         builder.setPositiveButton("Save", DialogInterface.OnClickListener { _,_ ->
-            val phone_nr1 : String = layout.findViewById(R.id.sos_phone_1)
-            val phone_nr2 : String = layout.findViewById(R.id.sos_phone2)
+            val phone_nr1 : String = layout.findViewById(R.id.phonenumber1)
+            val phone_nr2 : String = layout.findViewById(R.id.phonenumber2)
         })
         builder.setNegativeButton("Cancel",DialogInterface.OnClickListener { _,_->
             return@OnClickListener
