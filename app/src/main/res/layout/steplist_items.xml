@@ -7,7 +7,7 @@ android:layout_height="50dp"
 tools:context=".StepCountHistoryActivity">
 
     <TextView
-        android:id="@+id/textViewIzq"
+        android:id="@+id/textViewDate"
         android:layout_width="122dp"
         android:layout_height="30dp"
         android:layout_marginStart="32dp"
@@ -17,7 +17,7 @@ tools:context=".StepCountHistoryActivity">
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textViewDcha"
+        android:id="@+id/textViewSteps"
         android:layout_width="122dp"
         android:layout_height="30dp"
         android:layout_marginEnd="52dp"

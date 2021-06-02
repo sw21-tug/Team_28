@@ -1,22 +1,7 @@
 package com.team28.thehiker
 
-import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.PopupMenu
-import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.navigation.NavigationView
-import com.team28.thehiker.Constants.Constants
-import com.team28.thehiker.Permissions.PermissionHandler
-import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
-import com.team28.thehiker.language.LanguageSelector
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.drawer_settings.*
 import kotlinx.android.synthetic.main.step_count_history.*
 
 class StepCountHistoryActivity : AppCompatActivity(){
@@ -25,29 +10,29 @@ class StepCountHistoryActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.step_count_history)
 
-        val producto1 = Producto("1 de enero", "1 pasos")
-        val producto2 = Producto("2 de enero", "2 pasos")
-        val producto3 = Producto("3 de enero", "3 pasos")
-        val producto4 = Producto("4 de enero", "4 pasos")
-        val producto5 = Producto("5 de enero", "5 pasos")
-        val producto6 = Producto("6 de enero", "6 pasos")
-        val producto7 = Producto("7 de enero", "7 pasos")
-        val producto8 = Producto("8 de enero", "8 pasos")
-        val producto9 = Producto("9 de enero", "9 pasos")
-        val producto10 = Producto("10 de enero", "10 pasos")
-        val producto11 = Producto("11 de enero", "11 pasos")
-        val producto12 = Producto("12 de enero", "12 pasos")
-        val producto13 = Producto("13 de enero", "13 pasos")
-        val producto14 = Producto("14 de enero", "14 pasos")
-        val producto15 = Producto("15 de enero", "15 pasos")
-        val producto16 = Producto("16 de enero", "16 pasos")
-        val producto17 = Producto("17 de enero", "17 pasos")
-        val producto18 = Producto("18 de enero", "18 pasos")
-        val producto19 = Producto("19 de enero", "19 pasos")
-        val producto20 = Producto("20 de enero", "20 pasos")
-        val listaProducto = listOf(producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9, producto10, producto11, producto12, producto13, producto14, producto15, producto16, producto17, producto18, producto19, producto20)
-        val adapter = ProductoAdapter(this, listaProducto)
-        lista.adapter = adapter
+        val item1 = ListItem("01.01.2000", "10 steps")
+        val item2 = ListItem("02.01.2000", "20 steps")
+        val item3 = ListItem("03.01.2000", "30 steps")
+        val item4 = ListItem("04.01.2000", "40 steps")
+        val item5 = ListItem("05.01.2000", "50 steps")
+        val item6 = ListItem("06.01.2000", "60 steps")
+        val item7 = ListItem("07.01.2000", "70 steps")
+        val item8 = ListItem("08.01.2000", "80 steps")
+        val item9 = ListItem("09.01.2000", "90 steps")
+        val item10 = ListItem("10.01.2000", "100 steps")
+        val item11 = ListItem("11.01.2000", "110 steps")
+        val item12 = ListItem("12.01.2000", "120 steps")
+        val item13 = ListItem("13.01.2000", "130 steps")
+        val item14 = ListItem("14.01.2000", "140 steps")
+        val item15 = ListItem("15.01.2000", "150 steps")
+        val item16 = ListItem("16.01.2000", "160 steps")
+        val item17 = ListItem("17.01.2000", "170 steps")
+        val item18 = ListItem("18.01.2000", "180 steps")
+        val item19 = ListItem("19.01.2000", "190 steps")
+        val item20 = ListItem("20.01.2000", "200 steps")
+        val itemList = listOf(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20)
+        val adapter = ItemAdapter(this, itemList)
+        list.adapter = adapter
 
 
     }
