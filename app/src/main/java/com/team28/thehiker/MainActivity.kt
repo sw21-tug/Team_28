@@ -192,9 +192,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun showPermissionAlertDialog(permission_text: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.title_permission_alert)
+        //R.string.permission_alert_query
+        builder.setMessage(R.string.permission_alert_message)
+        builder.setMessage(R.string.permission_alert_query)
 
-        builder.setMessage(R.string.permission_alert_message,  permission_text +"\n\n",
-        R.string.permission_alert_query)
+        builder.setMessage(getString(R.string.permission_alert_message) + "\n" + permission_text +  "\n\n" +
+        getString(R.string.permission_alert_query))
 
         builder.setPositiveButton(R.string.string_yes,DialogInterface.OnClickListener{
                 _, _ ->openSettings()

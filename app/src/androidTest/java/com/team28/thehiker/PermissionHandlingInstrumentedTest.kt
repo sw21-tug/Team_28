@@ -67,8 +67,9 @@ class PermissionHandlingInstrumentedTest {
         denyPermission()
         onView(withId(R.id.btn_altitude))
                 .check(ViewAssertions.matches(ViewMatchers.withText("Altitude")))
-
         onView(withId(R.id.btn_altitude)).perform(ViewActions.click())
+        onView(withText("Permission Alert")).check(ViewAssertion.matches(ViewMatchers.withText("Permission Alert")))
+        return
         denyPermission()
         onView(withId(R.id.btn_position_on_map)).check(ViewAssertions.matches(ViewMatchers.withText("Find me")))
 
