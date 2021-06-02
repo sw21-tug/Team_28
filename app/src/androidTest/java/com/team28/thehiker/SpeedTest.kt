@@ -51,6 +51,15 @@ class SpeedTest {
     }
 
     @Test
+    fun testSpeedCalculationWithNegativeSpeed(){
+        val location1 = createMockLocation(47.06114502512434, 15.452581310572223)
+        Thread.sleep(1000)
+        val location2 = createMockLocation(47.061190704295825, 15.452698657207094)
+        activityRule.scenario.onActivity { it.calculateSpeed(location2, location1) }
+        onView(withId(R.id.speed)).check(matches(withText("0.00 km/h")))
+    }
+
+    @Test
     fun testIfPreviousLocationIsSet() {
         //mock location
         Thread.sleep(1000) // wait for service to start
