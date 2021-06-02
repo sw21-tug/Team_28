@@ -31,36 +31,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_directions_walk_24"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        app:tint="@color/primary"/>
 
     <TextView
         android:id="@+id/txtViewSteps"
-        android:layout_width="297dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginLeft="57dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginRight="57dp"
-        android:layout_marginBottom="173dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="0"
-        android:textSize="46sp"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerPedometer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtViewPedometer"
-        android:layout_width="177dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="117dp"
-        android:layout_marginLeft="117dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="117dp"
-        android:layout_marginRight="117dp"
         android:gravity="center"
-        android:text="Pedometer"
-        android:textSize="30sp"
+        android:text="@string/pedometer"
+        android:textSize="40sp"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iconPedometer" />

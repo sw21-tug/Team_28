@@ -27,7 +27,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.TheHiker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.TheHiker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColor">@color/primary</item>
+    </style>
 
     <style name="Theme.TheHiker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

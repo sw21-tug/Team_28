@@ -13,10 +13,11 @@
         android:layout_marginTop="32dp"
         android:minWidth="200sp"
         android:minHeight="200sp"
-        android:src="?android:attr/textSelectHandle"
+        android:src="@drawable/ic_drop_fill"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:tint="@color/primary"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -27,7 +28,8 @@
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:textColor="@color/primary"/>
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
