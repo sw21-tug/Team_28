@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.hardware.SensorManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -25,6 +26,7 @@ import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
 import com.team28.thehiker.permissions.PermissionHandler
@@ -37,7 +39,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var sharedPreferenceHandler : SharedPreferenceHandler
     lateinit var permissionHandler : PermissionHandler
-    var permissionStatus = false
     lateinit var humidityWrapper: HumidityWrapper
     lateinit var temperatureWrapper : TemperatureWrapper
 
@@ -46,9 +47,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.drawer_settings)
         setSupportActionBar(toolbar)
 
+
         val toggle =
             ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            toolbar.setTitleTextColor(getColor(R.color.black))
+            toggle.drawerArrowDrawable.color = getColor(R.color.black)
+        }
+        else {
+            toolbar.setTitleTextColor(resources.getColor(R.color.black))
+            toggle.drawerArrowDrawable.color = resources.getColor(R.color.black)
+        }
+
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -74,8 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun checkPermissions() {
-        permissionStatus = permissionHandler.permissionsAlreadyGranted(this)
-        if (!permissionStatus) {
+        if (!permissionHandler.permissionsAlreadyGranted(this)) {
             permissionHandler.askUserForPermissions(this)
         }
     }
@@ -89,7 +100,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if ((grantResults.isEmpty() ||
                             grantResults[0] == PackageManager.PERMISSION_DENIED)
                 ) {
-                    //finish()
                     return
                 }
                 return
@@ -102,6 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun navigateTo(view: View) {
         val intent: Intent
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
         when (view.id) {
             R.id.btn_altitude -> {
                 if(permission == PackageManager.PERMISSION_GRANTED) {
@@ -144,6 +155,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     return
                 }
             }
+            R.id.btn_speed_of_moving -> {
+                intent = Intent(this, SpeedActivity::class.java)
+            }
+            R.id.btn_sos -> {
+                if(permission == PackageManager.PERMISSION_GRANTED &&
+                    permissionSMS == PackageManager.PERMISSION_GRANTED) {
+
+                    intent = Intent(this, SosMessageActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showDialog()
+                    }
+                    return
+                }
+            }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
             }
@@ -161,13 +188,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     R.id.popup_russian -> {
                         LanguageSelector.setLocaleToRussian(this)
                         setSavedLocalizationString("ru")
-                        recreate()
+                        val i = Intent(this, SplashscreenActivity::class.java)
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(i)
                     }
 
                     R.id.popup_english -> {
                         LanguageSelector.setLocaleToEnglish(this)
                         setSavedLocalizationString("en")
-                        recreate()
+                        val i = Intent(this, SplashscreenActivity::class.java)
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(i)
                     }
                 }
                 true

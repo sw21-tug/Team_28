@@ -17,7 +17,8 @@
             app:srcCompat="@drawable/ic_temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:tint="@color/primary"/>
 
     <TextView
             android:layout_width="match_parent"
@@ -28,7 +29,8 @@
             app:layout_constraintBottom_toTopOf="@id/divider_temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_temperature" />
+            app:layout_constraintTop_toBottomOf="@id/imageView_temperature"
+            android:textColor="@color/primary"/>
 
     <View
             android:id="@+id/divider_temperature"

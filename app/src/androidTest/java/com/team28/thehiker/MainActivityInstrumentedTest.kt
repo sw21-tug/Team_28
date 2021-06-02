@@ -16,6 +16,7 @@ import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
 import org.hamcrest.CoreMatchers.not
@@ -84,6 +85,15 @@ class MainActivityInstrumentedTest {
     }
 
     @Test
+    fun button_sos() {
+        onView(withId(R.id.btn_sos))
+            .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_sos))
+            .check(matches(withText("SOS message")))
+    }
+
+    @Test
     fun check_listview_containsItems() {
         onView(withId(R.id.scrollview_menu))
             .check(matches(hasDescendant(withId(R.id.btn_altitude))))
@@ -93,6 +103,9 @@ class MainActivityInstrumentedTest {
 
         onView(withId(R.id.scrollview_menu))
             .check(matches(hasDescendant(withId(R.id.btn_pedometer))))
+
+        onView(withId(R.id.scrollview_menu))
+            .check(matches(hasDescendant(withId(R.id.btn_sos))))
     }
 
     @Test
@@ -143,6 +156,25 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_pedometer))
             .perform(click())
         Intents.intended(hasComponent(PedometerActivity::class.java.name), times(1))
+    }
+
+    @Test
+    fun onButtonClick_SOS_correctActivityStarted() {
+        onView(withId(R.id.btn_sos))
+            .perform(click())
+
+        Intents.intended(hasComponent(SosMessageActivity::class.java.name), times(1))
+    }
+
+
+
+    @Test
+    fun button_SpeedOfMoving() {
+        onView(withId(R.id.btn_speed_of_moving))
+                .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_speed_of_moving))
+                .check(matches(withText("Speed")))
     }
 
 
