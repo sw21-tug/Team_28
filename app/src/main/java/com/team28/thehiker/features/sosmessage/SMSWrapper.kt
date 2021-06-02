@@ -29,8 +29,10 @@ open class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers
 
     open fun stop() {
         stopAlarm = true
-        numbers.forEach {
-            smsManager.sendTextMessage(it, null, getGoogleMapsLocationMessage(), null, null)
+        if (threadRunning){
+            numbers.forEach {
+                smsManager.sendTextMessage(it, null, getGoogleMapsLocationMessage(), null, null)
+            }
         }
     }
 
