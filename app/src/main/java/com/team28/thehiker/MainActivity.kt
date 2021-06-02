@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 
 import android.Manifest
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -149,7 +151,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 if(getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
                     showSOSDialog()
-
                 }
                 intent = Intent(this, MainActivity::class.java) //TODO revert to pedometer activity
             }
@@ -161,18 +162,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun showSOSDialog() {
-       val builder = AlertDialog.Builder(this)
-        val layout = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
+       var builder  = AlertDialog.Builder(this)
         builder.setTitle(R.string.title_SOS_alert)
-        //builder.setView(layout)
-        builder.setPositiveButton("Save", DialogInterface.OnClickListener { _,_ ->
-            val phone_nr1 : String = layout.findViewById(R.id.phonenumber1)
-            val phone_nr2 : String = layout.findViewById(R.id.phonenumber2)
+        val layout = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
+        builder.setView(R.layout.alert_dialog_phone_numbers)
+
+        builder.setPositiveButton("Save", DialogInterface.OnClickListener {_ ,_->
+            storePhoneNumbers(layout.findViewById(R.id.phonenumber1),
+                layout.findViewById(R.id.phonenumber2))
         })
-        builder.setNegativeButton("Cancel",DialogInterface.OnClickListener { _,_->
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener {_,_->
             return@OnClickListener
         })
         builder.show()
+    }
+
+    private fun storePhoneNumbers(phoneEdit1: EditText,  phoneEdit2: EditText) {
+     return
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
