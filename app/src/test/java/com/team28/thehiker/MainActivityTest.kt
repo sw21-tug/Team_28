@@ -1,9 +1,9 @@
 package com.team28.thehiker
 
 
-import com.team28.thehiker.Constants.Constants
-import com.team28.thehiker.Permissions.PermissionHandler
-import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import com.team28.thehiker.constants.Constants
+import com.team28.thehiker.permissions.PermissionHandler
+import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
