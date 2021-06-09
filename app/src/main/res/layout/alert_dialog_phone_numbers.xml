@@ -5,9 +5,8 @@
     android:layout_height="wrap_content"
     android:padding="15dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phonenumber1_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <EditText
+        android:id="@+id/phonenumber1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -16,19 +15,11 @@
         android:hint="@string/phonenumber1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="phone" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phonenumber1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phonenumber2_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <EditText
+        android:id="@+id/phonenumber2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,13 +28,8 @@
         android:hint="@string/phonenumber2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phonenumber1_layout">
+        app:layout_constraintTop_toBottomOf="@+id/phonenumber1"
+        android:inputType="phone" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phonenumber2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

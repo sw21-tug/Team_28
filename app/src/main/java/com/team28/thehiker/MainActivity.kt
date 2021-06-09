@@ -31,6 +31,7 @@ import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
 import com.team28.thehiker.features.sosmessage.SOSNumberChecker
+import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
 import com.team28.thehiker.permissions.PermissionHandler
@@ -173,7 +174,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         builder.setPositiveButton("Save", DialogInterface.OnClickListener {dialog, which ->
                 val phoneEdit1 = findViewById<EditText>(R.id.phonenumber1)
                 val phoneEdit2 = findViewById<EditText>(R.id.phonenumber2)
-                storePhoneNumbers(phoneEdit1.text.toString(), phoneEdit2.text.toString())
+                if (phoneEdit1 != null && phoneEdit2 != null){
+                    storePhoneNumbers(phoneEdit1.text.toString(), phoneEdit2.text.toString())
+                }
+                intent = Intent(this, SosMessageActivity::class.java)
         })
 
         builder.setNegativeButton("Cancel", DialogInterface.OnClickListener {dialog,which->(
@@ -184,7 +188,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun storePhoneNumbers(phonenumber1 : String, phonenumber2 : String) {
-     if(SOSNumberChecker().checkSOSNumberLength(phonenumber1) && SOSNumberChecker().checkSOSNumberLength(phonenumber2))
+      if(SOSNumberChecker().checkSOSNumberLength(phonenumber1) && SOSNumberChecker().checkSOSNumberLength(phonenumber2))
         setNumbers(listOf(phonenumber1,phonenumber2))
     }
 
