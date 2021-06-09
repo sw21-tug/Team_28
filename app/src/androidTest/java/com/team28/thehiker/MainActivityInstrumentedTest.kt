@@ -2,8 +2,12 @@ package com.team28.thehiker
 
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.ScrollView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.times
@@ -16,6 +20,7 @@ import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
 import org.hamcrest.CoreMatchers.not
@@ -84,20 +89,33 @@ class MainActivityInstrumentedTest {
     }
 
     @Test
+    fun button_sos() {
+        onView(withId(R.id.btn_sos))
+            .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_sos))
+            .check(matches(withText("SOS message")))
+    }
+
+    @Test
     fun check_listview_containsItems() {
         onView(withId(R.id.scrollview_menu))
             .check(matches(hasDescendant(withId(R.id.btn_altitude))))
 
         onView(withId(R.id.scrollview_menu))
-                .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
+            .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
 
         onView(withId(R.id.scrollview_menu))
             .check(matches(hasDescendant(withId(R.id.btn_pedometer))))
+
+        onView(withId(R.id.scrollview_menu))
+            .check(matches(hasDescendant(withId(R.id.btn_sos))))
     }
 
     @Test
     fun onButtonClick_Altitude_correctActivityStarted() {
         onView(withId(R.id.btn_altitude))
+            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(AltitudeActivity::class.java.name), times(1))
@@ -106,6 +124,7 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_FindMe_correctActivityStarted() {
         onView(withId(R.id.btn_position_on_map))
+            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
@@ -132,6 +151,7 @@ class MainActivityInstrumentedTest {
         }
 
         onView(withId(R.id.btn_humidity))
+            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
@@ -141,16 +161,31 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_Pedometer_correctActivityStarted() {
         onView(withId(R.id.btn_pedometer))
+            .perform(scrollTo())
             .perform(click())
         Intents.intended(hasComponent(PedometerActivity::class.java.name), times(1))
     }
 
     @Test
-    fun onButtonClick_SOS_NoNumbers_AlertDialogShown() { //TODO sos button and alert dialog instead of pedometer btn
-        onView(withId(R.id.btn_pedometer))
-                .perform(click())
-        onView(withId(R.id.btn_pedometer)).check(matches(isDisplayed()))
+    fun onButtonClick_SOS_correctActivityStarted() {
+        onView(withId(R.id.btn_sos))
+            .perform(scrollTo())
+            .perform(click())
+
+        Intents.intended(hasComponent(SosMessageActivity::class.java.name), times(1))
     }
+
+
+
+    @Test
+    fun button_SpeedOfMoving() {
+        onView(withId(R.id.btn_speed_of_moving))
+            .check(matches(isClickable()))
+
+        onView(withId(R.id.btn_speed_of_moving))
+            .check(matches(withText("Speed")))
+    }
+
 
     @After
     fun cleanUp() {
@@ -200,7 +235,9 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_temperature))
             .check(matches(isDisplayed()))
 
-        onView(withId(R.id.btn_temperature)).perform(click())
+        onView(withId(R.id.btn_temperature))
+            .perform(scrollTo())
+            .perform(click())
 
         Intents.intended(hasComponent(TemperatureActivity::class.java.name), times(1))
         var intentFound = false
@@ -212,6 +249,25 @@ class MainActivityInstrumentedTest {
         }
         assert(intentFound)
     }
+
+    @Test
+
+    fun validateScrollViewHasCorrectHeight () {
+        onView(withId(R.id.main_image))
+            .check(matches(isDisplayed()))
+        onView(withId(R.id.scrollview_menu))
+            .check(matches(isDisplayed()))
+
+        activityRule.scenario.onActivity {
+            val imageView = it.findViewById<ImageView>(R.id.main_image)
+            val screenHeight = it.resources.displayMetrics.heightPixels
+            val scrollView = it.findViewById<ScrollView>(R.id.scrollview_menu)
+            assert(screenHeight==(imageView.bottom + scrollView.height))
+        }
+
+    }
+
+
 
     private fun validateTemperatureExtras(extras: Bundle?) {
         assertNotNull(extras)

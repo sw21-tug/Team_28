@@ -30,10 +30,9 @@
         android:id="@+id/scrollview_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divideHomeScreenGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/divideHomeScreenGuideline">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,6 +102,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
                     app:srcCompat="@drawable/ic_map"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/find_me"
@@ -142,7 +142,7 @@
                     android:onClick="navigateTo"
                     android:text="@string/pedometer" />
             </LinearLayout>
-  
+
               <LinearLayout
                 android:id="@+id/ll_humidity"
                 android:layout_width="match_parent"
@@ -165,7 +165,63 @@
                     android:text="@string/humidity_title"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:onClick="navigateTo"/>
+
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_speed_of_moving"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/ic_speed_of_moving"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    app:srcCompat="@drawable/ic_speed_of_moving"
+                    tools:ignore="VectorDrawableCompat"
+                    android:contentDescription="@string/speed_of_moving"
+                    app:tint="@color/primary"/>
+
+                <Button
+                    android:id="@+id/btn_speed_of_moving"
+                    android:text="@string/speed_of_moving"
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                    android:onClick="navigateTo"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/ll_sos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="20dp">
+
+                <ImageView
+                        android:id="@+id/imageViewSos"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="20dp"
+                        app:srcCompat="@drawable/ic_baseline_add_ic_call_24"
+                        android:contentDescription="@string/sos_btn"
+                        app:tint="@color/primary" />
+
+                <Button
+                        android:id="@+id/btn_sos"
+                        style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="navigateTo"
+                        android:text="@string/sos_btn" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
