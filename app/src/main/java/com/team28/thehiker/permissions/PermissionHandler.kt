@@ -5,22 +5,17 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.team28.thehiker.constants.Constants
+import java.sql.Array
 
 class PermissionHandler : IPermissionHandler {
-    var PERMISSION = ""
     override fun permissionsAlreadyGranted(context: Activity) : Boolean {
         return ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun askForSpecificPermission(context: Activity, askedPermission: String) {
-        PERMISSION = askedPermission
-        askUserForPermissions(context)
-    }
-
-    override fun askUserForPermissions(context: Activity) {
+    override fun askUserForPermissions(context: Activity, permissions: kotlin.Array<String>) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             ActivityCompat.requestPermissions(context,
-                    if(PERMISSION == "LOCATION") {
+                    /*if(PERMISSION == "LOCATION") {
                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
                     } else if(PERMISSION == "RECOGNITION")  {
                         arrayOf(Manifest.permission.ACTIVITY_RECOGNITION)
@@ -30,7 +25,9 @@ class PermissionHandler : IPermissionHandler {
                         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACTIVITY_RECOGNITION,
                                 Manifest.permission.SEND_SMS)
-                    }, Constants.PermissionConstants.PERMISSION_REQUEST_CODE)
+                    }*/
+                    permissions
+                    , Constants.PermissionConstants.PERMISSION_REQUEST_CODE)
         } else {
             ActivityCompat.requestPermissions(context,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS),
