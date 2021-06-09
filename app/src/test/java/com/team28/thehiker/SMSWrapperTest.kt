@@ -21,12 +21,7 @@ class SMSWrapperTest {
 
     @Test
     fun testStartStopInterval(){
-        val testLocation = mock(Location::class.java)
-        `when`(testLocation.latitude)
-            .thenReturn(51.9901615)
-
-        `when`(testLocation.longitude)
-            .thenReturn(20.7911654)
+        val testLocation = createTestLocation(0)
 
         `when`(activity.getString(R.string.sms_message_sos))
             .thenReturn("SOS!")
@@ -40,18 +35,37 @@ class SMSWrapperTest {
 
         smsWrapper.notifyLocationUpdate(testLocation)
 
-        val compareMessageStart = smsWrapper.getGoogleMapsLocationMessage(true)
-        val compareMessageEnd = smsWrapper.getGoogleMapsLocationMessage()
+        var compareMessageStart = smsWrapper.getGoogleMapsLocationMessage(true)
 
+        //verify only called on location change
         Thread.sleep(3 * UPDATE_INTERVAL)
-        verify(smsMock, atLeast(3)).sendTextMessage(eq(numbers[0]), any(), eq(compareMessageStart), any(), any())
-        verify(smsMock, atLeast(3)).sendTextMessage(eq(numbers[1]), any(), eq(compareMessageStart), any(), any())
-        verify(smsMock, atLeast(6)).sendTextMessage(anyString(), any(), eq(compareMessageStart), any(), any())
+        verify(smsMock, times(1)).sendTextMessage(eq(numbers[0]), any(), eq(compareMessageStart), any(), any())
+        verify(smsMock, times(1)).sendTextMessage(eq(numbers[1]), any(), eq(compareMessageStart), any(), any())
+        verify(smsMock, times(2)).sendTextMessage(anyString(), any(), eq(compareMessageStart), any(), any())
+
+        smsWrapper.notifyLocationUpdate(createTestLocation(1))
+        compareMessageStart = smsWrapper.getGoogleMapsLocationMessage(true)
+        Thread.sleep(3 * UPDATE_INTERVAL)
+        verify(smsMock, times(1)).sendTextMessage(eq(numbers[0]), any(), eq(compareMessageStart), any(), any())
+        verify(smsMock, times(1)).sendTextMessage(eq(numbers[1]), any(), eq(compareMessageStart), any(), any())
+        verify(smsMock, times(2)).sendTextMessage(anyString(), any(), eq(compareMessageStart), any(), any())
 
         smsWrapper.stop()
+        val compareMessageEnd = smsWrapper.getGoogleMapsLocationMessage()
         Thread.sleep(2 * UPDATE_INTERVAL)
-        verify(smsMock, atMost(5)).sendTextMessage(eq(numbers[0]), any(), eq(compareMessageEnd), any(), any())
-        verify(smsMock, atMost(5)).sendTextMessage(eq(numbers[1]), any(), eq(compareMessageEnd), any(), any())
-        verify(smsMock, atMost(10)).sendTextMessage(anyString(), any(), eq(compareMessageEnd), any(), any())
+        verify(smsMock, times(1)).sendTextMessage(eq(numbers[0]), any(), eq(compareMessageEnd), any(), any())
+        verify(smsMock, times(1)).sendTextMessage(eq(numbers[1]), any(), eq(compareMessageEnd), any(), any())
+        verify(smsMock, times(2)).sendTextMessage(anyString(), any(), eq(compareMessageEnd), any(), any())
+    }
+
+    private fun createTestLocation(offset : Int) : Location{
+        val testLocation = mock(Location::class.java)
+        `when`(testLocation.latitude)
+            .thenReturn(51.9901615 + offset%30)
+
+        `when`(testLocation.longitude)
+            .thenReturn(20.7911654 + offset%60)
+
+        return testLocation
     }
 }

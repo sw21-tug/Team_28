@@ -18,9 +18,13 @@ open class SMSWrapper(val smsManager: SmsManager, val delayMS: Long, val numbers
 
     init {
         thread = Thread(Runnable {
+            var prevLocation : Location? = null
             while (!stopAlarm) {
-                numbers.forEach {
-                    smsManager.sendTextMessage(it, null, getGoogleMapsLocationMessage(true), null, null)
+                if(prevLocation == null || prevLocation != location){
+                    numbers.forEach {
+                        smsManager.sendTextMessage(it, null, getGoogleMapsLocationMessage(true), null, null)
+                    }
+                    prevLocation = location
                 }
                 Thread.sleep(delayMS)
             }
