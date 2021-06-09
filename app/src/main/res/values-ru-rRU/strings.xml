@@ -43,4 +43,6 @@
     <string name="title_SOS_alert">добавить контакт для экстренной помощи</string>
     <string name="phonenumber1">Номер телефона один</string>
     <string name="phonenumber2">Номер телефона два</string>
+    <string name="number_wrong">пожалуйста введите правильное число</string>
+
 </resources>

@@ -45,4 +45,5 @@
     <string name="title_SOS_alert">Add Emergency Contact</string>
     <string name="phonenumber1">Phone Number One</string>
     <string name="phonenumber2">Phone Number Two</string>
+    <string name="number_wrong">Please enter a valid number</string>
 </resources>

@@ -7,10 +7,12 @@ class SOSNumberChecker : ISOSNumberChecker {
     }
 
     override fun checkSOSNumberLength(number: String): Boolean {
-        if(number[0] == '+')
-            return number.length in 6..16
+        if (number.isEmpty()) return false
+
+        return if(number[0] == '+')
+            number.length in 6..16
         else
-            return number.length in 5..15
+            number.length in 5..15
     }
 
 }

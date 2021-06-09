@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.ScrollView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -135,7 +134,7 @@ class MainActivityInstrumentedTest {
         Mockito.`when`(humWrapper.isHumiditySensorAvailable()).thenReturn(false)
         activityRule.scenario.onActivity {
             it.humidityWrapper = humWrapper
-            it.decidedButtonHumidityShown()
+            it.decideButtonShown(R.id.ll_humidity)
         }
 
         onView(withId(R.id.btn_humidity))
@@ -147,7 +146,7 @@ class MainActivityInstrumentedTest {
         Mockito.`when`(humWrapper.isHumiditySensorAvailable()).thenReturn(true)
         activityRule.scenario.onActivity {
             it.humidityWrapper = humWrapper
-            it.decidedButtonHumidityShown()
+            it.decideButtonShown(R.id.ll_humidity)
         }
 
         onView(withId(R.id.btn_humidity))
@@ -155,7 +154,6 @@ class MainActivityInstrumentedTest {
             .perform(click())
 
         Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
-
     }
 
     @Test
@@ -174,8 +172,6 @@ class MainActivityInstrumentedTest {
 
         Intents.intended(hasComponent(SosMessageActivity::class.java.name), times(1))
     }
-
-
 
     @Test
     fun button_SpeedOfMoving() {
@@ -197,7 +193,7 @@ class MainActivityInstrumentedTest {
         Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(true)
         activityRule.scenario.onActivity {
             it.temperatureWrapper = tempWrapper
-            it.decidedButtonsShown()
+            it.decideButtonShown(R.id.ll_temperature)
         }
 
         onView(withId(R.id.btn_temperature))
@@ -216,7 +212,7 @@ class MainActivityInstrumentedTest {
         Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(false)
         activityRule.scenario.onActivity {
             it.temperatureWrapper = tempWrapper
-            it.decidedButtonsShown()
+            it.decideButtonShown(R.id.ll_temperature)
         }
 
         onView(withId(R.id.btn_temperature))
@@ -229,7 +225,7 @@ class MainActivityInstrumentedTest {
         Mockito.`when`(tempWrapper.getTemperature()).thenReturn(TEMP_TEST_VALUE)
         activityRule.scenario.onActivity {
             it.temperatureWrapper = tempWrapper
-            it.decidedButtonsShown()
+            it.decideButtonShown(R.id.ll_humidity)
         }
 
         onView(withId(R.id.btn_temperature))
