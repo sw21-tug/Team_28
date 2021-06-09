@@ -102,24 +102,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>, grantResults: IntArray
-    ) {
-        when (requestCode) {
-            Constants.PermissionConstants.PERMISSION_REQUEST_CODE -> {
-                if ((grantResults.isEmpty() ||
-                                grantResults[0] == PackageManager.PERMISSION_DENIED)
-                ) {
-                    return
-                }
-                return
-            }
-            else -> {
-            }
-        }
-    }
-
     fun navigateTo(view: View) {
         val intent: Intent?
         val permissionLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -179,9 +161,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.btn_sos -> {
+
+                val numbers = getNumbers()
+
+                if (numbers[0].isNullOrEmpty()) {
+                    showSOSDialog()
+                    return
+                }
+
                 if(permissionLocation == PackageManager.PERMISSION_GRANTED &&
                     permissionSMS == PackageManager.PERMISSION_GRANTED) {
-
                     intent = Intent(this, SosMessageActivity::class.java)
                 } else {
                     permissionHandler.askUserForPermissions(this,
