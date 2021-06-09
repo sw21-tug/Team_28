@@ -118,6 +118,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         when (view.id) {
             R.id.btn_altitude -> {
+                showSOSDialog()
+                if(getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
+                    showSOSDialog()
+                }
+
                 if(permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, AltitudeActivity::class.java)
                 } else {
@@ -148,11 +153,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
             }
             R.id.btn_pedometer -> {
-
-                if(getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
-                    showSOSDialog()
-                }
-                intent = Intent(this, MainActivity::class.java) //TODO revert to pedometer activity
+                intent = Intent(this, PedometerActivity::class.java) //TODO revert to pedometer activity
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
@@ -164,21 +165,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun showSOSDialog() {
        var builder  = AlertDialog.Builder(this)
         builder.setTitle(R.string.title_SOS_alert)
-        val layout = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
-        builder.setView(R.layout.alert_dialog_phone_numbers)
 
-        builder.setPositiveButton("Save", DialogInterface.OnClickListener {_ ,_->
-            storePhoneNumbers(layout.findViewById(R.id.phonenumber1),
-                layout.findViewById(R.id.phonenumber2))
+
+        var layout :View = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
+        builder.setView(layout)
+
+        builder.setPositiveButton("Save", DialogInterface.OnClickListener {dialog, which ->
+                val phoneEdit1 = findViewById<EditText>(R.id.phonenumber1)
+                val phoneEdit2 = findViewById<EditText>(R.id.phonenumber2)
+                storePhoneNumbers(phoneEdit1.text.toString(), phoneEdit2.text.toString())
         })
-        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener {_,_->
+
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener {dialog,which->(
             return@OnClickListener
-        })
+                )})
+
         builder.show()
     }
 
-    private fun storePhoneNumbers(phoneEdit1: EditText,  phoneEdit2: EditText) {
-     return
+    private fun storePhoneNumbers(phonenumber1 : String, phonenumber2 : String) {
+     if(SOSNumberChecker().checkSOSNumberLength(phonenumber1) && SOSNumberChecker().checkSOSNumberLength(phonenumber2))
+        setNumbers(listOf(phonenumber1,phonenumber2))
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
