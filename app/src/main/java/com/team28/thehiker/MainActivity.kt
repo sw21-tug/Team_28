@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler = SharedPreferenceHandler()
         permissionHandler = PermissionHandler()
 
-        checkPermissions("")
+        checkPermissions()
         
         val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         temperatureWrapper.kill()
     }
 
-    fun checkPermissions(PERMISSION : String) {
+    fun checkPermissions() {
         if (!permissionHandler.permissionsAlreadyGranted(this)) {
             permissionHandler.askUserForPermissions(this, arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
