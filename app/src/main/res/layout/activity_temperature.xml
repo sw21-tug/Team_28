@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".TemperatureActivity">
+        tools:context=".features.temperature.TemperatureActivity">
 
     <ImageView
             android:id="@+id/imageView_temperature"
@@ -14,10 +14,11 @@
             android:layout_marginTop="32dp"
             android:minWidth="200sp"
             android:minHeight="200sp"
-            android:src="@drawable/ic_temperature"
+            app:srcCompat="@drawable/ic_temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primary" />
 
     <TextView
             android:layout_width="match_parent"
@@ -28,7 +29,8 @@
             app:layout_constraintBottom_toTopOf="@id/divider_temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_temperature" />
+            app:layout_constraintTop_toBottomOf="@id/imageView_temperature"
+            android:textColor="@color/primary"/>
 
     <View
             android:id="@+id/divider_temperature"
@@ -49,5 +51,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider_temperature"
-        android:text="---" />
+        android:text="@string/default_no_sensor_data_yet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

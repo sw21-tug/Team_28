@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.team28.thehiker.features.pedometer.StepCountHistoryActivity
 
-    class ListAdapter(private val context: Context,
+class ListAdapter(private val context: Context,
                       private val dataSource: ArrayList<StepCountHistoryActivity>) : BaseAdapter() {
 
         private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

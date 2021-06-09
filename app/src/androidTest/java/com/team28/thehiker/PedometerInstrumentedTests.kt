@@ -4,6 +4,9 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorManager
+import android.location.Location
+import android.location.LocationManager
+import android.os.SystemClock
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -11,18 +14,21 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.location.HikerLocationService
 import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
+import junit.framework.Assert.*
+import org.hamcrest.Matchers.not
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import java.lang.reflect.Field
-import java.time.*
 import java.util.*
-
+import kotlin.concurrent.thread
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -43,9 +49,6 @@ class PedometerInstrumentedTests {
             = ActivityScenarioRule(PedometerActivity::class.java)
 
     @Mock
-    private var sensorManager:SensorManager? = null
-
-    @Mock
     private var day : Long = 42
 
     @Before
@@ -56,6 +59,8 @@ class PedometerInstrumentedTests {
                 it.stepsTaken = 0
         }
     }
+
+    private var sensorManager: SensorManager? = null
 
     @Test
     fun onViewComponents(){
@@ -88,6 +93,70 @@ class PedometerInstrumentedTests {
         onView(withId(R.id.txtViewSteps)).check(matches(withText("5")))
     }
 
+    @Test
+    fun noStepSensorCallFaultback()
+    {
+        activityRule.scenario.onActivity { sensorManager = it.getSystemService(Context.SENSOR_SERVICE)
+                as SensorManager }
+        if(sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) == null)
+            activityRule.scenario.onActivity { assertFalse(it.sensorPresent) }
+        else
+            activityRule.scenario.onActivity { assertTrue(it.sensorPresent) }
+    }
+
+    @Test
+    fun testFaultbackThresholdNoChange(){
+        var test_location = createMockLocation()
+        var steps_before : Int = 0
+        activityRule.scenario.onActivity {
+            if (!it.sensorPresent) {
+                it.locationOld = test_location
+                steps_before = it.stepsTaken
+                it.notifyLocationUpdate(test_location)
+                Thread.sleep(2500)
+                assertEquals(steps_before, it.stepsTaken)
+            }
+        }
+    }
+
+    @Test
+    fun testFaultbackThresholdChange()
+    {
+        activityRule.scenario.onActivity {
+            if(!it.sensorPresent)
+            {
+                it.notifyLocationUpdate(createMockLocation())
+                Thread.sleep(2500)
+                val steps_before = it.stepsTaken
+                it.notifyLocationUpdate(createMockLocation2())
+                Thread.sleep(2500)
+                assertTrue(steps_before != it.stepsTaken)
+            }
+        }
+    }
+
+    fun testNewDayDetection()
+    {
+        mockStepsWithTimeStamp(Calendar.getInstance().timeInMillis - 86400000)
+        mockStepsWithTimeStampNow()
+    }
+
+    @Test
+    fun testStepsCalculatedCorrect(){
+        activityRule.scenario.onActivity {
+            assertEquals(it.calculateSteps(10.0f), 14)
+        }
+    }
+
+    @Test
+    fun gpsDataAvailable(){
+        activityRule.scenario.onActivity { if(!it.sensorPresent) {
+            assertEquals(it.getLocationService().javaClass, HikerLocationService::class.java)
+            }
+        }
+    }
+
+
     private fun mockFiveSteps() {
         val mockEvent  : SensorEvent = createMockStepEvent(1)
         for(i in 1..5)
@@ -97,8 +166,8 @@ class PedometerInstrumentedTests {
     }
 
 
-    private fun mockStepsWithTimeStamp() {
-        val mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, day)
+    private fun mockStepsWithTimeStamp(time_stamp: Long) {
+        val mockEvent  : SensorEvent = createMockStepWithTimeStamp(1, time_stamp)
         for(i in 1..5)
         {
             activityRule.scenario.onActivity { it.onSensorChanged(mockEvent)}
@@ -147,7 +216,30 @@ class PedometerInstrumentedTests {
 
         valuesField.set(mockEvent, float_array)
         tsField.set(mockEvent,time_stamp)
-
         return mockEvent
+    }
+
+    private fun createMockLocation() : Location {
+        val mockLocation = Location(LocationManager.GPS_PROVIDER)
+        mockLocation.latitude = 10.0
+        mockLocation.longitude = 10.0
+        mockLocation.accuracy = 1.0f
+        mockLocation.altitude = 123.12
+        mockLocation.time = System.currentTimeMillis()
+        mockLocation.elapsedRealtimeNanos = SystemClock.elapsedRealtimeNanos()
+
+        return mockLocation
+    }
+
+    private fun createMockLocation2() : Location {
+        val mockLocation = Location(LocationManager.GPS_PROVIDER)
+        mockLocation.latitude = 10.01
+        mockLocation.longitude = 10.03
+        mockLocation.accuracy = 1.0f
+        mockLocation.altitude = 123.12
+        mockLocation.time = System.currentTimeMillis()
+        mockLocation.elapsedRealtimeNanos = SystemClock.elapsedRealtimeNanos()
+
+        return mockLocation
     }
 }

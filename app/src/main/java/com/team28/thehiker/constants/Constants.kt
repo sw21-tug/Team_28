@@ -1,4 +1,4 @@
-package com.team28.thehiker.Constants
+package com.team28.thehiker.constants
 
 class Constants {
     object PermissionConstants {

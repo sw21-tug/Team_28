@@ -1,8 +1,6 @@
-package com.team28.thehiker.SharedPreferenceHandler
+package com.team28.thehiker.sharedpreferencehandler
 
 import android.app.Activity
-import android.content.Context
-import java.time.LocalDate
 
 interface ISharedPreferenceHandler {
 

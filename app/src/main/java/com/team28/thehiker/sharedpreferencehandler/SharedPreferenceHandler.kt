@@ -1,10 +1,8 @@
-package com.team28.thehiker.SharedPreferenceHandler
+package com.team28.thehiker.sharedpreferencehandler
 
 import android.app.Activity
 import android.content.Context
-import com.team28.thehiker.Constants.Constants
-import java.time.LocalDate
-import java.util.*
+import com.team28.thehiker.constants.Constants
 
 class SharedPreferenceHandler : ISharedPreferenceHandler {
 

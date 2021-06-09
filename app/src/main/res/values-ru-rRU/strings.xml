@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="splashscreen_descriptor">мультфильм _природа</string>
+    <string name="humidity_title">Влажность</string>
     <string name="altitude_title">Ваша высота:</string>
-    <string name="altitude_userinfo">* высота над уровнем моря отображается в метрах</string>
+    <string name="altitude_userinfo">*высота над уровнем моря отображается в метрах</string>
+    <string name="humidity_userinfo">*относительная влажность в процентах</string>
+    <string name="speed_title">Скорость перемещения:</string>
+    <string name="speed_userinfo">*скорость внутри помещения не является точной</string>
     <string name="altitude">высота</string>
     <string name="find_me">Найди меня</string>
+    <string name="speed_of_moving">Скорость</string>
     <string name="main_menu_header_image">изображение заголовка главного меню</string>
-    <string name="first_fragment_label">Первый фрагмент</string>
-    <string name="second_fragment_label">Второй фрагмент</string>
     <string name="next">Следующий</string>
     <string name="previous">Предыдущий</string>
-    <string name="hello_first_fragment">Привет первый фрагмент</string>
-    <string name="hello_second_fragment">Привет второй фрагмент. Аргумент:%1$s</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="settings">Настройки</string>
@@ -22,8 +23,22 @@
     <string name="my_location_label_text">Мое местонахождение</string>
     <string name="meters">м</string>
     <string name="temperature">Температура</string>
+
     <string name="temperature_title">Ваша температура:</string>
     <string name="pedometer">Шагомер</string>
+    <string name="humidity">Значок влажности</string>
+    <string name="map_logo">карта логотип</string>
     <string name="pedometer_history">История</string>
 
+    <string name="sms_message_sos">SOS!</string>
+    <string name="sms_message_emergency_over">Аварийное состояние закончилось!</string>
+    <string name="title_permission_alert">Предупреждение о разрешении</string>
+    <string name="permission_alert_message">Для этой функции требуются следующие разрешения:</string>
+    <string name="permission_alert_query">Хотели бы вы изменить это в настройках?</string>
+    <string name="string_yes">ДА</string>
+    <string name="string_no">Нет</string>
+
+    <string name="sos_btn">SOS сообщение</string>
+    <string name="stop_sos">ОСТАНОВИТЬ SOS</string>
+    <string name="sos_img_caption">SOS заставка</string>
 </resources>

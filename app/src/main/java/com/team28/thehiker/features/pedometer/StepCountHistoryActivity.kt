@@ -1,10 +1,13 @@
-package com.team28.thehiker
+package com.team28.thehiker.features.pedometer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
+import com.team28.thehiker.ItemAdapter
+import com.team28.thehiker.ListItem
+import com.team28.thehiker.R
+import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import kotlinx.android.synthetic.main.step_count_history.*
 
 class StepCountHistoryActivity : AppCompatActivity(){
