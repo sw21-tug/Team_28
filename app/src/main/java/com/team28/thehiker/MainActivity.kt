@@ -119,11 +119,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         when (view.id) {
             R.id.btn_altitude -> {
-                showSOSDialog()
-                if(getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
-                    showSOSDialog()
-                }
-
                 if(permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, AltitudeActivity::class.java)
                 } else {
@@ -154,7 +149,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
             }
             R.id.btn_pedometer -> {
-                intent = Intent(this, PedometerActivity::class.java) //TODO revert to pedometer activity
+                if(getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
+                    showSOSDialog()
+                }
+
+                if(!getNumbers()[0]?.isEmpty()!! && !getNumbers()[1]?.isEmpty()!!)
+                {
+                    intent = Intent(this, SosMessageActivity::class.java)
+                }
+                else
+                {
+                    intent = Intent(this, MainActivity::class.java)
+                }
+
+
+                //TODO revert to pedometer activity
+                // intent = Intent(this, PedoMeterActivity::class.java) //TODO revert to pedometer activity
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
@@ -177,7 +187,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (phoneEdit1 != null && phoneEdit2 != null){
                     storePhoneNumbers(phoneEdit1.text.toString(), phoneEdit2.text.toString())
                 }
-                intent = Intent(this, SosMessageActivity::class.java)
         })
 
         builder.setNegativeButton("Cancel", DialogInterface.OnClickListener {dialog,which->(
@@ -188,8 +197,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun storePhoneNumbers(phonenumber1 : String, phonenumber2 : String) {
-      if(SOSNumberChecker().checkSOSNumberLength(phonenumber1) && SOSNumberChecker().checkSOSNumberLength(phonenumber2))
-        setNumbers(listOf(phonenumber1,phonenumber2))
+      if(SOSNumberChecker().checkSOSNumberLength(phonenumber1) && SOSNumberChecker().checkSOSNumberLength(phonenumber2)) {
+          setNumbers(listOf(phonenumber1, phonenumber2))
+      }
+      else
+      {
+          val dialog = AlertDialog.Builder(this)
+          dialog.setTitle("Warning: Invalid Phone Number")
+          dialog.setMessage("Please enter a valid phone number!")
+          dialog.show()
+      }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
