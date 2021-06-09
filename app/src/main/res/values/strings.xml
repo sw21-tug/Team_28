@@ -34,6 +34,11 @@
     <string name="sms_message_sos">SOS!</string>
     <string name="sms_message_emergency_over">Emergency state is over!</string>
     <string name="title_activity_sos_message" translatable="false">SosMessageActivity</string>
+    <string name="title_permission_alert">Permission Alert</string>
+    <string name="permission_alert_message">This feature needs the following permission(s):</string>
+    <string name="permission_alert_query">Would you like to change it in the settings?</string>
+    <string name="string_yes">Yes</string>
+    <string name="string_no">No</string>
     <string name="sos_btn">SOS message</string>
     <string name="stop_sos">STOP SOS</string>
     <string name="sos_img_caption">SOS splashart</string>

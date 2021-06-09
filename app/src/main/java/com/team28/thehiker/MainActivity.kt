@@ -2,6 +2,7 @@ package com.team28.thehiker
 
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -15,6 +16,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
@@ -116,11 +118,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, AltitudeActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
-                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showDialog()
-                    }
-                    return
+                        permissionHandler.askUserForPermissions(this)
+                        if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            showPermissionAlertDialog("LOCATION")
+                        }
+                        return
                 }
             }
             R.id.btn_position_on_map -> {
@@ -129,7 +131,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                     permissionHandler.askUserForPermissions(this)
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showDialog()
+                        showPermissionAlertDialog("LOCATION")
                     }
                     return
                 }
@@ -143,7 +145,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
             }
             R.id.btn_pedometer -> {
-                intent = Intent(this, PedometerActivity::class.java)
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, PedometerActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this)
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
+                        showPermissionAlertDialog("PHYSICAL_ACTIVITY")
+                    }
+                    return
+                }
             }
             R.id.btn_speed_of_moving -> {
                 intent = Intent(this, SpeedActivity::class.java)
@@ -156,7 +166,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                     permissionHandler.askUserForPermissions(this)
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showDialog()
+                        showPermissionAlertDialog("LOCATION, SEND_SMS")
                     }
                     return
                 }
@@ -220,7 +230,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler.setLocalizationString(this, localization)
     }
 
-    fun showDialog() {
+    fun showPermissionAlertDialog(permission_text: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.title_permission_alert)
+        //R.string.permission_alert_query
+        builder.setMessage(R.string.permission_alert_message)
+        builder.setMessage(R.string.permission_alert_query)
+
+        builder.setMessage(getString(R.string.permission_alert_message) + "\n" + permission_text +  "\n\n" +
+        getString(R.string.permission_alert_query))
+
+        builder.setPositiveButton(R.string.string_yes,DialogInterface.OnClickListener{
+                _, _ ->openSettings()
+        })
+        builder.setNegativeButton(R.string.string_no, DialogInterface.OnClickListener{
+            _,_->return@OnClickListener
+        })
+        builder.show()
+    }
+
+    fun openSettings()
+    {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
