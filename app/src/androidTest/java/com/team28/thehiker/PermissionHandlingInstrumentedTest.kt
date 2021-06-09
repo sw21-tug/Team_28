@@ -15,13 +15,20 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class PermissionHandlingInstrumentedTest {
 
     /*    ¡¡¡¡¡¡¡¡¡¡¡ WARNING !!!!!!!!!!!
     In order to run these tests the all permission, except the LOCATION, have to be granted.
     The tests have to be run in alphabetical order
+
+    - Install app on device
+    - allow permissions except location permission
+    - run a_ testcase
+    - Hide the location permission request window "never ask again"
+    - run b_ testcase
+
+    (not properly working on Android 30, because showRational changed again)
     */
 
     @get:Rule

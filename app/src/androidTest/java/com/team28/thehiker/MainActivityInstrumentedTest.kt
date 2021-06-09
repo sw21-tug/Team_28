@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.ScrollView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.times
@@ -166,8 +165,10 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun onButtonClick_SOS_correctActivityStarted() {
+        onView(withId(R.id.scrollview_menu))
+                .perform(swipeUp())
+
         onView(withId(R.id.btn_sos))
-            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(SosMessageActivity::class.java.name), times(1))
