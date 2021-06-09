@@ -1,13 +1,9 @@
 package com.team28.thehiker
 
-import android.content.Context
 import android.os.Build
-import androidx.test.InstrumentationRegistry.getTargetContext
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -15,8 +11,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -63,7 +57,7 @@ class PermissionHandlingInstrumentedTest {
     fun a_testMainScreenWithoutPermission(){
         denyPermission()
         onView(withId(R.id.btn_altitude))
-                .check(ViewAssertions.matches(ViewMatchers.withText("Altitude")))
+                .check(ViewAssertions.matches(withText("Altitude")))
         return
     }
 
@@ -71,9 +65,9 @@ class PermissionHandlingInstrumentedTest {
     fun b_testMainScreenWithoutPermissionBtnCheck() {
         denyPermission()
         onView(withId(R.id.btn_altitude))
-                .check(ViewAssertions.matches(ViewMatchers.withText("Altitude")))
+                .check(ViewAssertions.matches(withText("Altitude")))
         onView(withId(R.id.btn_altitude)).perform(ViewActions.click())
-        onView(withText("Permission Alert")).check(ViewAssertions.matches(ViewMatchers.withText("Permission Alert")))
+        onView(withText("Permission Alert")).check(ViewAssertions.matches(withText("Permission Alert")))
         return
     }
 }

@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun navigateTo(view: View) {
-        var intent: Intent? = null
+        val intent: Intent?
         val permissionLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         val permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
         val permissionRecognition = ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
@@ -321,9 +321,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         builder.setMessage(getString(R.string.permission_alert_message) + "\n" + permission_text + "\n\n" +
                 getString(R.string.permission_alert_query))
 
-        builder.setPositiveButton(R.string.string_yes, DialogInterface.OnClickListener { _,_ ->
+        builder.setPositiveButton(R.string.string_yes) { _,_ ->
             openSettings()
-        })
+        }
         builder.setNegativeButton(R.string.string_no, null)
         builder.show()
     }
