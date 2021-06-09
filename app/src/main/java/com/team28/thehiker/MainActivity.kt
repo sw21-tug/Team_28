@@ -45,10 +45,10 @@ import kotlinx.android.synthetic.main.drawer_settings.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var sharedPreferenceHandler : SharedPreferenceHandler
-    lateinit var permissionHandler : PermissionHandler
+    lateinit var sharedPreferenceHandler: SharedPreferenceHandler
+    lateinit var permissionHandler: PermissionHandler
     lateinit var humidityWrapper: HumidityWrapper
-    lateinit var temperatureWrapper : TemperatureWrapper
+    lateinit var temperatureWrapper: TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,14 +57,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         val toggle =
-            ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+                ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             toolbar.setTitleTextColor(getColor(R.color.black))
             toggle.drawerArrowDrawable.color = getColor(R.color.black)
-        }
-        else {
+        } else {
             toolbar.setTitleTextColor(resources.getColor(R.color.black))
             toggle.drawerArrowDrawable.color = resources.getColor(R.color.black)
         }
@@ -78,8 +77,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         permissionHandler = PermissionHandler()
 
         checkPermissions()
-        
-        val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        val sensorManager: SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         humidityWrapper = HumidityWrapper(sensorManager)
         decidedButtonHumidityShown()
@@ -108,13 +107,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>, grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<String>, grantResults: IntArray
     ) {
         when (requestCode) {
             Constants.PermissionConstants.PERMISSION_REQUEST_CODE -> {
                 if ((grantResults.isEmpty() ||
-                            grantResults[0] == PackageManager.PERMISSION_DENIED)
+                                grantResults[0] == PackageManager.PERMISSION_DENIED)
                 ) {
                     return
                 }
@@ -126,27 +125,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun navigateTo(view: View) {
-        val intent: Intent
+        var intent: Intent? = null
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         val permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
         when (view.id) {
             R.id.btn_altitude -> {
-                if(permission == PackageManager.PERMISSION_GRANTED) {
+                if (permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, AltitudeActivity::class.java)
                 } else {
-                        permissionHandler.askUserForPermissions(this)
-                        if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                            showPermissionAlertDialog("LOCATION")
-                        }
-                        return
+                    permissionHandler.askUserForPermissions(this)
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showPermissionAlertDialog("LOCATION")
+                    }
+                    return
                 }
             }
             R.id.btn_position_on_map -> {
-                if(permission == PackageManager.PERMISSION_GRANTED) {
+                if (permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, FindMeActivity::class.java)
                 } else {
                     permissionHandler.askUserForPermissions(this)
-                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                         showPermissionAlertDialog("LOCATION")
                     }
                     return
@@ -155,17 +154,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.btn_humidity -> {
                 intent = Intent(this, HumidityActivity::class.java)
             }
-            R.id.btn_temperature ->{
+            R.id.btn_temperature -> {
                 intent = Intent(this, TemperatureActivity::class.java)
-                val temperature : Double? = temperatureWrapper.getTemperature()
-                intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
+                val temperature: Double? = temperatureWrapper.getTemperature()
+                intent.putExtra(TemperatureActivity.TEMP_KEY, temperature)
             }
             R.id.btn_pedometer -> {
-                if(permission == PackageManager.PERMISSION_GRANTED) {
+                if (permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, PedometerActivity::class.java)
                 } else {
                     permissionHandler.askUserForPermissions(this)
-                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
                         showPermissionAlertDialog("PHYSICAL_ACTIVITY")
                     }
                     return
@@ -175,29 +174,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent = Intent(this, SpeedActivity::class.java)
             }
             R.id.btn_sos -> {
-                if(permission == PackageManager.PERMISSION_GRANTED &&
-                    permissionSMS == PackageManager.PERMISSION_GRANTED) {
+                if (permission == PackageManager.PERMISSION_GRANTED &&
+                        permissionSMS == PackageManager.PERMISSION_GRANTED) {
 
-                    if(getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
+                    if (getNumbers()[0]?.isEmpty()!! || getNumbers()[1]?.isEmpty()!!) {
                         showSOSDialog()
-                        if(!getNumbers()[0]?.isEmpty()!! && !getNumbers()[1]?.isEmpty()!!)
-                        {
-                            intent = Intent(this, SosMessageActivity::class.java)
-                        }
-                        else
-                        {
-                            return
-                        }
-                    }
-                    else
-                    {
+                    } else {
                         intent = Intent(this, SosMessageActivity::class.java)
                     }
 
 
                 } else {
                     permissionHandler.askUserForPermissions(this)
-                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                         showPermissionAlertDialog("LOCATION, SEND_SMS")
                     }
                     return
@@ -212,38 +201,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun showSOSDialog() {
-       var builder  = AlertDialog.Builder(this)
+        var builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.title_SOS_alert)
 
 
-        var layout :View = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
+        var layout: View = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
         builder.setView(layout)
 
-        builder.setPositiveButton("Save", DialogInterface.OnClickListener {dialog, which ->
-                val phoneEdit1 = findViewById<EditText>(R.id.phonenumber1)
-                val phoneEdit2 = findViewById<EditText>(R.id.phonenumber2)
-                if (phoneEdit1 != null && phoneEdit2 != null){
-                    storePhoneNumbers(phoneEdit1.text.toString(), phoneEdit2.text.toString())
-                }
+        builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
+            val phoneEdit1 = layout.findViewById<EditText>(R.id.phonenumber1)
+            val phoneEdit2 = layout.findViewById<EditText>(R.id.phonenumber2)
+
+            if (SOSNumberChecker().checkSOSNumberLength(phoneEdit1.text.toString()) &&
+                    SOSNumberChecker().checkSOSNumberLength(phoneEdit2.text.toString())) {
+                setNumbers(listOf(phoneEdit1.text.toString(), phoneEdit2.text.toString()))
+                intent = Intent(this, SosMessageActivity::class.java)
+                startActivity(intent)
+            } else {
+                var dialog = AlertDialog.Builder(this)
+                dialog.setTitle("SOS Warning")
+                dialog.setMessage("Please enter a valid phone number!")
+                dialog.show()
+            }
         })
 
-        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener {dialog,which->(
-            return@OnClickListener
-                )})
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+            (
+                    return@OnClickListener
+                    )
+        })
 
         builder.show()
-    }
-
-    private fun storePhoneNumbers(phonenumber1 : String, phonenumber2 : String) {
-      if(SOSNumberChecker().checkSOSNumberLength(phonenumber1) && SOSNumberChecker().checkSOSNumberLength(phonenumber2)) {
-          setNumbers(listOf(phonenumber1, phonenumber2))
-      }
-      else {
-          var dialog = AlertDialog.Builder(this)
-          dialog.setTitle("SOS Warning")
-          dialog.setMessage("Please enter a valid phone number!")
-          dialog.show()
-      }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -252,7 +240,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             popupMenu.menuInflater.inflate(R.menu.popup_menu_language, popupMenu.menu)
 
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { menuItem ->
-                when(menuItem.itemId) {
+                when (menuItem.itemId) {
                     R.id.popup_russian -> {
                         LanguageSelector.setLocaleToRussian(this)
                         setSavedLocalizationString("ru")
@@ -278,19 +266,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun decidedButtonHumidityShown(){
+    fun decidedButtonHumidityShown() {
         //decide whether to show the humidity button
-        val humidityButton : LinearLayout = findViewById(R.id.ll_humidity)
-        if(humidityWrapper.isHumiditySensorAvailable()){
+        val humidityButton: LinearLayout = findViewById(R.id.ll_humidity)
+        if (humidityWrapper.isHumiditySensorAvailable()) {
             humidityButton.visibility = View.VISIBLE
-        }else{
+        } else {
             humidityButton.visibility = View.GONE
         }
 
         humidityButton.invalidate()
     }
 
-    fun getSavedLocalizationString() : String? {
+    fun getSavedLocalizationString(): String? {
         return sharedPreferenceHandler.getLocalizationString(this)
     }
 
@@ -305,39 +293,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         builder.setMessage(R.string.permission_alert_message)
         builder.setMessage(R.string.permission_alert_query)
 
-        builder.setMessage(getString(R.string.permission_alert_message) + "\n" + permission_text +  "\n\n" +
-        getString(R.string.permission_alert_query))
+        builder.setMessage(getString(R.string.permission_alert_message) + "\n" + permission_text + "\n\n" +
+                getString(R.string.permission_alert_query))
 
-        builder.setPositiveButton(R.string.string_yes,DialogInterface.OnClickListener{
-                _, _ ->openSettings()
+        builder.setPositiveButton(R.string.string_yes, DialogInterface.OnClickListener { _, _ ->
+            openSettings()
         })
-        builder.setNegativeButton(R.string.string_no, DialogInterface.OnClickListener{
-            _,_->return@OnClickListener
+        builder.setNegativeButton(R.string.string_no, DialogInterface.OnClickListener { _, _ ->
+            return@OnClickListener
         })
         builder.show()
     }
 
-    fun openSettings()
-    {
+    fun openSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
     }
 
-    fun decidedButtonsShown(){
+    fun decidedButtonsShown() {
         //decide whether to show the temperature button
-        val temperatureButton : LinearLayout = findViewById(R.id.ll_temperature)
-        if(temperatureWrapper.isTemperatureSensorAvailable()){
+        val temperatureButton: LinearLayout = findViewById(R.id.ll_temperature)
+        if (temperatureWrapper.isTemperatureSensorAvailable()) {
             temperatureButton.visibility = View.VISIBLE
-        }else{
+        } else {
             temperatureButton.visibility = View.GONE
         }
 
         temperatureButton.invalidate()
     }
 
-    fun getNumbers() : List<String?> {
+    fun getNumbers(): List<String?> {
         return sharedPreferenceHandler.getNumbers(this)
     }
 
