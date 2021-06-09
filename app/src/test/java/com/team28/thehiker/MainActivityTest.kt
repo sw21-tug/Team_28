@@ -1,6 +1,7 @@
 package com.team28.thehiker
 
 
+import android.Manifest
 import com.team28.thehiker.constants.Constants
 import com.team28.thehiker.features.sosmessage.SOSNumberChecker
 import com.team28.thehiker.permissions.PermissionHandler
@@ -30,7 +31,9 @@ class MainActivityTest {
         mainActivity.checkPermissions()
 
         verify(permissionHandlerMock, times(1)).permissionsAlreadyGranted(mainActivity)
-        verify(permissionHandlerMock, never()).askUserForPermissions(mainActivity)
+        verify(permissionHandlerMock, never()).askUserForPermissions(mainActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACTIVITY_RECOGNITION,
+                Manifest.permission.SEND_SMS))
     }
 
     @Test
@@ -44,7 +47,9 @@ class MainActivityTest {
         mainActivity.checkPermissions()
 
         verify(permissionHandlerMock, times(1)).permissionsAlreadyGranted(mainActivity)
-        verify(permissionHandlerMock, times(1)).askUserForPermissions(mainActivity)
+        verify(permissionHandlerMock, times(1)).askUserForPermissions(mainActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACTIVITY_RECOGNITION,
+                        Manifest.permission.SEND_SMS))
     }
 
     @Test

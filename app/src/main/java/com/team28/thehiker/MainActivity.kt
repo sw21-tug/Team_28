@@ -95,7 +95,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun checkPermissions() {
         if (!permissionHandler.permissionsAlreadyGranted(this)) {
-            permissionHandler.askUserForPermissions(this)
+            permissionHandler.askUserForPermissions(this, arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACTIVITY_RECOGNITION,
+                    Manifest.permission.SEND_SMS))
         }
     }
 
@@ -119,26 +122,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun navigateTo(view: View) {
         var intent: Intent? = null
-        val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val permissionLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         val permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+        val permissionRecognition = ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
         when (view.id) {
             R.id.btn_altitude -> {
-                if (permission == PackageManager.PERMISSION_GRANTED) {
+                if(permissionLocation == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, AltitudeActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        showPermissionAlertDialog("LOCATION")
-                    }
-                    return
+                        permissionHandler.askUserForPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+                        if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            showPermissionAlertDialog("LOCATION")
+                        }
+                        return
                 }
             }
             R.id.btn_position_on_map -> {
-                if (permission == PackageManager.PERMISSION_GRANTED) {
+                if(permissionLocation == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, FindMeActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    permissionHandler.askUserForPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                         showPermissionAlertDialog("LOCATION")
                     }
                     return
@@ -153,31 +157,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra(TemperatureActivity.TEMP_KEY, temperature)
             }
             R.id.btn_pedometer -> {
-                if (permission == PackageManager.PERMISSION_GRANTED) {
+                if(permissionRecognition == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, PedometerActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
+                    permissionHandler.askUserForPermissions(this, arrayOf(Manifest.permission.ACTIVITY_RECOGNITION))
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
                         showPermissionAlertDialog("PHYSICAL_ACTIVITY")
                     }
                     return
                 }
             }
             R.id.btn_speed_of_moving -> {
-                intent = Intent(this, SpeedActivity::class.java)
+                if(permissionLocation == PackageManager.PERMISSION_GRANTED) {
+                    intent = Intent(this, SpeedActivity::class.java)
+                } else {
+                    permissionHandler.askUserForPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showPermissionAlertDialog("LOCATION")
+                    }
+                    return
+                }
             }
             R.id.btn_sos -> {
-                if (permission == PackageManager.PERMISSION_GRANTED && permissionSMS == PackageManager.PERMISSION_GRANTED) {
-                    val numbers = getNumbers()
-                    if (numbers[0].isNullOrEmpty() || numbers[1].isNullOrEmpty()) {
-                        showSOSDialog()
-                        return
-                    } else {
-                        intent = Intent(this, SosMessageActivity::class.java)
-                    }
+                if(permissionLocation == PackageManager.PERMISSION_GRANTED &&
+                    permissionSMS == PackageManager.PERMISSION_GRANTED) {
+
+                    intent = Intent(this, SosMessageActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    permissionHandler.askUserForPermissions(this,
+                            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS))
+
+                    if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
+                            !ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
                         showPermissionAlertDialog("LOCATION, SEND_SMS")
                     }
                     return

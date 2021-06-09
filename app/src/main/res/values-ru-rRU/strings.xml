@@ -18,7 +18,7 @@
     <string name="settings">Настройки</string>
     <string name="language">Язык</string>
     <string name="russian">русский</string>
-    <string name="english">английский</string>
+    <string name="english">English</string>
     <string name="title_activity_position_on_map">карта</string>
     <string name="my_location_label_text">Мое местонахождение</string>
     <string name="meters">м</string>
