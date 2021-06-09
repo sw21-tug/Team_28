@@ -25,6 +25,11 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class PermissionHandlingInstrumentedTest {
 
+    /*    ¡¡¡¡¡¡¡¡¡¡¡ WARNING !!!!!!!!!!!
+    In order to run these tests the all permission, except the LOCATION, have to be granted.
+    The tests have to be run in alphabetical order
+    */
+
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
 
