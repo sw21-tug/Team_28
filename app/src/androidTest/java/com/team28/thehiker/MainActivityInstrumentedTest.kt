@@ -2,6 +2,8 @@ package com.team28.thehiker
 
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.ScrollView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -238,6 +240,25 @@ class MainActivityInstrumentedTest {
         }
         assert(intentFound)
     }
+
+    @Test
+
+    fun validateScrollViewHasCorrectHeight () {
+        onView(withId(R.id.main_image))
+            .check(matches(isDisplayed()))
+        onView(withId(R.id.scrollview_menu))
+            .check(matches(isDisplayed()))
+
+        activityRule.scenario.onActivity {
+            val imageView = it.findViewById<ImageView>(R.id.main_image)
+            val screenHeight = it.resources.displayMetrics.heightPixels
+            val scrollView = it.findViewById<ScrollView>(R.id.scrollview_menu)
+            assert(screenHeight==(imageView.bottom + scrollView.height))
+        }
+
+    }
+
+
 
     private fun validateTemperatureExtras(extras: Bundle?) {
         assertNotNull(extras)
