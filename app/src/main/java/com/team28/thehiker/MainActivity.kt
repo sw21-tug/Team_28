@@ -12,11 +12,14 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
+import android.widget.ScrollView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnLayout
 import com.google.android.material.navigation.NavigationView
 import com.team28.thehiker.constants.Constants
 import com.team28.thehiker.features.altitude.AltitudeActivity
@@ -76,6 +79,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         temperatureWrapper = TemperatureWrapper(sensorManager)
 
         decidedButtonsShown()
+
+        findViewById<ScrollView>(R.id.scrollview_menu).doOnLayout {
+            val imageView = findViewById<ImageView>(R.id.main_image)
+            val screenHeight = resources.displayMetrics.heightPixels
+            val params = it.layoutParams
+            params.height = screenHeight - imageView.bottom
+            it.layoutParams = params
+        }
     }
 
     override fun onDestroy() {
