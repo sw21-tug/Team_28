@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.ScrollView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.times
@@ -101,7 +103,7 @@ class MainActivityInstrumentedTest {
             .check(matches(hasDescendant(withId(R.id.btn_altitude))))
 
         onView(withId(R.id.scrollview_menu))
-                .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
+            .check(matches(hasDescendant(withId(R.id.btn_position_on_map))))
 
         onView(withId(R.id.scrollview_menu))
             .check(matches(hasDescendant(withId(R.id.btn_pedometer))))
@@ -113,6 +115,7 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_Altitude_correctActivityStarted() {
         onView(withId(R.id.btn_altitude))
+            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(AltitudeActivity::class.java.name), times(1))
@@ -121,6 +124,7 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_FindMe_correctActivityStarted() {
         onView(withId(R.id.btn_position_on_map))
+            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(FindMeActivity::class.java.name), times(1))
@@ -147,6 +151,7 @@ class MainActivityInstrumentedTest {
         }
 
         onView(withId(R.id.btn_humidity))
+            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(HumidityActivity::class.java.name), times(1))
@@ -156,6 +161,7 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_Pedometer_correctActivityStarted() {
         onView(withId(R.id.btn_pedometer))
+            .perform(scrollTo())
             .perform(click())
         Intents.intended(hasComponent(PedometerActivity::class.java.name), times(1))
     }
@@ -163,6 +169,7 @@ class MainActivityInstrumentedTest {
     @Test
     fun onButtonClick_SOS_correctActivityStarted() {
         onView(withId(R.id.btn_sos))
+            .perform(scrollTo())
             .perform(click())
 
         Intents.intended(hasComponent(SosMessageActivity::class.java.name), times(1))
@@ -173,10 +180,10 @@ class MainActivityInstrumentedTest {
     @Test
     fun button_SpeedOfMoving() {
         onView(withId(R.id.btn_speed_of_moving))
-                .check(matches(isClickable()))
+            .check(matches(isClickable()))
 
         onView(withId(R.id.btn_speed_of_moving))
-                .check(matches(withText("Speed")))
+            .check(matches(withText("Speed")))
     }
 
 
@@ -228,7 +235,9 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.btn_temperature))
             .check(matches(isDisplayed()))
 
-        onView(withId(R.id.btn_temperature)).perform(click())
+        onView(withId(R.id.btn_temperature))
+            .perform(scrollTo())
+            .perform(click())
 
         Intents.intended(hasComponent(TemperatureActivity::class.java.name), times(1))
         var intentFound = false
