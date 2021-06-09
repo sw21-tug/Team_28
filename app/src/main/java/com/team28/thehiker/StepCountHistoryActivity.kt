@@ -2,13 +2,22 @@ package com.team28.thehiker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.team28.thehiker.SharedPreferenceHandler.SharedPreferenceHandler
 import kotlinx.android.synthetic.main.step_count_history.*
 
 class StepCountHistoryActivity : AppCompatActivity(){
 
+    lateinit var sharedPreferenceHandler: SharedPreferenceHandler
+
+    inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.step_count_history)
+
+        sharedPreferenceHandler = SharedPreferenceHandler()
 
         val item1 = ListItem("01.01.2000", "10 steps")
         val item2 = ListItem("02.01.2000", "20 steps")
@@ -30,10 +39,26 @@ class StepCountHistoryActivity : AppCompatActivity(){
         val item18 = ListItem("18.01.2000", "180 steps")
         val item19 = ListItem("19.01.2000", "190 steps")
         val item20 = ListItem("20.01.2000", "200 steps")
-        val itemList = listOf(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20)
-        val adapter = ItemAdapter(this, itemList)
-        list.adapter = adapter
+        //val itemList = listOf(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20)
 
+        val gson = Gson()
+        var step_history_json = sharedPreferenceHandler.getStepCountHistory(this)
+        var step_history = mutableListOf<String>()
 
+        if(step_history_json != "")
+        {
+            val type = genericType<MutableList<String>>()
+            step_history = gson.fromJson(step_history_json, type)
+        }
+
+        var item_list = mutableListOf<ListItem>()
+
+        step_history.forEach()
+        {
+            item_list.add(ListItem(it.split("_")[0], it.split("_")[1]))
+        }
+
+        val adapter = ItemAdapter(this, item_list)
+        step_list.adapter = adapter
     }
 }
