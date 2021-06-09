@@ -1,6 +1,10 @@
 package com.team28.thehiker.constants
 
 class Constants {
+    object SMSConstants {
+        const val SOSNUMBERS = "numbers"
+    }
+
     object PermissionConstants {
         const val PERMISSION_REQUEST_CODE = 42
     }

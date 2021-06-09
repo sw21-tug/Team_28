@@ -172,6 +172,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(permissionLocation == PackageManager.PERMISSION_GRANTED &&
                     permissionSMS == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, SosMessageActivity::class.java)
+                    intent.putStringArrayListExtra(Constants.SMSConstants.SOSNUMBERS, ArrayList(getNumbers()))
                 } else {
                     permissionHandler.askUserForPermissions(this,
                             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS))
