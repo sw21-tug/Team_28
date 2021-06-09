@@ -12,7 +12,7 @@ class PermissionHandler : IPermissionHandler {
         return ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun test(context: Activity, askedPermission: String) {
+    fun askForSpecificPermission(context: Activity, askedPermission: String) {
         PERMISSION = askedPermission
         askUserForPermissions(context)
     }

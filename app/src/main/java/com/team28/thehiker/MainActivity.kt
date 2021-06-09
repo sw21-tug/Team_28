@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun checkPermissions(PERMISSION : String) {
         if (!permissionHandler.permissionsAlreadyGranted(this)) {
-            permissionHandler.test(this, PERMISSION)
+            permissionHandler.askForSpecificPermission(this, PERMISSION)
         }
     }
 
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, AltitudeActivity::class.java)
                 } else {
-                        permissionHandler.askUserForPermissions(this)
+                        permissionHandler.askForSpecificPermission(this, "LOCATION")
                         if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                             showPermissionAlertDialog("LOCATION")
                         }
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, FindMeActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
+                    permissionHandler.askForSpecificPermission(this, "LOCATION")
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                         showPermissionAlertDialog("LOCATION")
                     }
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(permission == PackageManager.PERMISSION_GRANTED) {
                     intent = Intent(this, PedometerActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
+                    permissionHandler.askForSpecificPermission(this, "RECOGNITION")
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
                         showPermissionAlertDialog("PHYSICAL_ACTIVITY")
                     }
@@ -164,7 +164,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     intent = Intent(this, SosMessageActivity::class.java)
                 } else {
-                    permissionHandler.askUserForPermissions(this)
+                    permissionHandler.askForSpecificPermission(this, "LOCATION")
+                    permissionHandler.askForSpecificPermission(this, "SMS")
                     if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                         showPermissionAlertDialog("LOCATION, SEND_SMS")
                     }
