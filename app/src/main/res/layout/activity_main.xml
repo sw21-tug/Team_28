@@ -12,27 +12,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/main_menu_header_image"
-        android:scaleType="center"
-        android:src="@drawable/main_menu_header"
+        android:scaleType="fitEnd"
         app:layout_constraintBottom_toTopOf="@id/divideHomeScreenGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/thehiker_header" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/divideHomeScreenGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintGuide_begin="219dp" />
 
     <ScrollView
         android:id="@+id/scrollview_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/divideHomeScreenGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/divideHomeScreenGuideline">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +53,6 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     app:srcCompat="@drawable/ic_altitude"
                     tools:ignore="VectorDrawableCompat"
                     android:contentDescription="@string/altitude"
@@ -60,7 +60,32 @@
 
                 <Button
                     android:id="@+id/btn_altitude"
-                    android:text="@string/altitude"
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                    android:onClick="navigateTo"
+                    android:text="@string/altitude"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_temperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/ic_temperature"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    android:contentDescription="@string/temperature"
+                    app:srcCompat="@drawable/ic_temperature"
+                    app:tint="@color/primary"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <Button
+                    android:id="@+id/btn_temperature"
+                    android:text="@string/temperature"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:onClick="navigateTo"/>
             </LinearLayout>
@@ -86,11 +111,118 @@
 
                 <Button
                     android:id="@+id/btn_position_on_map"
-                    android:text="@string/find_me"
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                    android:onClick="navigateTo"
+                    android:text="@string/find_me"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_pedometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    app:srcCompat="@drawable/ic_baseline_directions_walk_24"
+                    android:contentDescription="@string/pedo_meter_image"
+                    app:tint="@color/primary"/>
+
+                <Button
+                    android:id="@+id/btn_pedometer"
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="navigateTo"
+                    android:text="@string/pedometer" />
+            </LinearLayout>
+
+              <LinearLayout
+                android:id="@+id/ll_humidity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/ic_humidity"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    android:contentDescription="@string/humidity"
+                    app:srcCompat="?android:attr/textSelectHandle"
+                    app:tint="@color/primary"/>
+
+                <Button
+                    android:id="@+id/btn_humidity"
+                    android:text="@string/humidity_title"
                     style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
                     android:onClick="navigateTo"/>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_speed_of_moving"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/ic_speed_of_moving"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    app:srcCompat="@drawable/ic_speed_of_moving"
+                    tools:ignore="VectorDrawableCompat"
+                    android:contentDescription="@string/speed_of_moving"
+                    app:tint="@color/primary"/>
+
+                <Button
+                    android:id="@+id/btn_speed_of_moving"
+                    android:text="@string/speed_of_moving"
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                    android:onClick="navigateTo"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/ll_sos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="20dp">
+
+                <ImageView
+                        android:id="@+id/imageViewSos"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="20dp"
+                        app:srcCompat="@drawable/ic_baseline_add_ic_call_24"
+                        android:contentDescription="@string/sos_btn"
+                        app:tint="@color/primary" />
+
+                <Button
+                        android:id="@+id/btn_sos"
+                        style="@style/Base.TextAppearance.AppCompat.Widget.Button.MainMenuButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="navigateTo"
+                        android:text="@string/sos_btn" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
@@ -99,9 +231,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0024DA17"
+        android:background="#00000000"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:subtitleTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

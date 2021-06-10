@@ -5,12 +5,13 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#121212</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FF0000</color>
 
     <!-- app colours -->
-    <color name="primary">#FF0C6A2A</color>
-    <color name="primaryVariant">#FFC5E99B</color>
-    <color name="secondary">#FF326273</color>
-    <color name="secondaryVariant">#FF5C9EAD</color>
+    <color name="primary">#17b978</color>
+    <color name="primaryVariant">#a7ff83</color>
+    <color name="secondary">#086972</color>
+    <color name="secondaryVariant">#071a52</color>
 </resources>
