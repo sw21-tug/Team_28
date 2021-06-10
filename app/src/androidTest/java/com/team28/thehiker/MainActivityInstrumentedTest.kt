@@ -21,25 +21,27 @@ import com.team28.thehiker.features.pedometer.PedometerActivity
 import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
+import com.team28.thehiker.sharedpreferencehandler.SharedPreferenceHandler
 import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.*
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
-
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityInstrumentedTest {
     @Mock
-    var humWrapper = Mockito.mock(HumidityWrapper::class.java)
+    var humWrapper = mock(HumidityWrapper::class.java)
 
 
     private val TEMP_TEST_VALUE = 22.2
 
     @Mock
-    var tempWrapper = Mockito.mock(TemperatureWrapper::class.java)
+    var tempWrapper = mock(TemperatureWrapper::class.java)
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> =
@@ -163,6 +165,7 @@ class MainActivityInstrumentedTest {
         Intents.intended(hasComponent(PedometerActivity::class.java.name), times(1))
     }
 
+    //This test needs a new installation to test the alert dialog, will fail otherwise
     @Test
     fun onButtonClick_SOS_correctActivityStarted() {
         onView(withId(R.id.scrollview_menu))
@@ -170,6 +173,11 @@ class MainActivityInstrumentedTest {
 
         onView(withId(R.id.btn_sos))
             .perform(click())
+
+        onView(withId(R.id.phonenumber1)).perform(replaceText("00005555"))
+        onView(withId(R.id.phonenumber2)).perform(replaceText("00005555"))
+
+        onView(withText("Save")).perform(click())
 
         Intents.intended(hasComponent(SosMessageActivity::class.java.name), times(1))
     }
@@ -191,7 +199,7 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun buttonTemperatureIsAvailable() {
-        Mockito.`when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(true)
+        `when`(tempWrapper.isTemperatureSensorAvailable()).thenReturn(true)
         activityRule.scenario.onActivity {
             it.temperatureWrapper = tempWrapper
             it.decideButtonShown(R.id.ll_temperature)

@@ -28,9 +28,11 @@ class SosMessageActivity : AppCompatActivity(), ServiceConnection {
         setContentView(R.layout.activity_sos_message)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val test = intent.getStringArrayListExtra(Constants.SMSConstants.SOSNUMBERS)
-        if (test != null)
-            numbers = listOf(test[0], test[1])
+        var test = intent.getStringArrayListExtra(Constants.SMSConstants.SOSNUMBERS)
+        if (test == null)
+            test = arrayListOf("000555", "555000")
+
+        numbers = listOf(test[0], test[1])
 
         bindService(Intent(this, HikerLocationService::class.java), this, Context.BIND_AUTO_CREATE)
 
@@ -54,7 +56,7 @@ class SosMessageActivity : AppCompatActivity(), ServiceConnection {
         Log.d("SosMessageActivity", "Service Disconnected")
     }
 
-    fun injectWrapper(wrapper:SMSWrapper){
+    fun injectWrapper(wrapper: SMSWrapper){
         this.wrapper = wrapper
         locationService.addLocationCallback(wrapper)
     }
