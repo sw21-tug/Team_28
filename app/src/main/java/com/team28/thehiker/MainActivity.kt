@@ -13,15 +13,13 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupMenu
-import android.widget.ScrollView
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
+import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.team28.thehiker.constants.Constants
 import com.team28.thehiker.features.altitude.AltitudeActivity
@@ -29,6 +27,7 @@ import com.team28.thehiker.features.findme.FindMeActivity
 import com.team28.thehiker.features.humidity.HumidityActivity
 import com.team28.thehiker.features.humidity.HumidityWrapper
 import com.team28.thehiker.features.pedometer.PedometerActivity
+import com.team28.thehiker.features.sosmessage.SOSNumberChecker
 import com.team28.thehiker.features.sosmessage.SosMessageActivity
 import com.team28.thehiker.features.temperature.TemperatureActivity
 import com.team28.thehiker.features.temperature.TemperatureWrapper
@@ -40,10 +39,10 @@ import kotlinx.android.synthetic.main.drawer_settings.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var sharedPreferenceHandler : SharedPreferenceHandler
-    lateinit var permissionHandler : PermissionHandler
+    lateinit var sharedPreferenceHandler: SharedPreferenceHandler
+    lateinit var permissionHandler: PermissionHandler
     lateinit var humidityWrapper: HumidityWrapper
-    lateinit var temperatureWrapper : TemperatureWrapper
+    lateinit var temperatureWrapper: TemperatureWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +51,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         val toggle =
-            ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+                ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             toolbar.setTitleTextColor(getColor(R.color.black))
             toggle.drawerArrowDrawable.color = getColor(R.color.black)
-        }
-        else {
+        } else {
             toolbar.setTitleTextColor(resources.getColor(R.color.black))
             toggle.drawerArrowDrawable.color = resources.getColor(R.color.black)
         }
@@ -73,14 +71,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         permissionHandler = PermissionHandler()
 
         checkPermissions()
-        
-        val sensorManager : SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        val sensorManager: SensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         humidityWrapper = HumidityWrapper(sensorManager)
-        decidedButtonHumidityShown()
+        decideButtonShown(R.id.ll_humidity)
         temperatureWrapper = TemperatureWrapper(sensorManager)
-
-        decidedButtonsShown()
+        decideButtonShown(R.id.ll_temperature)
 
         findViewById<ScrollView>(R.id.scrollview_menu).doOnLayout {
             val imageView = findViewById<ImageView>(R.id.main_image)
@@ -105,29 +102,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>, grantResults: IntArray
-    ) {
-        when (requestCode) {
-            Constants.PermissionConstants.PERMISSION_REQUEST_CODE -> {
-                if ((grantResults.isEmpty() ||
-                            grantResults[0] == PackageManager.PERMISSION_DENIED)
-                ) {
-                    return
-                }
-                return
-            }
-            else -> {
-            }
-        }
-    }
-
     fun navigateTo(view: View) {
-        val intent: Intent
+        val intent: Intent?
         val permissionLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         val permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-        val permissionRecognition =ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
+        val permissionRecognition = ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
         when (view.id) {
             R.id.btn_altitude -> {
                 if(permissionLocation == PackageManager.PERMISSION_GRANTED) {
@@ -154,10 +133,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.btn_humidity -> {
                 intent = Intent(this, HumidityActivity::class.java)
             }
-            R.id.btn_temperature ->{
+            R.id.btn_temperature -> {
                 intent = Intent(this, TemperatureActivity::class.java)
-                val temperature : Double? = temperatureWrapper.getTemperature()
-                intent.putExtra(TemperatureActivity.TEMP_KEY,temperature)
+                val temperature: Double? = temperatureWrapper.getTemperature()
+                intent.putExtra(TemperatureActivity.TEMP_KEY, temperature)
             }
             R.id.btn_pedometer -> {
                 if(permissionRecognition == PackageManager.PERMISSION_GRANTED) {
@@ -182,10 +161,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.btn_sos -> {
+
+                val numbers = getNumbers()
+
+                if (numbers[0].isNullOrEmpty()) {
+                    showSOSDialog()
+                    return
+                }
+
                 if(permissionLocation == PackageManager.PERMISSION_GRANTED &&
                     permissionSMS == PackageManager.PERMISSION_GRANTED) {
-
                     intent = Intent(this, SosMessageActivity::class.java)
+                    intent.putStringArrayListExtra(Constants.SMSConstants.SOSNUMBERS, ArrayList(getNumbers()))
                 } else {
                     permissionHandler.askUserForPermissions(this,
                             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS))
@@ -196,6 +183,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                     return
                 }
+
             }
             else -> {
                 intent = Intent(this, MainActivity::class.java)
@@ -204,13 +192,52 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(intent)
     }
 
+    private fun showSOSDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.title_SOS_alert)
+
+        val layout: View = layoutInflater.inflate(R.layout.alert_dialog_phone_numbers, null)
+        builder.setView(layout)
+
+        builder.setPositiveButton("Save", null)
+
+        builder.setNegativeButton("Cancel", null)
+
+        val dialog = builder.create()
+
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val phoneEdit1 = layout.findViewById<EditText>(R.id.phonenumber1)
+            val phoneEditText1 = layout.findViewById<TextView>(R.id.phonenumber1_text)
+            val phoneEdit2 = layout.findViewById<EditText>(R.id.phonenumber2)
+            val phoneEditText2 = layout.findViewById<TextView>(R.id.phonenumber2_text)
+
+            val number1 = phoneEdit1.text.toString()
+            val number2 = phoneEdit2.text.toString()
+
+            val number1Check1 = SOSNumberChecker().checkSOSNumber(number1)
+            val number1Check2 = SOSNumberChecker().checkSOSNumberLength(number1)
+            val number2Check1 = SOSNumberChecker().checkSOSNumber(number2)
+            val number2Check2 = SOSNumberChecker().checkSOSNumberLength(number2)
+
+            phoneEditText1.isVisible = !(number1Check1 && number1Check2)
+            phoneEditText2.isVisible = !(number2Check1 && number2Check2)
+
+            if (!phoneEditText1.isVisible && !phoneEditText2.isVisible) {
+                setNumbers(listOf(number1, number2))
+                dialog.dismiss()
+                navigateTo(findViewById(R.id.btn_sos))
+            }
+        }
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.language) {
             val popupMenu = PopupMenu(this, findViewById(R.id.language))
             popupMenu.menuInflater.inflate(R.menu.popup_menu_language, popupMenu.menu)
 
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { menuItem ->
-                when(menuItem.itemId) {
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
                     R.id.popup_russian -> {
                         LanguageSelector.setLocaleToRussian(this)
                         setSavedLocalizationString("ru")
@@ -230,25 +257,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                 }
                 true
-            })
+            }
             popupMenu.show()
         }
         return true
     }
 
-    fun decidedButtonHumidityShown(){
-        //decide whether to show the humidity button
-        val humidityButton : LinearLayout = findViewById(R.id.ll_humidity)
-        if(humidityWrapper.isHumiditySensorAvailable()){
-            humidityButton.visibility = View.VISIBLE
-        }else{
-            humidityButton.visibility = View.GONE
+    fun decideButtonShown(idButtonToCheck : Int) {
+        when(idButtonToCheck) {
+            R.id.ll_temperature -> {
+                val temperatureButton: LinearLayout = findViewById(R.id.ll_temperature)
+
+                if (temperatureWrapper.isTemperatureSensorAvailable()) {
+                    temperatureButton.visibility = View.VISIBLE
+                } else {
+                    temperatureButton.visibility = View.GONE
+                }
+
+                temperatureButton.invalidate()
+                return
+            }
+            R.id.ll_humidity -> {
+                val humidityButton: LinearLayout = findViewById(R.id.ll_humidity)
+
+                if (humidityWrapper.isHumiditySensorAvailable()) {
+                    humidityButton.visibility = View.VISIBLE
+                } else {
+                    humidityButton.visibility = View.GONE
+                }
+
+                humidityButton.invalidate()
+                return
+            }
+
         }
 
-        humidityButton.invalidate()
     }
 
-    fun getSavedLocalizationString() : String? {
+    fun getSavedLocalizationString(): String? {
         return sharedPreferenceHandler.getLocalizationString(this)
     }
 
@@ -256,43 +302,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPreferenceHandler.setLocalizationString(this, localization)
     }
 
-    fun showPermissionAlertDialog(permission_text: String) {
+    private fun showPermissionAlertDialog(permission_text: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.title_permission_alert)
-        //R.string.permission_alert_query
         builder.setMessage(R.string.permission_alert_message)
         builder.setMessage(R.string.permission_alert_query)
 
-        builder.setMessage(getString(R.string.permission_alert_message) + "\n" + permission_text +  "\n\n" +
-        getString(R.string.permission_alert_query))
+        builder.setMessage(getString(R.string.permission_alert_message) + "\n" + permission_text + "\n\n" +
+                getString(R.string.permission_alert_query))
 
-        builder.setPositiveButton(R.string.string_yes,DialogInterface.OnClickListener{
-                _, _ ->openSettings()
-        })
-        builder.setNegativeButton(R.string.string_no, DialogInterface.OnClickListener{
-            _,_->return@OnClickListener
-        })
+        builder.setPositiveButton(R.string.string_yes) { _,_ ->
+            openSettings()
+        }
+        builder.setNegativeButton(R.string.string_no, null)
         builder.show()
     }
 
-    fun openSettings()
-    {
+    private fun openSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
     }
 
-    fun decidedButtonsShown(){
-        //decide whether to show the temperature button
-        val temperatureButton : LinearLayout = findViewById(R.id.ll_temperature)
-        if(temperatureWrapper.isTemperatureSensorAvailable()){
-            temperatureButton.visibility = View.VISIBLE
-        }else{
-            temperatureButton.visibility = View.GONE
-        }
-
-        temperatureButton.invalidate()
+    fun getNumbers(): List<String?> {
+        return sharedPreferenceHandler.getNumbers(this)
     }
+
+    fun setNumbers(numbers: List<String>) {
+        sharedPreferenceHandler.setNumbers(this, numbers)
+    }
+
 }
 

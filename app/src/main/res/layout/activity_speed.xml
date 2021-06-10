@@ -13,11 +13,11 @@
         android:layout_marginTop="32dp"
         android:minWidth="100sp"
         android:minHeight="100sp"
-        android:src="@drawable/ic_speed_of_moving"
+        app:srcCompat="@drawable/ic_speed_of_moving"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:tint="@color/primary"/>
+        app:tint="@color/primary" />
 
     <TextView
         android:layout_width="match_parent"

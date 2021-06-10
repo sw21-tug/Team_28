@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/phonenumber1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/phonenumber1"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/phonenumber1_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/number_wrong"
+        android:textColor="@color/primary"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/phonenumber2"
+        app:layout_constraintEnd_toEndOf="@+id/phonenumber1"
+        app:layout_constraintStart_toStartOf="@+id/phonenumber1"
+        app:layout_constraintTop_toBottomOf="@+id/phonenumber1" />
+
+    <EditText
+        android:id="@+id/phonenumber2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/phonenumber2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phonenumber1"
+        android:inputType="phone"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/phonenumber2_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/number_wrong"
+        android:textColor="@color/primary"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/phonenumber2"
+        app:layout_constraintStart_toStartOf="@+id/phonenumber2"
+        app:layout_constraintTop_toBottomOf="@+id/phonenumber2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

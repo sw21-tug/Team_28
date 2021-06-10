@@ -13,13 +13,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.team28.thehiker.R
+import com.team28.thehiker.constants.Constants
 import com.team28.thehiker.location.HikerLocationService
 
 class SosMessageActivity : AppCompatActivity(), ServiceConnection {
 
     private val DELAY_MS_3_MINS = 3000000L
-    //TODO: change in other subtask
-    private val numbers = listOf("+43664664664", "+497887788")
+    private lateinit var numbers : List<String>
     private lateinit var wrapper : SMSWrapper
     private lateinit var locationService : HikerLocationService
 
@@ -27,6 +27,12 @@ class SosMessageActivity : AppCompatActivity(), ServiceConnection {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sos_message)
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        var test = intent.getStringArrayListExtra(Constants.SMSConstants.SOSNUMBERS)
+        if (test == null)
+            test = arrayListOf("000555", "555000")
+
+        numbers = listOf(test[0], test[1])
 
         bindService(Intent(this, HikerLocationService::class.java), this, Context.BIND_AUTO_CREATE)
 
@@ -50,7 +56,7 @@ class SosMessageActivity : AppCompatActivity(), ServiceConnection {
         Log.d("SosMessageActivity", "Service Disconnected")
     }
 
-    fun injectWrapper(wrapper:SMSWrapper){
+    fun injectWrapper(wrapper: SMSWrapper){
         this.wrapper = wrapper
         locationService.addLocationCallback(wrapper)
     }

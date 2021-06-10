@@ -45,4 +45,20 @@ class SharedPreferenceHandler : ISharedPreferenceHandler {
         }
     }
 
+    override fun getNumbers(context: Activity): List<String?> {
+        val sharedPref = context.applicationContext.getSharedPreferences("hiker_preferences",Context.MODE_PRIVATE)
+        val sos1 = sharedPref.getString(Constants.SharedPreferenceConstants.SOS_NUMBER_1, "")
+        val sos2 = sharedPref.getString(Constants.SharedPreferenceConstants.SOS_NUMBER_2, "")
+        return listOf(sos1, sos2)
+    }
+
+    override fun setNumbers(context: Activity, numbers: List<String>) {
+        val sharedPref = context.applicationContext.getSharedPreferences("hiker_preferences",Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString(Constants.SharedPreferenceConstants.SOS_NUMBER_1, numbers[0])
+            putString(Constants.SharedPreferenceConstants.SOS_NUMBER_2, numbers[1])
+            apply()
+        }
+    }
+
 }
