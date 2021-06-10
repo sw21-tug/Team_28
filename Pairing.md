@@ -12,7 +12,7 @@ Dev 9: Markus Watko
 | Syntax      | Lukas André Feldgrill   	  | Sebastian Grief   	  | Thomas Langs   	  | Johannes Leonhard Günther Leeb   	  | Jaime Nuñez Delgado   	  | Nikolas Saf   	  | Tamara Schweiger   	  | Maria Seiser   	  | Markus Watko       |
 | :---        |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |
 | Lukas André Feldgrill       | 04:00           | 07:40       | 08:00       | 04:00       | 04:00       | 04:00       | 08:00       | 12:00       | 02:00       |
-| Sebastian Grief       | 04:00       | 20:00           | 04:50       | 04:00       | 07:40       | 02:00       | 09:10       | 08:00       | 02:00       |
+| Sebastian Grief       | 04:00       | 24:00           | 04:50       | 04:00       | 07:40       | 02:00       | 09:10       | 08:00       | 02:00       |
 | Thomas Langs       | 08:00       | 04:50       | 02:45           | 10:00       | 04:00       | 02:00       | 20:10       | 01:10       | 03:15      |
 | Johannes Leonhard Günther Leeb       | 04:00       | 04:00       | 10:00       | 04:00           | 10:00       | 04:00       | 04:00       | 02:50       | 05:10       |
 | Jaime Nuñez Delgado       | 04:00       | 04:00       | 04:00       | 10:00       | X           | 04:00       | 02:00       | 20:00       |08:00       |
