@@ -44,10 +44,15 @@ In long terms The Hiker app tries to provide a useful app that will rise the awa
 
 ### Remarks to test our App:
 
+All remarks are additionally commented in the corresponding test file.
 * Please enable developer settings
 * Set this App as Mock Location Provider: Systems -> Advanced -> Developer Options -> Debugging -> Select Mock Location App 
 * Set it to None afterwards for a correct behavior of the App
 
+* For the PermissionHandlingInstrumentedTest:
+    * All permissions except the LOCATION, have to be granted.
+    * The tests have to be run in alphabetical order.
+    * properly not working on Android 30
 ---
 
 ### Known Limitations for Release 1:
